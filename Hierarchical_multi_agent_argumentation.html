@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hierarchical Multi-Agent Argumentation - Interactive Editable Diagram</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=STIX+Two+Math&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-math: 'STIX Two Math', 'Cambria Math', 'Times New Roman', serif;
+    }
+    body {
+      font-family: var(--font-sans);
+      background-color: #f1f5f9;
+      color: #0f172a;
+      margin: 0;
+      padding: 0;
+    }
+    .math {
+      font-family: var(--font-math);
+      font-style: italic;
+    }
+    .math-upright {
+      font-family: var(--font-math);
+      font-style: normal;
+    }
+    /* Editable visual feedback */
+    body.edit-active [contenteditable="true"] {
+      outline: 1px dashed transparent;
+      transition: all 0.15s ease;
+      border-radius: 3px;
+    }
+    body.edit-active [contenteditable="true"]:hover {
+      outline: 1.5px dashed #3b82f6;
+      background-color: rgba(59, 130, 246, 0.06);
+      cursor: text;
+    }
+    body.edit-active [contenteditable="true"]:focus {
+      outline: 2px solid #2563eb;
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    /* Draggable nodes in Drag Mode */
+    body.drag-active .draggable-node {
+      cursor: grab !important;
+      outline: 2px dashed #8b5cf6 !important;
+       outline-offset: 2px;
+    }
+    body.drag-active .draggable-node:active {
+      cursor: grabbing !important;
+      outline: 2px solid #6d28d9 !important;
+    }
+    /* Fixed Aspect Ratio Canvas for crisp academic layout */
+    #diagram-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    #diagram-canvas {
+      width: 1520px;
+      min-width: 1520px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+      padding: 24px 28px 30px 28px;
+      position: relative;
+      user-select: none;
+    }
+    body.edit-active #diagram-canvas {
+      user-select: text;
+    }
+    /* Box Aesthetics matching the original figure */
+    .blue-box {
+      border: 1.8px solid #6082b6;
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 2px 5px rgba(96, 130, 182, 0.1);
+    }
+    .blue-header {
+      background: linear-gradient(180deg, #dbeafe 0%, #eff6ff 100%);
+      border-bottom: 1.5px solid #93c5fd;
+      border-radius: 10px 10px 0 0;
+    }
+    .blue-gradient-pill {
+      background: linear-gradient(180deg, #e0ebff 0%, #f5f8ff 100%);
+      border: 1.6px solid #6b8cce;
+      box-shadow: 0 2px 4px rgba(30, 64, 175, 0.08);
+    }
+    .subagent-pill {
+      background: #ffffff;
+      border: 1.6px solid #7c83bc;
+      border-radius: 9px;
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.07);
+    }
+    .subagent-pill-elevated {
+      background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+      border: 1.6px solid #6366f1;
+      border-radius: 9px;
+      box-shadow: 0 3px 6px rgba(99, 102, 241, 0.15);
+    }
+    .graph-node {
+      width: 44px;
+      height: 44px;
+      border-radius: 9999px;
+      border: 2px solid #1e293b;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.12);
+      z-index: 20;
+    }
+    .graph-node-k {
+      background: linear-gradient(145deg, #dbeafe 0%, #bfdbfe 100%);
+    }
+    .stakeholder-card {
+      background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 35%, #fffdf5 100%);
+      border: 1.8px solid #f59e0b;
+      border-radius: 12px;
+      box-shadow: 0 3px 6px rgba(245, 158, 11, 0.12);
+    }
+    .step-card {
+      background: linear-gradient(180deg, #f8fafc 0%, #eff6ff 100%);
+      border: 1.5px solid #64748b;
+      border-radius: 9px;
+      box-shadow: 0 2px 4px rgba(15, 23, 42, 0.06);
+    }
+    /* Dynamic SVG Overlay */
+    #connections-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 15;
+    }
+    @media print {
+      body {
+        background: #ffffff;
+      }
+      #toolbar, #helper-banner {
+        display: none !important;
+      }
+      #diagram-wrapper {
+        padding: 0;
+        overflow: visible;
+      }
+      #diagram-canvas {
+        box-shadow: none;
+        padding: 10px;
+        transform: scale(0.92);
+        transform-origin: top left;
+      }
+    }
+  </style>
+</head>
+<body class="edit-active">
+
+  <!-- TOP INTERACTIVE TOOLBAR -->
+  <header id="toolbar" class="sticky top-0 z-50 bg-slate-900 text-white px-6 py-3 shadow-lg flex flex-wrap items-center justify-between gap-4 border-b border-slate-700">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-lg shadow-inner">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+        </svg>
+      </div>
+      <div>
+        <h1 class="font-bold text-sm sm:text-base tracking-tight">Trình Chỉnh Sửa Sơ Đồ: Hierarchical Multi-Agent Argumentation</h1>
+        <p class="text-xs text-slate-400">Nhấp trực tiếp vào bất kỳ văn bản, ký hiệu toán học nào để sửa nội dung hoặc kéo thả các nút đồ thị</p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2.5">
+      <!-- Toggle Edit Text Mode -->
+      <button id="btn-toggle-edit" onclick="toggleEditMode()" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-1.5 shadow transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+        <span id="edit-status-text"> Sửa văn bản: BẬT</span>
+      </button>
+
+      <!-- Toggle Drag Node Mode -->
+      <button id="btn-toggle-drag" onclick="toggleDragMode()" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-700 hover:bg-slate-600 text-slate-200 flex items-center gap-1.5 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+        </svg>
+        <span id="drag-status-text">Kéo thả Nút (Nodes): TẮT</span>
+      </button>
+
+      <!-- Reset Node Positions -->
+      <button onclick="resetNodePositions()" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 transition" title="Đặt lại vị trí các nút đồ thị">
+        Đặt lại vị trí
+      </button>
+
+      <!-- Zoom Controls -->
+      <div class="flex items-center bg-slate-800 rounded-lg border border-slate-700 p-0.5">
+        <button onclick="changeZoom(-0.1)" class="px-2 py-1 text-xs hover:bg-slate-700 rounded text-slate-300" title="Thu nhỏ">-</button>
+        <span id="zoom-label" class="px-2 text-xs font-mono text-slate-200">100%</span>
+        <button onclick="changeZoom(0.1)" class="px-2 py-1 text-xs hover:bg-slate-700 rounded text-slate-300" title="Phóng to">+</button>
+      </div>
+
+      <!-- Print / Save PDF -->
+      <button onclick="window.print()" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-1.5 shadow transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+        </svg>
+        In / Xuất PDF
+      </button>
+
+      <!-- Download Edited HTML -->
+      <button onclick="downloadHTML()" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500 hover:bg-amber-400 text-slate-950 flex items-center gap-1.5 shadow transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        Tải file HTML đã sửa
+      </button>
+    </div>
+  </header>
+
+  <!-- Quick Math Symbol Insertion Bar -->
+  <div id="helper-banner" class="bg-blue-50 border-b border-blue-200 px-6 py-1.5 flex flex-wrap items-center justify-between text-xs text-slate-700">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="font-semibold text-blue-900">Chèn nhanh ký hiệu toán học (nhấp để copy):</span>
+      <button onclick="copySymbol('x_i')" class="px-2 py-0.5 bg-white border border-blue-200 rounded hover:bg-blue-100 math">x<sub>i</sub></button>
+      <button onclick="copySymbol('a_{x_i}')" class="px-2 py-0.5 bg-white border border-blue-200 rounded hover:bg-blue-100 math">a<sub>x<sub>i</sub></sub></button>
+      <button onclick="copySymbol('V_j')" class="px-2 py-0.5 bg-white border border-blue-200 rounded hover:bg-blue-100 math">V<sub>j</sub></button>
+      <button onclick="copySymbol('G_t')" class="px-2 py-0.5 bg-white border border-blue-200 rounded hover:bg-blue-100 math">G<sub>t</sub></button>
+      <button onclick="copySymbol('R^+')" class="px-2 py-0.5 bg-white border border-blue-200 rounded hover:bg-blue-100 math">R<sup>+</sup></button>
+      <button onclick="copySymbol('R^-')" class="px-2 py-0.5 bg-white border border-blue-200 rounded hover:bg-blue-100 math">R<sup>−</sup></button>
+      <button onclick="copySymbol('→')" class="px-2 py-0.5 bg-white border border-blue-200 rounded hover:bg-blue-100 font-bold">→</button>
+      <button onclick="copySymbol('↔')" class="px-2 py-0.5 bg-white border border-blue-200 rounded hover:bg-blue-100 font-bold">↔</button>
+      <button onclick="copySymbol('∪')" class="px-2 py-0.5 bg-white border border-blue-200 rounded hover:bg-blue-100 font-bold">∪</button>
+      <button onclick="copySymbol('⋯')" class="px-2 py-0.5 bg-white border border-blue-200 rounded hover:bg-blue-100 font-bold">⋯</button>
+      <span id="copy-toast" class="text-emerald-700 font-semibold hidden ml-2">✓ Đã copy!</span>
+    </div>
+    <div class="text-slate-500">Mẹo: Dùng <kbd class="px-1.5 py-0.5 bg-white border rounded text-[11px]">Ctrl+B</kbd> hoặc <kbd class="px-1.5 py-0.5 bg-white border rounded text-[11px]">Ctrl+I</kbd> khi bôi đen chữ để in đậm/in nghiêng.</div>
+  </div>
+
+  <!-- MAIN DIAGRAM WORKSPACE -->
+  <div id="diagram-wrapper">
+    <div id="diagram-canvas">
+
+      <!-- ============================================================
+           DYNAMIC SVG OVERLAY FOR ALL ARROWS & GRAPH CONNECTIONS
+           ============================================================ -->
+      <svg id="connections-svg" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Green Support Arrowhead -->
+          <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#15803d" />
+          </marker>
+          <!-- Red Attack Arrowhead -->
+          <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#dc2626" />
+          </marker>
+          <!-- Purple Aggregation Arrowhead -->
+          <marker id="arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#6d28d9" />
+          </marker>
+          <!-- Blue Feedback Arrowhead -->
+          <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#1d4ed8" />
+          </marker>
+          <!-- Black Representation Arrowhead -->
+          <marker id="arrow-black" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#1e293b" />
+          </marker>
+          <!-- Gray/Slate Structural Arrowhead -->
+          <marker id="arrow-slate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#334155" />
+          </marker>
+        </defs>
+        <g id="dynamic-paths"></g>
+      </svg>
+
+      <!-- ============================================================
+           ROW 1: TOP TEMPORAL EVOLUTION BANNER
+           ============================================================ -->
+      <div class="grid grid-cols-12 gap-5 mb-3">
+        <div class="col-span-3"></div>
+        <div class="col-span-6 flex justify-center">
+          <div id="box-temporal" class="w-full blue-gradient-pill rounded-xl px-6 py-2.5 flex items-center justify-between relative">
+            <div contenteditable="true" class="font-bold text-[19px] text-slate-900 tracking-tight whitespace-nowrap mr-6">
+              Temporal Evolution
+            </div>
+            <!-- Timeline Graphic -->
+            <div class="flex-1 flex items-center relative mr-4">
+              <!-- Horizontal Arrow Line -->
+              <svg class="w-full h-14 overflow-visible" viewBox="0 0 460 52">
+                <!-- Base timeline arrow -->
+                <line x1="15" y1="34" x2="438" y2="34" stroke="#0f172a" stroke-width="2.6" marker-end="url(#arrow-black)" />
+                
+                <!-- Node t1 -->
+                <g transform="translate(65, 34)">
+                  <circle cx="0" cy="0" r="7" fill="#ffffff" stroke="#0f172a" stroke-width="2.5" />
+                </g>
+                <!-- Node t2 -->
+                <g transform="translate(175, 34)">
+                  <circle cx="0" cy="0" r="7" fill="#ffffff" stroke="#0f172a" stroke-width="2.5" />
+                </g>
+                <!-- Dots ... -->
+                <text x="242" y="21" font-size="22" font-weight="bold" fill="#0f172a" text-anchor="middle">⋯</text>
+                <!-- Node t -->
+                <g transform="translate(305, 34)">
+                  <circle cx="0" cy="0" r="7" fill="#ffffff" stroke="#0f172a" stroke-width="2.5" />
+                </g>
+                <!-- Node t+1 (Highlighted Blue Ring) -->
+                <g transform="translate(390, 34)">
+                  <circle cx="0" cy="0" r="9.5" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="2" />
+                  <circle cx="0" cy="0" r="4" fill="#ffffff" />
+                </g>
+              </svg>
+              <!-- Editable Labels above timeline nodes -->
+              <div contenteditable="true" class="absolute left-[46px] -top-0.5 text-[18px] font-semibold math text-slate-900">t<sub class="text-xs">1</sub></div>
+              <div contenteditable="true" class="absolute left-[146px] -top-0.5 text-[18px] font-semibold math text-slate-900">t<sub class="text-xs">2</sub></div>
+              <div contenteditable="true" class="absolute left-[272px] -top-0.5 text-[18px] font-semibold math text-slate-900">t</div>
+              <div contenteditable="true" class="absolute left-[334px] -top-0.5 text-[18px] font-bold math text-slate-900">t<span class="math-upright">+1</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-3"></div>
+      </div>
+
+      <!-- ============================================================
+           MAIN 3-COLUMN ARCHITECTURE LAYOUT
+           ============================================================ -->
+      <div class="grid grid-cols-12 gap-5 items-start">
+
+        <!-- ==========================================================
+             LEFT COLUMN: Public Discourse, Reference Knowledge, Notation
+             ========================================================== -->
+        <div class="col-span-3 flex flex-col gap-5">
+
+          <!-- BOX 1: Public Discourse A_D -->
+          <div id="box-discourse" class="blue-box overflow-hidden">
+            <div class="blue-header px-4 py-2.5 flex items-center justify-center gap-2.5">
+              <!-- Speech Bubble with Dots Icon -->
+              <svg class="w-6 h-6 text-slate-800 shrink-0" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
+              <div contenteditable="true" class="font-bold text-[18px] text-slate-900">
+                Public Discourse <span class="math font-bold ml-1">A<sub>D</sub></span>
+              </div>
+            </div>
+            <div class="p-4 space-y-3 text-[15px] text-slate-800">
+              <div class="flex items-center gap-3">
+                <!-- Newspaper icon -->
+                <svg class="w-6 h-6 text-slate-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                </svg>
+                <span contenteditable="true" class="font-medium">News articles</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <!-- Social Media / People Network icon -->
+                <svg class="w-6 h-6 text-slate-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <span contenteditable="true" class="font-medium">Social media discussions</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <!-- Public comments icon -->
+                <svg class="w-6 h-6 text-slate-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                <span contenteditable="true" class="font-medium">Public comments</span>
+              </div>
+              <div contenteditable="true" class="text-center font-bold text-lg leading-none text-slate-700 tracking-widest pt-0.5">...</div>
+            </div>
+          </div>
+
+          <!-- BOX 2: Reference Knowledge A_K -->
+          <div id="box-knowledge" class="blue-box overflow-hidden">
+            <div class="blue-header px-4 py-2.5 flex items-center justify-center gap-2.5">
+              <!-- Database Cylinder Icon -->
+              <svg class="w-6 h-6 text-slate-800 shrink-0" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+                <ellipse cx="12" cy="5" rx="8" ry="3" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3" />
+              </svg>
+              <div contenteditable="true" class="font-bold text-[18px] text-slate-900">
+                Reference Knowledge <span class="math font-bold ml-1">A<sub>K</sub></span>
+              </div>
+            </div>
+            <div class="p-4 space-y-3 text-[15px] text-slate-800">
+              <div class="flex items-center gap-3">
+                <!-- Classical Building Icon -->
+                <svg class="w-6 h-6 text-slate-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M4 18h16M6 18v-7m4 7v-7m4 7v-7m4 7v-7M12 3l9 5H3l9-5z" />
+                </svg>
+                <span contenteditable="true" class="font-medium">Official statements</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <!-- Stacked Layers Icon -->
+                <svg class="w-6 h-6 text-slate-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                <span contenteditable="true" class="font-medium">Domain knowledge</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <!-- Shield Check Icon -->
+                <svg class="w-6 h-6 text-slate-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                <span contenteditable="true" class="font-medium">Source validity / authority</span>
+              </div>
+              <div contenteditable="true" class="text-center font-bold text-lg leading-none text-slate-700 tracking-widest pt-0.5">...</div>
+            </div>
+          </div>
+
+          <!-- BOX 3: Notation -->
+          <div id="box-notation" class="blue-box overflow-hidden bg-gradient-to-b from-[#e8f0fe] via-white to-white">
+            <div class="px-4 pt-3 pb-1.5 text-center">
+              <h2 contenteditable="true" class="font-bold text-[19px] text-slate-900">Notation</h2>
+            </div>
+            <div class="px-4 pb-4 pt-1 text-[13.5px] leading-snug text-slate-800 space-y-2">
+              <div class="grid grid-cols-12 items-baseline">
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[15px]">x<sub>i</sub></div>
+                <div contenteditable="true" class="col-span-8">: argument node (e.g., claim)</div>
+              </div>
+              <div class="grid grid-cols-12 items-baseline">
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[15px]">a<sub>x<sub>i</sub></sub></div>
+                <div contenteditable="true" class="col-span-8">: argument subagent<br/>&nbsp;&nbsp;(representing <span class="math">x<sub>i</sub></span>)</div>
+              </div>
+              <div class="grid grid-cols-12 items-baseline">
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[15px]">V<sub>j</sub></div>
+                <div contenteditable="true" class="col-span-8">: viewpoint agent</div>
+              </div>
+              <div class="grid grid-cols-12 items-baseline">
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[15px]">G<sub>t</sub></div>
+                <div contenteditable="true" class="col-span-8">: temporal argument graph<br/>&nbsp;&nbsp;<span class="math">(A<sub>K</sub>(t) <span class="math-upright">∪</span> A<sub>D</sub>(t), R<sup>+</sup>, R<sup>−</sup>)</span></div>
+              </div>
+              <div class="grid grid-cols-12 items-baseline">
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">C<span class="math-upright">(</span>x<sub>i</sub>, t<span class="math-upright">)</span></div>
+                <div contenteditable="true" class="col-span-8">: conflict score of <span class="math">x<sub>i</sub></span> at <span class="math">t</span></div>
+              </div>
+              <div class="grid grid-cols-12 items-baseline">
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">S<span class="math-upright">(</span>x<sub>i</sub>, t<span class="math-upright">)</span></div>
+                <div contenteditable="true" class="col-span-8">: steering proxy of <span class="math">x<sub>i</sub></span> at <span class="math">t</span></div>
+              </div>
+              <div class="grid grid-cols-12 items-baseline">
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">R<span class="math-upright">(</span>x<sub>i</sub>, s, t<span class="math-upright">)</span></div>
+                <div contenteditable="true" class="col-span-8">: risk of <span class="math">x<sub>i</sub></span> for stakeholder <span class="math">s</span><br/>&nbsp;&nbsp;at <span class="math">t</span></div>
+              </div>
+              <div class="grid grid-cols-12 items-baseline">
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">I<sub>s</sub><span class="math-upright">(</span>t<span class="math-upright">)</span></div>
+                <div contenteditable="true" class="col-span-8">: interests and context of a<br/>&nbsp;&nbsp;stakeholder <span class="math">s</span> at <span class="math">t</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ==========================================================
+             CENTER + RIGHT COLUMNS (9 Columns Wide)
+             ========================================================== -->
+        <div class="col-span-9 flex flex-col gap-5">
+
+          <!-- TOP SUB-GRID: Center Main Box (9 cols) + Right Update Box (3 cols) -->
+          <div class="grid grid-cols-12 gap-5 items-start">
+
+            <!-- CENTER MAIN ARCHITECTURE BOX -->
+            <div id="box-main-center" class="col-span-9 blue-box p-4 relative bg-white">
+              <!-- Title & Subtitle -->
+              <div class="text-center mb-3">
+                <h2 contenteditable="true" class="font-extrabold text-[22px] text-slate-900 tracking-tight leading-tight">
+                  Hierarchical Multi-Agent Argumentation
+                </h2>
+                <p contenteditable="true" class="text-[15.5px] text-slate-700 font-medium">
+                  Two-level reasoning over a shared temporal argument graph
+                </p>
+              </div>
+
+              <!-- ====================================================
+                   TIER 1: Viewpoint Agents (1st level)
+                   ==================================================== -->
+              <div class="grid grid-cols-12 gap-3 items-center mb-9">
+                <!-- Left Tier Label -->
+                <div class="col-span-2">
+                  <div class="bg-[#dbeafe] border border-[#93c5fd] rounded-xl py-2.5 px-2 text-center shadow-sm">
+                    <div contenteditable="true" class="font-bold text-[14px] text-slate-800 leading-tight">Viewpoint<br/>Agents</div>
+                    <div contenteditable="true" class="text-[12.5px] text-slate-700 mt-0.5">(1st level)</div>
+                  </div>
+                </div>
+
+                <!-- 3 Viewpoint Agent Pills -->
+                <div class="col-span-10 flex items-center justify-around px-2 relative">
+                  <!-- V1 -->
+                  <div id="node-v1" class="draggable-node blue-gradient-pill rounded-2xl px-4 py-2 flex items-center gap-2.5 z-20">
+                    <svg class="w-6 h-6 text-slate-800 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <div contenteditable="true" class="text-[15px] text-slate-900 whitespace-nowrap">
+                      <span class="math font-bold text-[17px]">V<sub>1</sub></span> <span class="italic text-slate-800">(e.g., Support)</span>
+                    </div>
+                  </div>
+
+                  <!-- V2 -->
+                  <div id="node-v2" class="draggable-node blue-gradient-pill rounded-2xl px-4 py-2 flex items-center gap-2.5 z-20">
+                    <svg class="w-6 h-6 text-slate-800 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <div contenteditable="true" class="text-[15px] text-slate-900 whitespace-nowrap">
+                      <span class="math font-bold text-[17px]">V<sub>2</sub></span> <span class="italic text-slate-800">(e.g., Oppose)</span>
+                    </div>
+                  </div>
+
+                  <!-- V3 -->
+                  <div id="node-v3" class="draggable-node blue-gradient-pill rounded-2xl px-4 py-2 flex items-center gap-2.5 z-20">
+                    <svg class="w-6 h-6 text-slate-800 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <div contenteditable="true" class="text-[15px] text-slate-900 whitespace-nowrap">
+                      <span class="math font-bold text-[17px]">V<sub>3</sub></span> <span class="italic text-slate-800">(e.g., Concern)</span>
+                    </div>
+                  </div>
+
+                  <div contenteditable="true" class="font-bold text-xl text-slate-800 tracking-widest">...</div>
+                </div>
+              </div>
+
+              <!-- ====================================================
+                   TIER 2: Argument Subagents (2nd level)
+                   ==================================================== -->
+              <div class="grid grid-cols-12 gap-3 items-center mb-9">
+                <!-- Left Tier Label -->
+                <div class="col-span-2">
+                  <div class="bg-[#e0e7ff] border border-[#a5b4fc] rounded-xl py-3 px-2 text-center shadow-sm">
+                    <div contenteditable="true" class="font-bold text-[14px] text-slate-800 leading-tight">Argument<br/>Subagents</div>
+                    <div contenteditable="true" class="text-[12.5px] text-slate-700 mt-0.5">(2nd level)</div>
+                  </div>
+                </div>
+
+                <!-- Dashed Purple Subagent Container -->
+                <div class="col-span-10 border-2 border-dashed border-indigo-400 bg-indigo-50/30 rounded-2xl px-4 py-4 relative h-[92px] flex items-center justify-between">
+                  
+                  <!-- Subagent a_K1 (leftmost) -->
+                  <div id="node-ak1" class="draggable-node subagent-pill px-3 py-1.5 flex items-center gap-2 z-20 mt-4">
+                    <!-- Robot Icon -->
+                    <svg class="w-5 h-5 text-slate-800 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                      <rect x="4" y="8" width="16" height="12" rx="3" />
+                      <path d="M12 3v5M9 3h6M8.5 13h.01M15.5 13h.01M9 17h6" stroke-linecap="round"/>
+                    </svg>
+                    <span contenteditable="true" class="math font-bold text-[16px]">a<sub>K<sub>1</sub></sub></span>
+                  </div>
+
+                  <!-- Subagent a_x1 -->
+                  <div id="node-ax1" class="draggable-node subagent-pill px-3 py-1.5 flex items-center gap-2 z-20 mt-4">
+                    <svg class="w-5 h-5 text-slate-800 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                      <rect x="4" y="8" width="16" height="12" rx="3" />
+                      <path d="M12 3v5M9 3h6M8.5 13h.01M15.5 13h.01M9 17h6" stroke-linecap="round"/>
+                    </svg>
+                    <span contenteditable="true" class="math font-bold text-[16px]">a<sub>x<sub>1</sub></sub></span>
+                  </div>
+
+                  <!-- Subagent a_x2 (Slightly elevated as in the image) -->
+                  <div id="node-ax2" class="draggable-node subagent-pill-elevated px-3 py-1.5 flex items-center gap-2 z-20 -mt-6">
+                    <svg class="w-5 h-5 text-slate-800 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                      <rect x="4" y="8" width="16" height="12" rx="3" />
+                      <path d="M12 3v5M9 3h6M8.5 13h.01M15.5 13h.01M9 17h6" stroke-linecap="round"/>
+                    </svg>
+                    <span contenteditable="true" class="math font-bold text-[16px]">a<sub>x<sub>2</sub></sub></span>
+                  </div>
+
+                  <!-- Subagent a_x3 -->
+                  <div id="node-ax3" class="draggable-node subagent-pill px-3 py-1.5 flex items-center gap-2 z-20 mt-4">
+                    <svg class="w-5 h-5 text-slate-800 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                      <rect x="4" y="8" width="16" height="12" rx="3" />
+                      <path d="M12 3v5M9 3h6M8.5 13h.01M15.5 13h.01M9 17h6" stroke-linecap="round"/>
+                    </svg>
+                    <span contenteditable="true" class="math font-bold text-[16px]">a<sub>x<sub>3</sub></sub></span>
+                  </div>
+
+                  <!-- Subagent a_x4 -->
+                  <div id="node-ax4" class="draggable-node subagent-pill px-3 py-1.5 flex items-center gap-2 z-20 mt-4">
+                    <svg class="w-5 h-5 text-slate-800 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                      <rect x="4" y="8" width="16" height="12" rx="3" />
+                      <path d="M12 3v5M9 3h6M8.5 13h.01M15.5 13h.01M9 17h6" stroke-linecap="round"/>
+                    </svg>
+                    <span contenteditable="true" class="math font-bold text-[16px]">a<sub>x<sub>4</sub></sub></span>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- ====================================================
+                   TIER 3: Shared Temporal Argument Graph G_t
+                   ==================================================== -->
+              <div class="grid grid-cols-12 gap-3 items-center mb-4">
+                <!-- Left Tier Label -->
+                <div class="col-span-2">
+                  <div class="bg-[#dcfce7] border border-[#86efac] rounded-xl py-2.5 px-2 text-center shadow-sm">
+                    <div contenteditable="true" class="font-bold text-[14px] text-slate-800 leading-snug">
+                      Shared<br/>Temporal<br/>Argument<br/>Graph <span class="math font-bold text-[16px]">G<sub>t</sub></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Solid Green Shaded Graph Container -->
+                <div class="col-span-10 border-2 border-[#4ade80] bg-gradient-to-b from-[#dcfce7]/70 to-[#f0fdf4]/90 rounded-2xl px-7 py-4 relative h-[96px] flex items-center justify-between">
+                  
+                  <!-- Node K_1 -->
+                  <div id="node-k1" class="draggable-node graph-node graph-node-k mt-4">
+                    <span contenteditable="true" class="math">K<sub>1</sub></span>
+                  </div>
+
+                  <!-- Node x_1 -->
+                  <div id="node-x1" class="draggable-node graph-node mt-4">
+                    <span contenteditable="true" class="math">x<sub>1</sub></span>
+                  </div>
+
+                  <!-- Node x_2 (Upper middle) -->
+                  <div id="node-x2" class="draggable-node graph-node -mt-7">
+                    <span contenteditable="true" class="math">x<sub>2</sub></span>
+                  </div>
+
+                  <!-- Node x_3 -->
+                  <div id="node-x3" class="draggable-node graph-node mt-4">
+                    <span contenteditable="true" class="math">x<sub>3</sub></span>
+                  </div>
+
+                  <!-- Node x_4 -->
+                  <div id="node-x4" class="draggable-node graph-node mt-4">
+                    <span contenteditable="true" class="math">x<sub>4</sub></span>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- ====================================================
+                   BOTTOM SUB-BOX: Stakeholder-Aware Risk Reasoning
+                   ==================================================== -->
+              <div id="box-risk-reasoning" class="border-[1.8px] border-[#818cf8] bg-gradient-to-b from-[#eef2ff] via-[#f8fafc] to-white rounded-xl p-3.5 mt-2">
+                <div class="text-center mb-2.5">
+                  <h3 contenteditable="true" class="font-bold text-[18px] text-slate-900">
+                    Stakeholder-Aware Risk Reasoning
+                  </h3>
+                </div>
+
+                <div class="grid grid-cols-12 gap-3 items-center">
+                  <!-- Left Two Pill Inputs (Conflict & SteeringProxy) -->
+                  <div class="col-span-4 flex flex-col gap-2.5 pr-2 relative">
+                    <!-- Conflict C(x_i, t) -->
+                    <div id="pill-conflict" class="blue-gradient-pill rounded-xl px-3 py-1.5 flex items-center justify-between text-[14px]">
+                      <div class="flex items-center gap-2">
+                        <!-- Scales of Justice Icon -->
+                        <svg class="w-5 h-5 text-slate-800 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18m-7 0h14M5 7l7-2 7 2M5 7l-3 6h6L5 7zm14 0l-3 6h6l-3-6z" />
+                        </svg>
+                        <span contenteditable="true" class="font-semibold text-slate-900">Conflict</span>
+                      </div>
+                      <span contenteditable="true" class="math font-semibold text-[15px]">C<span class="math-upright">(</span>x<sub>i</sub>, t<span class="math-upright">)</span></span>
+                    </div>
+
+                    <!-- SteeringProxy S(x_i, t) -->
+                    <div id="pill-steering" class="blue-gradient-pill rounded-xl px-3 py-1.5 flex items-center justify-between text-[14px]">
+                      <div class="flex items-center gap-2">
+                        <!-- Trend/Graph Icon -->
+                        <svg class="w-5 h-5 text-slate-800 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                          <circle cx="5" cy="18" r="2" />
+                          <circle cx="11" cy="11" r="2" />
+                          <circle cx="19" cy="6" r="2" />
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6.5 16.5L9.5 12.5M12.8 10L17.2 7.2" />
+                        </svg>
+                        <span contenteditable="true" class="font-semibold text-slate-900">SteeringProxy</span>
+                      </div>
+                      <span contenteditable="true" class="math font-semibold text-[15px]">S<span class="math-upright">(</span>x<sub>i</sub>, t<span class="math-upright">)</span></span>
+                    </div>
+                  </div>
+
+                  <!-- Center Proposed Reasoning Problem Formula Box -->
+                  <div class="col-span-4">
+                    <div id="box-formula" class="border-[1.6px] border-[#94a3b8] bg-white rounded-xl px-3 py-2.5 text-center shadow-sm">
+                      <div class="flex items-center justify-center gap-1.5 mb-1">
+                        <!-- Gear Icon -->
+                        <svg class="w-5 h-5 text-slate-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                          <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <div contenteditable="true" class="math font-bold text-[14.5px] text-slate-900 whitespace-nowrap">
+                          R<span class="math-upright">(</span>x<sub>i</sub>, s, t<span class="math-upright">) = </span>f<span class="math-upright">(</span>C<span class="math-upright">(</span>x<sub>i</sub>, t<span class="math-upright">), </span>S<span class="math-upright">(</span>x<sub>i</sub>, t<span class="math-upright">), </span>I<sub>s</sub><span class="math-upright">(</span>t<span class="math-upright">))</span>
+                        </div>
+                      </div>
+                      <div contenteditable="true" class="text-[12.5px] italic text-slate-600">
+                        (a proposed reasoning problem)
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Right Explanation Bullet Points -->
+                  <div class="col-span-4 border-l-2 border-slate-300 pl-3.5 text-[12.5px] leading-snug space-y-1.5 text-slate-800">
+                    <div class="flex items-start gap-1.5">
+                      <span class="font-bold">•</span>
+                      <div contenteditable="true">
+                        <span class="math font-bold">I<sub>s</sub><span class="math-upright">(</span>t<span class="math-upright">)</span></span>: interests and context of stakeholders <span class="math">s</span>
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <span class="font-bold">•</span>
+                      <div contenteditable="true">
+                        <span class="math font-bold">R<span class="math-upright">(</span>x<sub>i</sub>, s, t<span class="math-upright">)</span></span>: stakeholder-specific risk<br/>(with uncertainty)
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <span class="font-bold">•</span>
+                      <div contenteditable="true">
+                        <span class="font-bold underline">Explanation</span>: argument chains and evidence in <span class="math font-semibold">G<sub>t</sub></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- ========================================================
+                 RIGHT COLUMN TOP: Update at t + 1
+                 ======================================================== -->
+            <div class="col-span-3 flex flex-col gap-5">
+              <div id="box-update" class="blue-box p-3.5 bg-gradient-to-b from-[#dbeafe]/70 via-white to-white">
+                <!-- Header -->
+                <div class="flex items-center justify-center gap-2 mb-3">
+                  <!-- Refresh Icon -->
+                  <svg class="w-5 h-5 text-slate-900 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  <h3 contenteditable="true" class="font-bold text-[18px] text-slate-900">
+                    Update at <span class="math">t <span class="math-upright">+ 1</span></span>
+                  </h3>
+                </div>
+
+                <!-- 4 Sequential Step Boxes -->
+                <div class="flex flex-col items-center gap-2">
+                  <!-- Step 1 -->
+                  <div class="step-card w-full px-3 py-2 flex items-center gap-2.5">
+                    <svg class="w-6 h-6 text-slate-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <div contenteditable="true" class="text-[13.5px] font-medium text-slate-900 leading-tight text-center flex-1">
+                      New evidence /<br/>arguments
+                    </div>
+                  </div>
+
+                  <!-- Down Arrow -->
+                  <svg class="w-4 h-4 text-slate-700" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v9.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 13.586V4a1 1 0 011-1z" clip-rule="evenodd" />
+                  </svg>
+
+                  <!-- Step 2 -->
+                  <div class="step-card w-full px-3 py-2 flex items-center gap-2.5">
+                    <svg class="w-6 h-6 text-slate-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                      <circle cx="6" cy="18" r="2.5" />
+                      <circle cx="12" cy="10" r="2.5" />
+                      <circle cx="19" cy="6" r="2.5" />
+                      <path stroke-linecap="round" d="M7.5 16L10.5 12M14 9l3-2" />
+                    </svg>
+                    <div contenteditable="true" class="text-[13.5px] font-medium text-slate-900 leading-tight text-center flex-1">
+                      Update <span class="math font-bold">G<sub>t<span class="math-upright">+1</span></sub></span><br/>
+                      <span class="math text-[13px]">(R<sup>+</sup><sub>t<span class="math-upright">+1</span></sub>, R<sup>−</sup><sub>t<span class="math-upright">+1</span></sub>)</span>
+                    </div>
+                  </div>
+
+                  <!-- Down Arrow -->
+                  <svg class="w-4 h-4 text-slate-700" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v9.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 13.586V4a1 1 0 011-1z" clip-rule="evenodd" />
+                  </svg>
+
+                  <!-- Step 3 -->
+                  <div class="step-card w-full px-3 py-2 flex items-center gap-2.5">
+                    <svg class="w-6 h-6 text-slate-700 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <rect x="4" y="8" width="16" height="12" rx="3" />
+                      <path d="M12 3v5M9 3h6M8.5 13h.01M15.5 13h.01M9 17h6" stroke-linecap="round"/>
+                    </svg>
+                    <div contenteditable="true" class="text-[13.5px] font-medium text-slate-900 leading-tight text-center flex-1">
+                      Revise agents'<br/>beliefs / states<br/>
+                      <span class="math font-semibold">(V<sub>j</sub>, a<sub>x<sub>i</sub></sub>)</span>
+                    </div>
+                  </div>
+
+                  <!-- Down Arrow -->
+                  <svg class="w-4 h-4 text-slate-700" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v9.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 13.586V4a1 1 0 011-1z" clip-rule="evenodd" />
+                  </svg>
+
+                  <!-- Step 4 -->
+                  <div class="step-card w-full px-3 py-2 flex items-center gap-2.5">
+                    <svg class="w-6 h-6 text-slate-800 shrink-0" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <div contenteditable="true" class="text-[13.5px] font-medium text-slate-900 leading-tight text-center flex-1">
+                      Re-assess<br/>
+                      <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>, s, t<span class="math-upright">+1)</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ==========================================================
+               BOTTOM SUB-GRID: 3 Stakeholder Cards (9 cols) + Legend (3 cols)
+               ========================================================== -->
+          <div class="grid grid-cols-12 gap-5 items-stretch">
+
+            <!-- 3 STAKEHOLDER OUTPUT CARDS -->
+            <div class="col-span-9 grid grid-cols-3 gap-3.5 pt-2">
+
+              <!-- Card 1: Students S_stu -->
+              <div id="card-stu" class="stakeholder-card p-3.5">
+                <div class="flex items-center justify-center gap-2 pb-2 mb-2 border-b border-amber-300/80">
+                  <!-- Graduation Cap Icon -->
+                  <svg class="w-6 h-6 text-slate-800 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                  </svg>
+                  <h4 contenteditable="true" class="font-bold text-[16.5px] text-slate-900">
+                    Students <span class="math font-bold ml-1">S<sub>stu</sub></span>
+                  </h4>
+                </div>
+                <ul class="space-y-1.5 text-[13px] leading-snug text-slate-800">
+                  <li class="flex items-start gap-1.5">
+                    <span class="font-bold">•</span>
+                    <div contenteditable="true">
+                      <span class="font-bold underline">Affected interests</span>: fairness, examination opportunity, ...
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-1.5">
+                    <span class="font-bold">•</span>
+                    <div contenteditable="true">
+                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>, S<sub>stu</sub>, t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-1.5">
+                    <span class="font-bold">•</span>
+                    <div contenteditable="true">
+                      <span class="font-bold underline">Explanation</span> <span class="italic">(illustrative)</span>: e.g., <span class="math font-semibold">x<sub>2</sub></span> (attack) → evidence <span class="math font-semibold">e<sub>1</sub></span>, ...
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Card 2: Education Authority S_edu -->
+              <div id="card-edu" class="stakeholder-card p-3.5">
+                <div class="flex items-center justify-center gap-2 pb-2 mb-2 border-b border-amber-300/80">
+                  <!-- Building Icon -->
+                  <svg class="w-6 h-6 text-slate-800 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                  <h4 contenteditable="true" class="font-bold text-[16.5px] text-slate-900">
+                    Education Authority <span class="math font-bold ml-1">S<sub>edu</sub></span>
+                  </h4>
+                </div>
+                <ul class="space-y-1.5 text-[13px] leading-snug text-slate-800">
+                  <li class="flex items-start gap-1.5">
+                    <span class="font-bold">•</span>
+                    <div contenteditable="true">
+                      <span class="font-bold underline">Affected interests</span>: policy credibility, management authority, ...
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-1.5">
+                    <span class="font-bold">•</span>
+                    <div contenteditable="true">
+                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>, S<sub>edu</sub>, t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-1.5">
+                    <span class="font-bold">•</span>
+                    <div contenteditable="true">
+                      <span class="font-bold underline">Explanation</span> <span class="italic">(illustrative)</span>: e.g., <span class="math font-semibold">x<sub>1</sub> → x<sub>3</sub></span> → official source <span class="math font-semibold">h<sub>1</sub></span>, ...
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Card 3: Local Community S_com -->
+              <div id="card-com" class="stakeholder-card p-3.5">
+                <div class="flex items-center justify-center gap-2 pb-2 mb-2 border-b border-amber-300/80">
+                  <!-- Community / People Icon -->
+                  <svg class="w-6 h-6 text-slate-800 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <h4 contenteditable="true" class="font-bold text-[16.5px] text-slate-900">
+                    Local Community <span class="math font-bold ml-1">S<sub>com</sub></span>
+                  </h4>
+                </div>
+                <ul class="space-y-1.5 text-[13px] leading-snug text-slate-800">
+                  <li class="flex items-start gap-1.5">
+                    <span class="font-bold">•</span>
+                    <div contenteditable="true">
+                      <span class="font-bold underline">Affected interests</span>: social trust, educational equity, ...
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-1.5">
+                    <span class="font-bold">•</span>
+                    <div contenteditable="true">
+                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>, S<sub>com</sub>, t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
+                    </div>
+                  </li>
+                  <li class="flex items-start gap-1.5">
+                    <span class="font-bold">•</span>
+                    <div contenteditable="true">
+                      <span class="font-bold underline">Explanation</span> <span class="italic">(illustrative)</span>: e.g., limited reach of counter-arguments, ...
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+
+            <!-- ========================================================
+                 RIGHT COLUMN BOTTOM: Legend
+                 ======================================================== -->
+            <div class="col-span-3">
+              <div class="blue-box p-3.5 h-full bg-gradient-to-b from-[#e8f0fe] via-white to-white">
+                <h3 contenteditable="true" class="font-bold text-[18px] text-slate-900 text-center mb-2.5">
+                  Legend
+                </h3>
+                <div class="space-y-2 text-[13px] text-slate-800">
+                  
+                  <!-- Support (R+) -->
+                  <div class="flex items-center gap-2.5">
+                    <svg class="w-14 h-4 shrink-0" viewBox="0 0 56 16">
+                      <line x1="2" y1="8" x2="46" y2="8" stroke="#15803d" stroke-width="2.4" marker-end="url(#arrow-green)" />
+                    </svg>
+                    <div contenteditable="true">Support <span class="math font-semibold">(R<sup>+</sup>)</span></div>
+                  </div>
+
+                  <!-- Attack (R-) -->
+                  <div class="flex items-center gap-2.5">
+                    <svg class="w-14 h-4 shrink-0" viewBox="0 0 56 16">
+                      <line x1="2" y1="8" x2="46" y2="8" stroke="#dc2626" stroke-width="2.4" stroke-dasharray="5,3" marker-end="url(#arrow-red)" />
+                    </svg>
+                    <div contenteditable="true">Attack <span class="math font-semibold">(R<sup>−</sup>)</span></div>
+                  </div>
+
+                  <!-- Representation -->
+                  <div class="flex items-center gap-2.5">
+                    <svg class="w-14 h-4 shrink-0" viewBox="0 0 56 16">
+                      <line x1="10" y1="8" x2="46" y2="8" stroke="#1e293b" stroke-width="2" stroke-dasharray="4,3" marker-start="url(#arrow-black)" marker-end="url(#arrow-black)" />
+                    </svg>
+                    <div contenteditable="true" class="leading-tight">
+                      Representation<br/><span class="math font-semibold">(a<sub>x<sub>i</sub></sub> ↔ x<sub>i</sub>)</span>
+                    </div>
+                  </div>
+
+                  <!-- Aggregation -->
+                  <div class="flex items-center gap-2.5">
+                    <svg class="w-14 h-4 shrink-0" viewBox="0 0 56 16">
+                      <line x1="2" y1="8" x2="46" y2="8" stroke="#6d28d9" stroke-width="2.4" marker-end="url(#arrow-purple)" />
+                    </svg>
+                    <div contenteditable="true" class="leading-tight">
+                      Aggregation<br/><span class="math font-semibold">(a<sub>x<sub>i</sub></sub> → V<sub>j</sub>)</span>
+                    </div>
+                  </div>
+
+                  <!-- Contextual feedback -->
+                  <div class="flex items-center gap-2.5">
+                    <svg class="w-14 h-4 shrink-0" viewBox="0 0 56 16">
+                      <line x1="2" y1="8" x2="46" y2="8" stroke="#1d4ed8" stroke-width="2.4" marker-end="url(#arrow-blue)" />
+                    </svg>
+                    <div contenteditable="true" class="leading-tight">
+                      Contextual feedback<br/><span class="math font-semibold">(V<sub>j</sub> → a<sub>x<sub>i</sub></sub>)</span>
+                    </div>
+                  </div>
+
+                  <!-- Subagent interaction -->
+                  <div class="flex items-center gap-2.5 pt-1">
+                    <svg class="w-14 h-10 shrink-0" viewBox="0 0 56 38">
+                      <line x1="2" y1="11" x2="36" y2="11" stroke="#15803d" stroke-width="2.2" marker-end="url(#arrow-green)" />
+                      <line x1="2" y1="27" x2="36" y2="27" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="4,2.5" marker-end="url(#arrow-red)" />
+                      <!-- Right Curly Brace -->
+                      <path d="M 45 4 Q 49 4 49 10 L 49 15 Q 49 19 53 19 Q 49 19 49 23 L 49 28 Q 49 34 45 34" fill="none" stroke="#1e293b" stroke-width="1.8" />
+                    </svg>
+                    <div contenteditable="true" class="leading-tight text-[12.5px]">
+                      Subagent interaction<br/>(also support/attack,<br/>e.g., <span class="math font-semibold">a<sub>x<sub>i</sub></sub> → a<sub>x<sub>j</sub></sub></span>)
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================
+       JAVASCRIPT: DYNAMIC SVG ARROWS, DRAG-AND-DROP & EXPORT
+       ============================================================ -->
+  <script>
+    let editMode = true;
+    let dragMode = false;
+    let currentZoom = 1;
+
+    // Helper: Get bounding box of an element relative to #diagram-canvas
+    function getRelRect(id) {
+      const canvas = document.getElementById('diagram-canvas');
+      const el = document.getElementById(id);
+      if (!canvas || !el) return null;
+      const cRect = canvas.getBoundingClientRect();
+      const eRect = el.getBoundingClientRect();
+      return {
+        left: (eRect.left - cRect.left) / currentZoom,
+        right: (eRect.right - cRect.left) / currentZoom,
+        top: (eRect.top - cRect.top) / currentZoom,
+        bottom: (eRect.bottom - cRect.top) / currentZoom,
+        cx: ((eRect.left + eRect.right) / 2 - cRect.left) / currentZoom,
+        cy: ((eRect.top + eRect.bottom) / 2 - cRect.top) / currentZoom,
+        width: eRect.width / currentZoom,
+        height: eRect.height / currentZoom
+      };
+    }
+
+    // Create an SVG path element with attributes
+    function createPath(d, stroke, width, markerEnd, dash = '', markerStart = '') {
+      const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('d', d);
+      p.setAttribute('fill', 'none');
+      p.setAttribute('stroke', stroke);
+      p.setAttribute('stroke-width', width);
+      if (dash) p.setAttribute('stroke-dasharray', dash);
+      if (markerEnd) p.setAttribute('marker-end', `url(#${markerEnd})`);
+      if (markerStart) p.setAttribute('marker-start', `url(#${markerStart})`);
+      return p;
+    }
+
+    // Render all dynamic arrows accurately between elements
+    function renderAllConnections() {
+      const g = document.getElementById('dynamic-paths');
+      if (!g) return;
+      g.innerHTML = '';
+
+      // 1. Left Boxes (Public Discourse & Reference Knowledge) -> Main Center Box
+      const disc = getRelRect('box-discourse');
+      const know = getRelRect('box-knowledge');
+      const main = getRelRect('box-main-center');
+      if (disc && main) {
+        g.appendChild(createPath(
+          `M ${disc.right} ${disc.cy} L ${main.left - 3} ${disc.cy}`,
+          '#6082b6', 2.2, 'arrow-blue'
+        ));
+      }
+      if (know && main) {
+        g.appendChild(createPath(
+          `M ${know.right} ${know.cy} L ${main.left - 3} ${know.cy}`,
+          '#6082b6', 2.2, 'arrow-blue'
+        ));
+      }
+
+      // 2. Representation (Vertical black dashed double-headed arrows: subagents <-> graph nodes)
+      const pairs = [
+        ['node-ak1', 'node-k1'],
+        ['node-ax1', 'node-x1'],
+        ['node-ax2', 'node-x2'],
+        ['node-ax3', 'node-x3'],
+        ['node-ax4', 'node-x4']
+      ];
+      pairs.forEach(([subId, graphId]) => {
+        const s = getRelRect(subId);
+        const n = getRelRect(graphId);
+        if (s && n) {
+          g.appendChild(createPath(
+            `M ${s.cx} ${s.bottom + 4} L ${n.cx} ${n.top - 5}`,
+            '#1e293b', 2, 'arrow-black', '5,3', 'arrow-black'
+          ));
+        }
+      });
+
+      // 3. Shared Temporal Argument Graph Edges (Inside G_t)
+      const k1 = getRelRect('node-k1');
+      const x1 = getRelRect('node-x1');
+      const x2 = getRelRect('node-x2');
+      const x3 = getRelRect('node-x3');
+      const x4 = getRelRect('node-x4');
+
+      if (k1 && x1) {
+        // K1 -> x1 (Green Support)
+        g.appendChild(createPath(
+          `M ${k1.right + 2} ${k1.cy} L ${x1.left - 5} ${x1.cy}`,
+          '#15803d', 2.5, 'arrow-green'
+        ));
+      }
+      if (x2 && x1) {
+        // x2 -> x1 (Red Dashed Curved Attack)
+        const startX = x2.left - 2;
+        const startY = x2.cy + 4;
+        const endX = x1.right + 2;
+        const endY = x1.cy - 8;
+        const ctrlX = (startX + endX) / 2 - 10;
+        const ctrlY = Math.min(startY, endY) - 8;
+        g.appendChild(createPath(
+          `M ${startX} ${startY} Q ${ctrlX} ${ctrlY} ${endX} ${endY}`,
+          '#dc2626', 2.5, 'arrow-red', '6,4'
+        ));
+      }
+      if (x1 && x3) {
+        // x1 -> x3 (Green Curved Support)
+        const startX = x1.right + 2;
+        const startY = x1.cy + 4;
+        const endX = x3.left - 5;
+        const endY = x3.cy + 4;
+        const ctrlX = (startX + endX) / 2;
+        const ctrlY = Math.max(startY, endY) + 14;
+        g.appendChild(createPath(
+          `M ${startX} ${startY} Q ${ctrlX} ${ctrlY} ${endX} ${endY}`,
+          '#15803d', 2.5, 'arrow-green'
+        ));
+      }
+      if (x3 && x4) {
+        // x3 -> x4 (Green Support)
+        g.appendChild(createPath(
+          `M ${x3.right + 2} ${x3.cy} L ${x4.left - 5} ${x4.cy}`,
+          '#15803d', 2.5, 'arrow-green'
+        ));
+      }
+
+      // 4. Subagent Interactions (Tier 2)
+      const ak1 = getRelRect('node-ak1');
+      const ax1 = getRelRect('node-ax1');
+      const ax2 = getRelRect('node-ax2');
+      const ax3 = getRelRect('node-ax3');
+      const ax4 = getRelRect('node-ax4');
+
+      if (ak1 && ax1) {
+        g.appendChild(createPath(
+          `M ${ak1.right + 2} ${ak1.cy} L ${ax1.left - 5} ${ax1.cy}`,
+          '#15803d', 2.3, 'arrow-green'
+        ));
+      }
+      if (ax2 && ax1) {
+        // Red dashed attack between ax2 and ax1
+        const sx = ax2.left - 3;
+        const sy = ax2.cy + 4;
+        const ex = ax1.right + 2;
+        const ey = ax1.top - 2;
+        g.appendChild(createPath(
+          `M ${sx} ${sy} Q ${(sx+ex)/2 - 8} ${sy - 10} ${ex} ${ey}`,
+          '#dc2626', 2.3, 'arrow-red', '5,3'
+        ));
+      }
+      if (ax1 && ax3) {
+        const sx = ax1.right + 2;
+        const sy = ax1.cy + 3;
+        const ex = ax3.left - 5;
+        const ey = ax3.cy + 3;
+        g.appendChild(createPath(
+          `M ${sx} ${sy} L ${ex} ${ey}`,
+          '#15803d', 2.3, 'arrow-green'
+        ));
+      }
+      if (ax3 && ax4) {
+        g.appendChild(createPath(
+          `M ${ax3.right + 2} ${ax3.cy} L ${ax4.left - 5} ${ax4.cy}`,
+          '#15803d', 2.3, 'arrow-green'
+        ));
+      }
+
+      // 5. Tier 1 (Viewpoint Agents V1, V2, V3) <-> Tier 2 (Subagents)
+      // Purple = Aggregation (a_xi -> V_j), Blue = Contextual feedback (V_j -> a_xi)
+      const v1 = getRelRect('node-v1');
+      const v2 = getRelRect('node-v2');
+      const v3 = getRelRect('node-v3');
+
+      if (v1 && ak1 && ax1 && ax3) {
+        // ak1 -> V1 (Blue feedback down or Purple up: in original image, blue up/down & purple)
+        // Leftmost pair between V1 and ak1:
+        g.appendChild(createPath(
+          `M ${ak1.cx - 8} ${ak1.top - 2} L ${v1.left + 26} ${v1.bottom + 4}`,
+          '#1d4ed8', 2.1, 'arrow-blue'
+        ));
+        g.appendChild(createPath(
+          `M ${v1.left + 42} ${v1.bottom + 2} L ${ak1.cx + 8} ${ak1.top - 4}`,
+          '#6d28d9', 2.1, 'arrow-purple'
+        ));
+        // V1 -> ax1 (Blue curved feedback)
+        g.appendChild(createPath(
+          `M ${v1.cx + 15} ${v1.bottom + 2} Q ${ax1.cx - 10} ${(v1.bottom + ax1.top)/2} ${ax1.cx - 8} ${ax1.top - 4}`,
+          '#1d4ed8', 2.1, 'arrow-blue'
+        ));
+        // V1 -> ax3 (Long blue feedback arch)
+        g.appendChild(createPath(
+          `M ${v1.right - 25} ${v1.bottom + 2} Q ${(v1.right + ax3.left)/2} ${v1.bottom + 25} ${ax3.left + 12} ${ax3.top - 4}`,
+          '#1d4ed8', 2.1, 'arrow-blue'
+        ));
+      }
+
+      if (v2 && ax1 && ax2 && ax3) {
+        // ax1 -> V2 (Blue line)
+        g.appendChild(createPath(
+          `M ${ax1.cx + 10} ${ax1.top - 2} L ${v2.left + 35} ${v2.bottom + 4}`,
+          '#1d4ed8', 2.1, 'arrow-blue'
+        ));
+        // V2 <-> ax2 (Purple Aggregation)
+        g.appendChild(createPath(
+          `M ${v2.cx} ${v2.bottom + 2} L ${ax2.cx} ${ax2.top - 4}`,
+          '#6d28d9', 2.3, 'arrow-purple'
+        ));
+        // ax3 -> V2 (Blue line)
+        g.appendChild(createPath(
+          `M ${ax3.cx - 5} ${ax3.top - 2} L ${v2.right - 35} ${v2.bottom + 4}`,
+          '#1d4ed8', 2.1, 'arrow-blue'
+        ));
+      }
+
+      if (v3 && ax3 && ax4) {
+        // ax3 -> V3 (Purple Aggregation up)
+        g.appendChild(createPath(
+          `M ${ax3.cx + 14} ${ax3.top - 2} L ${v3.left + 35} ${v3.bottom + 4}`,
+          '#6d28d9', 2.2, 'arrow-purple'
+        ));
+        // ax4 -> V3 (Purple Aggregation up)
+        g.appendChild(createPath(
+          `M ${ax4.cx - 8} ${ax4.top - 2} L ${v3.cx + 5} ${v3.bottom + 4}`,
+          '#6d28d9', 2.2, 'arrow-purple'
+        ));
+        // V3 -> ax4 (Blue Contextual feedback)
+        g.appendChild(createPath(
+          `M ${v3.cx + 22} ${v3.bottom + 2} L ${ax4.cx + 10} ${ax4.top - 4}`,
+          '#1d4ed8', 2.2, 'arrow-blue'
+        ));
+      }
+
+      // 6. Conflict & SteeringProxy Bracket -> Formula Box
+      const pConf = getRelRect('pill-conflict');
+      const pSteer = getRelRect('pill-steering');
+      const bForm = getRelRect('box-formula');
+      if (pConf && pSteer && bForm) {
+        const midX = (pConf.right + bForm.left) / 2;
+        const dBracket = `
+          M ${pConf.right + 2} ${pConf.cy}
+          L ${midX} ${pConf.cy}
+          L ${midX} ${pSteer.cy}
+          L ${pSteer.right + 2} ${pSteer.cy}
+          M ${midX} ${(pConf.cy + pSteer.cy) / 2}
+          L ${bForm.left - 5} ${bForm.cy}
+        `;
+        g.appendChild(createPath(dBracket, '#1e293b', 2, 'arrow-black'));
+      }
+
+      // 7. Stakeholder-Aware Risk Reasoning -> 3 Bottom Stakeholder Cards
+      const bRisk = getRelRect('box-risk-reasoning');
+      const cStu = getRelRect('card-stu');
+      const cEdu = getRelRect('card-edu');
+      const cCom = getRelRect('card-com');
+      if (bRisk && cStu && cEdu && cCom) {
+        const startX = cEdu.cx;
+        const startY = bRisk.bottom;
+        const splitY = (bRisk.bottom + cEdu.top) / 2;
+        // Center vertical down to S_edu
+        g.appendChild(createPath(
+          `M ${startX} ${startY} L ${cEdu.cx} ${cEdu.top - 4}`,
+          '#1e293b', 2, 'arrow-black'
+        ));
+        // Branch left to S_stu
+        g.appendChild(createPath(
+          `M ${startX} ${splitY} L ${cStu.cx} ${splitY} L ${cStu.cx} ${cStu.top - 4}`,
+          '#1e293b', 2, 'arrow-black'
+        ));
+        // Branch right to S_com
+        g.appendChild(createPath(
+          `M ${startX} ${splitY} L ${cCom.cx} ${splitY} L ${cCom.cx} ${cCom.top - 4}`,
+          '#1e293b', 2, 'arrow-black'
+        ));
+      }
+
+      // 8. Feedback Loop: Main Box -> Update at t+1 -> Temporal Evolution
+      const bUpdate = getRelRect('box-update');
+      const bTemp = getRelRect('box-temporal');
+      if (main && bUpdate && bTemp) {
+        // Purple arrow from lower-right of Main Center Box into bottom of Update at t+1
+        const startX = main.right;
+        const startY = bUpdate.bottom + 24;
+        const midX = bUpdate.cx;
+        g.appendChild(createPath(
+          `M ${startX} ${startY} L ${midX - 10} ${startY} Q ${midX} ${startY} ${midX} ${startY - 10} L ${midX} ${bUpdate.bottom + 5}`,
+          '#6d28d9', 2.8, 'arrow-purple'
+        ));
+
+        // Purple arrow from top of Update at t+1 looping left into Temporal Evolution
+        const uTopX = bUpdate.cx;
+        const uTopY = bUpdate.top;
+        const tRightX = bTemp.right + 6;
+        const tMidY = bTemp.cy;
+        g.appendChild(createPath(
+          `M ${uTopX} ${uTopY} L ${uTopX} ${tMidY + 8} Q ${uTopX} ${tMidY} ${uTopX - 10} ${tMidY} L ${tRightX} ${tMidY}`,
+          '#6d28d9', 2.8, 'arrow-purple'
+        ));
+      }
+    }
+
+    // ============================================================
+    // INTERACTIVE CONTROLS: EDIT MODE, DRAG MODE, ZOOM, EXPORT
+    // ============================================================
+    function toggleEditMode() {
+      editMode = !editMode;
+      const body = document.body;
+      const btn = document.getElementById('btn-toggle-edit');
+      const txt = document.getElementById('edit-status-text');
+      const editables = document.querySelectorAll('#diagram-canvas [contenteditable]');
+
+      editables.forEach(el => {
+        el.setAttribute('contenteditable', editMode ? 'true' : 'false');
+      });
+
+      if (editMode) {
+        body.classList.add('edit-active');
+        btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-1.5 shadow transition';
+        txt.textContent = 'Sửa văn bản: BẬT';
+      } else {
+        body.classList.remove('edit-active');
+        btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-700 hover:bg-slate-600 text-slate-200 flex items-center gap-1.5 transition';
+        txt.textContent = 'Sửa văn bản: TẮT';
+      }
+    }
+
+    function toggleDragMode() {
+      dragMode = !dragMode;
+      const body = document.body;
+      const btn = document.getElementById('btn-toggle-drag');
+      const txt = document.getElementById('drag-status-text');
+
+      if (dragMode) {
+        body.classList.add('drag-active');
+        btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-500 text-white flex items-center gap-1.5 shadow transition';
+        txt.textContent = 'Kéo thả Nút (Nodes): BẬT';
+      } else {
+        body.classList.remove('drag-active');
+        btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-700 hover:bg-slate-600 text-slate-200 flex items-center gap-1.5 transition';
+        txt.textContent = 'Kéo thả Nút (Nodes): TẮT';
+      }
+    }
+
+    // Dragging logic for .draggable-node elements
+    let activeDragEl = null;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let initialTransX = 0;
+    let initialTransY = 0;
+
+    function initDraggableNodes() {
+      const nodes = document.querySelectorAll('.draggable-node');
+      nodes.forEach(node => {
+        node.dataset.tx = '0';
+        node.dataset.ty = '0';
+
+        node.addEventListener('mousedown', (e) => {
+          if (!dragMode) return;
+          e.preventDefault();
+          activeDragEl = node;
+          dragStartX = e.clientX;
+          dragStartY = e.clientY;
+          initialTransX = parseFloat(node.dataset.tx || '0');
+          initialTransY = parseFloat(node.dataset.ty || '0');
+        });
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!activeDragEl || !dragMode) return;
+        const dx = (e.clientX - dragStartX) / currentZoom;
+        const dy = (e.clientY - dragStartY) / currentZoom;
+        const newX = initialTransX + dx;
+        const newY = initialTransY + dy;
+        activeDragEl.dataset.tx = newX;
+        activeDragEl.dataset.ty = newY;
+        activeDragEl.style.transform = `translate(${newX}px, ${newY}px)`;
+        renderAllConnections();
+      });
+
+      window.addEventListener('mouseup', () => {
+        activeDragEl = null;
+      });
+    }
+
+    function resetNodePositions() {
+      const nodes = document.querySelectorAll('.draggable-node');
+      nodes.forEach(node => {
+        node.dataset.tx = '0';
+        node.dataset.ty = '0';
+        node.style.transform = 'translate(0px, 0px)';
+      });
+      renderAllConnections();
+    }
+
+    function changeZoom(delta) {
+      currentZoom = Math.min(1.4, Math.max(0.6, +(currentZoom + delta).toFixed(2)));
+      const canvas = document.getElementById('diagram-canvas');
+      canvas.style.transform = `scale(${currentZoom})`;
+      canvas.style.transformOrigin = 'top center';
+      document.getElementById('zoom-label').textContent = `${Math.round(currentZoom * 100)}%`;
+      setTimeout(renderAllConnections, 50);
+    }
+
+    function copySymbol(sym) {
+      const temp = document.createElement('textarea');
+      temp.value = sym;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      const toast = document.getElementById('copy-toast');
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 1500);
+    }
+
+    function downloadHTML() {
+      const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'hierarchical_multi_agent_argumentation_edited.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Re-draw arrows whenever text is edited or window resizes
+    window.addEventListener('load', () => {
+      initDraggableNodes();
+      renderAllConnections();
+      // Observe DOM mutations / text edits inside the canvas to keep arrows aligned
+      const canvas = document.getElementById('diagram-canvas');
+      canvas.addEventListener('input', renderAllConnections);
+      window.addEventListener('resize', renderAllConnections);
+    });
+  </script>
+</body>
+</html>
