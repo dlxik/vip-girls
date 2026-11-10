@@ -20,4 +20,4 @@
 - [`project/source-review.md`](project/source-review.md): kiểm tra và tổng hợp nguồn.
 - `meeting_notes/`: biên bản họp theo sự kiện khi cần.
 
-Tài liệu riêng của Blue Sky nằm tại [`../bluesky/README.md`](../bluesky/README.md) và README của từng version.
+Mã nguồn hệ thống hiện tại nằm trong [`../agora/`](../agora/) và được mô tả tại [README gốc](../README.md).

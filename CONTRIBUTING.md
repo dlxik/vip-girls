@@ -3,7 +3,7 @@
 ## Luồng Git
 
 1. Đồng bộ trước khi làm: `git switch main` và `git pull --ff-only`.
-2. Tạo branch theo component, ví dụ `feature/v4-ui`, `data/ctq-sources`, `docs/methodology` hoặc `fix/propagation-queue`.
+2. Tạo branch theo component, ví dụ `feature/graph-ui`, `data/ctq-sources`, `docs/methodology` hoặc `fix/propagation-queue`.
 3. Commit nhỏ, mô tả rõ phạm vi; không trộn thay đổi dữ liệu, UI và refactor không liên quan.
 4. Chạy test phù hợp trước khi push.
 5. Review diff và merge về `main`; tránh sửa trực tiếp `main` khi hai người đang làm song song.
@@ -12,13 +12,13 @@
 
 ```bash
 python -m unittest discover -s tests
-python -m bluesky.v4.demo_v4
+python -m agora.demo
 ```
 
 Nếu thay đổi propagation/Risk, chạy thêm:
 
 ```bash
-python -m bluesky.v4.demo_v4 --evaluation
+python -m agora.demo --evaluation
 ```
 
 ## Quy ước dữ liệu
@@ -34,7 +34,7 @@ python -m bluesky.v4.demo_v4 --evaluation
 - Kiến trúc đặt tại `docs/architecture/`.
 - Phương pháp và kế hoạch nghiên cứu đặt tại `docs/research/`.
 - Status/decision/uncertainty/source review đặt tại `docs/project/`.
-- Output tái lập của demo đặt tại `bluesky/outputs/`; khi thay đổi code sinh output, cập nhật output tương ứng trong cùng commit.
+- Output tái lập của demo đặt tại `outputs/`; khi thay đổi code sinh output, cập nhật output tương ứng trong cùng commit.
 
 ## Không commit
 
