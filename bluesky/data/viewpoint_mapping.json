@@ -1,0 +1,86 @@
+{
+  "method": "Phân nhóm thủ công, loại trừ lẫn nhau, theo vị thế được kết luận của lập luận. Các A_K chủ yếu mã hóa thẩm quyền, quy tắc hoặc thủ tục được tách thành lớp contextual thay vì giả làm quan điểm công chúng.",
+  "viewpoints": [
+    {
+      "viewpoint_id": "CTX01",
+      "kind": "contextual",
+      "name": "Nền tảng thẩm quyền và thủ tục",
+      "description": "Lớp ngữ cảnh thể chế, không phải agent quan điểm công chúng.",
+      "position_summary": "Quy chế, thẩm quyền và thủ tục chính thức xác định khung xử lý vụ việc và tuyển sinh.",
+      "inclusion_rule": "Các A_K có kết luận chủ yếu xác lập thẩm quyền, nghĩa vụ quy phạm, hiệu lực thủ tục hoặc chuẩn tuyển sinh.",
+      "argument_ids": ["CTQ-A001", "CTQ-A005", "CTQ-A010", "CTQ-A014", "CTQ-A022"]
+    },
+    {
+      "viewpoint_id": "VP01",
+      "kind": "collective",
+      "name": "Thận trọng và cá thể hóa kết luận",
+      "description": "Không suy nguyên nhân hoặc lỗi cá nhân vượt quá chứng cứ hiện có.",
+      "position_summary": "Cần xác minh trước, phân biệt độ tin cậy hệ thống với trách nhiệm cá nhân và giữ kết luận tố tụng ở trạng thái phù hợp.",
+      "inclusion_rule": "Các lập luận kết luận rằng dữ liệu tổng hợp, chênh lệch điểm hoặc quyết định khởi tố chưa đủ để quy lỗi cá nhân.",
+      "argument_ids": ["CTQ-A002", "CTQ-A007", "CTQ-A020", "CTQ-A021", "CTQ-A027"]
+    },
+    {
+      "viewpoint_id": "VP02",
+      "kind": "collective",
+      "name": "Nghi vấn và cập nhật theo chứng cứ",
+      "description": "Bất thường tạo nghi vấn và phát hiện cụ thể sau phải thay thế đánh giá sơ bộ trước đó.",
+      "position_summary": "Khi chứng cứ sai phạm cụ thể xuất hiện, giải thích ban đầu phải được cập nhật thay vì duy trì vì quán tính.",
+      "inclusion_rule": "Các lập luận đi từ nghi vấn thống kê tới chứng cứ sai phạm và yêu cầu thay thế nhận định sơ bộ.",
+      "argument_ids": ["CTQ-A003", "CTQ-A006", "CTQ-A008"]
+    },
+    {
+      "viewpoint_id": "VP03",
+      "kind": "collective",
+      "name": "Giải thích lành tính ban đầu",
+      "description": "Giữ khả năng quy trình đúng và thành tích cao có giải thích lành tính khi chưa có chứng cứ ngược lại.",
+      "position_summary": "Ở giai đoạn đầu chưa đủ căn cứ vô hiệu hóa kết quả chỉ từ bất thường điểm.",
+      "inclusion_rule": "Lập luận có kết luận bảo lưu khả năng giải thích lành tính trước khi chứng cứ sai phạm xuất hiện.",
+      "argument_ids": ["CTQ-A004"]
+    },
+    {
+      "viewpoint_id": "VP04",
+      "kind": "collective",
+      "name": "Biện pháp giới hạn ở môn Toán",
+      "description": "Giới hạn phạm vi xử lý theo chứng cứ ban đầu tập trung ở môn Toán.",
+      "position_summary": "Ở t2–t3, chứng cứ khi đó chưa đủ cho xử lý tất cả môn và phương án thi lại Toán là lựa chọn giới hạn.",
+      "inclusion_rule": "Các lập luận kết luận phạm vi biện pháp chưa nên vượt quá môn Toán.",
+      "argument_ids": ["CTQ-A009", "CTQ-A011"]
+    },
+    {
+      "viewpoint_id": "VP05",
+      "kind": "collective",
+      "name": "Phản đối thi lại tập thể",
+      "description": "Ưu tiên hủy kết quả hoặc xử lý cá nhân thay vì cho toàn điểm thi thi lại.",
+      "position_summary": "Thi lại có thể thiếu nhất quán với chế tài khác và không nên thay thế việc cá thể hóa trách nhiệm.",
+      "inclusion_rule": "Các lập luận phản đối phương án thi lại toàn điểm và đề xuất hủy kết quả hoặc xử lý theo cá nhân.",
+      "argument_ids": ["CTQ-A012", "CTQ-A013"]
+    },
+    {
+      "viewpoint_id": "VP06",
+      "kind": "collective",
+      "name": "Ủng hộ thi lại toàn bộ có kiểm soát",
+      "description": "Bảo vệ biện pháp thi lại tất cả môn cùng kiểm soát thủ tục và bảo vệ trách nhiệm cá nhân.",
+      "position_summary": "Thi lại toàn bộ có thể khôi phục độ tin cậy nếu được kiểm soát, cân bằng quyền lợi và không đồng nhất với quy lỗi mọi thí sinh.",
+      "inclusion_rule": "Các lập luận kết luận trực tiếp rằng thi lại toàn bộ là biện pháp có thể bảo vệ được hoặc nêu điều kiện hỗ trợ biện pháp này.",
+      "argument_ids": ["CTQ-A015", "CTQ-A016", "CTQ-A017", "CTQ-A018", "CTQ-A025"]
+    },
+    {
+      "viewpoint_id": "VP07",
+      "kind": "collective",
+      "name": "Kết quả thi lại phản ánh năng lực phân hóa",
+      "description": "Diễn giải phân bố lần hai như dấu hiệu năng lực đa dạng, không phải bằng chứng lỗi cá nhân.",
+      "position_summary": "Kết quả thi lại có giá trị mô tả năng lực phân hóa nhưng không xác định ai đã tham gia sai phạm lần đầu.",
+      "inclusion_rule": "Các lập luận diễn giải tích cực nhưng có giới hạn từ phân bố điểm thi lại.",
+      "argument_ids": ["CTQ-A019", "CTQ-A023"]
+    },
+    {
+      "viewpoint_id": "VP08",
+      "kind": "collective",
+      "name": "Sai phạm có phạm vi hệ thống",
+      "description": "Chứng cứ muộn cho thấy thất bại trên toàn điểm thi và tất cả môn.",
+      "position_summary": "Phạm vi sai phạm rộng làm kết quả lần đầu không đáng tin và bác tường thuật an toàn ban đầu.",
+      "inclusion_rule": "Các lập luận kết luận trực tiếp về phạm vi tất cả phòng, tất cả môn hoặc thất bại phát hiện trên toàn điểm thi.",
+      "argument_ids": ["CTQ-A024", "CTQ-A026"]
+    }
+  ]
+}

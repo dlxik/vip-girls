@@ -1,0 +1,6141 @@
+{
+  "baseline": {
+    "final_beliefs": {
+      "CTX01": {
+        "CTQ-A001": [
+          "accepted",
+          0.7297
+        ],
+        "CTQ-A005": [
+          "accepted",
+          0.7297
+        ],
+        "CTQ-A010": [
+          "accepted",
+          1.0
+        ],
+        "CTQ-A014": [
+          "accepted",
+          0.7304
+        ],
+        "CTQ-A022": [
+          "accepted",
+          0.7071
+        ]
+      },
+      "VP01": {
+        "CTQ-A002": [
+          "accepted",
+          0.6353
+        ],
+        "CTQ-A007": [
+          "undecided",
+          0.5348
+        ],
+        "CTQ-A020": [
+          "undecided",
+          0.5046
+        ],
+        "CTQ-A021": [
+          "undecided",
+          0.4853
+        ],
+        "CTQ-A027": [
+          "undecided",
+          0.5177
+        ]
+      },
+      "VP02": {
+        "CTQ-A003": [
+          "undecided",
+          0.4507
+        ],
+        "CTQ-A006": [
+          "accepted",
+          0.6786
+        ],
+        "CTQ-A008": [
+          "accepted",
+          0.6702
+        ]
+      },
+      "VP03": {
+        "CTQ-A004": [
+          "retracted",
+          0.0137
+        ]
+      },
+      "VP04": {
+        "CTQ-A009": [
+          "retracted",
+          0.1417
+        ],
+        "CTQ-A011": [
+          "retracted",
+          0.1043
+        ]
+      },
+      "VP05": {
+        "CTQ-A012": [
+          "rejected",
+          0.3213
+        ],
+        "CTQ-A013": [
+          "accepted",
+          0.6935
+        ]
+      },
+      "VP06": {
+        "CTQ-A015": [
+          "accepted",
+          0.8564
+        ],
+        "CTQ-A016": [
+          "undecided",
+          0.5348
+        ],
+        "CTQ-A017": [
+          "undecided",
+          0.4982
+        ],
+        "CTQ-A018": [
+          "undecided",
+          0.5408
+        ],
+        "CTQ-A025": [
+          "accepted",
+          1.0
+        ]
+      },
+      "VP07": {
+        "CTQ-A019": [
+          "accepted",
+          0.769
+        ],
+        "CTQ-A023": [
+          "accepted",
+          0.7293
+        ]
+      },
+      "VP08": {
+        "CTQ-A024": [
+          "undecided",
+          0.4352
+        ],
+        "CTQ-A026": [
+          "undecided",
+          0.4918
+        ]
+      }
+    },
+    "dominant_viewpoint": "VP06",
+    "split_candidates": [],
+    "merge_candidates": [
+      {
+        "agents": [
+          "CTX01",
+          "VP02"
+        ],
+        "score": 0.8218,
+        "threshold": 0.68,
+        "cross_support": 1,
+        "cross_attack": 0,
+        "relation_ids": [
+          "CTQ-R004"
+        ],
+        "argument_ids": [
+          "CTQ-A001",
+          "CTQ-A003",
+          "CTQ-A005",
+          "CTQ-A006",
+          "CTQ-A008",
+          "CTQ-A010",
+          "CTQ-A014",
+          "CTQ-A022"
+        ],
+        "criteria": {
+          "status_similarity": 0.6667,
+          "confidence_similarity": 0.8205,
+          "cross_support_ratio": 1.0,
+          "low_conflict": 1.0
+        }
+      },
+      {
+        "agents": [
+          "CTX01",
+          "VP06"
+        ],
+        "score": 0.7367,
+        "threshold": 0.68,
+        "cross_support": 4,
+        "cross_attack": 0,
+        "relation_ids": [
+          "CTQ-R002",
+          "CTQ-R008",
+          "CTQ-R009",
+          "CTQ-R016"
+        ],
+        "argument_ids": [
+          "CTQ-A001",
+          "CTQ-A005",
+          "CTQ-A010",
+          "CTQ-A014",
+          "CTQ-A015",
+          "CTQ-A016",
+          "CTQ-A017",
+          "CTQ-A018",
+          "CTQ-A022",
+          "CTQ-A025"
+        ],
+        "criteria": {
+          "status_similarity": 0.4,
+          "confidence_similarity": 0.9067,
+          "cross_support_ratio": 1.0,
+          "low_conflict": 1.0
+        }
+      },
+      {
+        "agents": [
+          "VP01",
+          "VP05"
+        ],
+        "score": 0.873,
+        "threshold": 0.68,
+        "cross_support": 1,
+        "cross_attack": 0,
+        "relation_ids": [
+          "CTQ-R006"
+        ],
+        "argument_ids": [
+          "CTQ-A002",
+          "CTQ-A007",
+          "CTQ-A012",
+          "CTQ-A013",
+          "CTQ-A020",
+          "CTQ-A021",
+          "CTQ-A027"
+        ],
+        "criteria": {
+          "status_similarity": 0.7,
+          "confidence_similarity": 0.9719,
+          "cross_support_ratio": 1.0,
+          "low_conflict": 1.0
+        }
+      },
+      {
+        "agents": [
+          "VP01",
+          "VP06"
+        ],
+        "score": 0.8824,
+        "threshold": 0.68,
+        "cross_support": 2,
+        "cross_attack": 0,
+        "relation_ids": [
+          "CTQ-R015",
+          "CTQ-R020"
+        ],
+        "argument_ids": [
+          "CTQ-A002",
+          "CTQ-A007",
+          "CTQ-A015",
+          "CTQ-A016",
+          "CTQ-A017",
+          "CTQ-A018",
+          "CTQ-A020",
+          "CTQ-A021",
+          "CTQ-A025",
+          "CTQ-A027"
+        ],
+        "criteria": {
+          "status_similarity": 0.8,
+          "confidence_similarity": 0.8495,
+          "cross_support_ratio": 1.0,
+          "low_conflict": 1.0
+        }
+      },
+      {
+        "agents": [
+          "VP06",
+          "VP07"
+        ],
+        "score": 0.7442,
+        "threshold": 0.68,
+        "cross_support": 2,
+        "cross_attack": 0,
+        "relation_ids": [
+          "CTQ-R011",
+          "CTQ-R017"
+        ],
+        "argument_ids": [
+          "CTQ-A015",
+          "CTQ-A016",
+          "CTQ-A017",
+          "CTQ-A018",
+          "CTQ-A019",
+          "CTQ-A023",
+          "CTQ-A025"
+        ],
+        "criteria": {
+          "status_similarity": 0.4,
+          "confidence_similarity": 0.9369,
+          "cross_support_ratio": 1.0,
+          "low_conflict": 1.0
+        }
+      },
+      {
+        "agents": [
+          "VP06",
+          "VP08"
+        ],
+        "score": 0.7844,
+        "threshold": 0.68,
+        "cross_support": 2,
+        "cross_attack": 0,
+        "relation_ids": [
+          "CTQ-R018",
+          "CTQ-R019"
+        ],
+        "argument_ids": [
+          "CTQ-A015",
+          "CTQ-A016",
+          "CTQ-A017",
+          "CTQ-A018",
+          "CTQ-A024",
+          "CTQ-A025",
+          "CTQ-A026"
+        ],
+        "criteria": {
+          "status_similarity": 0.6,
+          "confidence_similarity": 0.7775,
+          "cross_support_ratio": 1.0,
+          "low_conflict": 1.0
+        }
+      }
+    ],
+    "simulation_convergence": false,
+    "convergence_proxy": 0.7125,
+    "event_types": [
+      "CONVERGENCE_PROXY",
+      "CONVERGENCE_PROXY",
+      "CONVERGENCE_PROXY",
+      "CONVERGENCE_PROXY",
+      "CONVERGENCE_PROXY",
+      "DOMINANCE_SHIFT",
+      "FRAGMENTATION_PROXY",
+      "FRAGMENTATION_PROXY",
+      "FRAGMENTATION_PROXY",
+      "FRAGMENTATION_PROXY",
+      "FRAGMENTATION_PROXY",
+      "FRAGMENTATION_PROXY",
+      "FRAGMENTATION_PROXY",
+      "PERSISTENT_CONFLICT",
+      "PERSISTENT_CONFLICT",
+      "PERSISTENT_CONFLICT",
+      "PERSISTENT_CONFLICT",
+      "PERSISTENT_CONFLICT",
+      "PERSISTENT_CONFLICT",
+      "PERSISTENT_CONFLICT",
+      "PERSISTENT_CONFLICT",
+      "PERSISTENT_CONFLICT",
+      "PERSISTENT_CONFLICT",
+      "STABILIZATION",
+      "STABILIZATION",
+      "STABILIZATION",
+      "STABILIZATION",
+      "STABILIZATION",
+      "VIEWPOINT_MERGE_CANDIDATE",
+      "VIEWPOINT_MERGE_CANDIDATE",
+      "VIEWPOINT_MERGE_CANDIDATE",
+      "VIEWPOINT_MERGE_CANDIDATE",
+      "VIEWPOINT_MERGE_CANDIDATE",
+      "VIEWPOINT_MERGE_CANDIDATE",
+      "VIEWPOINT_MERGE_CANDIDATE",
+      "VIEWPOINT_MERGE_CANDIDATE",
+      "VIEWPOINT_MERGE_CANDIDATE",
+      "VIEWPOINT_MERGE_CANDIDATE"
+    ]
+  },
+  "sensitivity": {
+    "reasoning_support_weight_high": {
+      "config": {
+        "v2": {
+          "reasoning": {
+            "canonical_status": {
+              "accepted": 0.68,
+              "undecided": 0.5,
+              "rejected": 0.3
+            },
+            "relation_confidence": {
+              "high": 1.0,
+              "medium": 0.7
+            },
+            "incoming_support": 0.16,
+            "incoming_attack": 0.12,
+            "evidence_quality": 0.1,
+            "source_authority": {
+              "official_document": 1.0,
+              "authority_statement": 0.85,
+              "news": 0.55,
+              "social": 0.35
+            },
+            "verification_quality": {
+              "verified": 1.0,
+              "verified_copy": 0.9,
+              "partially_verified": 0.65,
+              "needs_human_review": 0.4
+            },
+            "historical_penalty": 0.08,
+            "observed_support_action": 0.06,
+            "observed_attack_action": 0.08,
+            "observed_challenge_action": 0.05,
+            "observed_evidence_action": 0.07
+          },
+          "policy": {
+            "action_base": {
+              "PRESENT_ARGUMENT": 0.4,
+              "SUPPORT": 0.62,
+              "ATTACK": 0.72,
+              "CHALLENGE": 0.56,
+              "PROVIDE_EVIDENCE": 0.6,
+              "RETRACT": 0.78,
+              "NO_OP": 0.0
+            },
+            "high_relation_bonus": 0.08,
+            "medium_relation_bonus": 0.04,
+            "new_argument_bonus": 0.05,
+            "evidence_bonus": 0.04,
+            "historical_penalty": 0.08
+          },
+          "max_deliberation_steps": 5,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38,
+          "retract_threshold": 0.22,
+          "reasoning_blend": 0.35,
+          "confidence_change_epsilon": 0.0001,
+          "no_change_patience": 1
+        },
+        "semantics": {
+          "damping": 0.35,
+          "convergence_epsilon": 0.0001,
+          "max_iterations": 40,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38
+        },
+        "semantic_revision_blend": 0.35,
+        "viewpoint_dynamics": {
+          "split_candidate_threshold": 0.45,
+          "merge_candidate_threshold": 0.68,
+          "stabilization_threshold": 0.72,
+          "persistent_steps": 2,
+          "enable_runtime_split_merge": false
+        },
+        "dynamics": {
+          "persistent_conflict_steps": 2,
+          "confidence_gap_threshold": 0.08,
+          "consensus_threshold": 0.72,
+          "fragmentation_threshold": 0.25
+        },
+        "conflict": {
+          "relation_confidence": {
+            "high": 1.0,
+            "medium": 0.7
+          },
+          "authority_weights": {
+            "official_document": 1.0,
+            "authority_statement": 0.85,
+            "news": 0.55,
+            "social": 0.35
+          },
+          "verification_weights": {
+            "verified": 1.0,
+            "verified_copy": 0.9,
+            "partially_verified": 0.65,
+            "needs_human_review": 0.4
+          },
+          "status_validity": {
+            "accepted": 1.0,
+            "undecided": 0.6,
+            "rejected": 0.25
+          },
+          "historical_multiplier": 0.35
+        },
+        "steering": {
+          "linkage_weights": {
+            "direct_relation": 0.45,
+            "reverse_response_relation": 0.2,
+            "interaction_reaches_target_owner": 0.2,
+            "linked_belief_revision": 0.15
+          },
+          "canonical_relation_semantic_floor": 0.85,
+          "semantic_method": "canonical_relation_else_conclusion_token_jaccard",
+          "medium_evidence_threshold": 0.2,
+          "strong_evidence_threshold": 0.75
+        },
+        "risk": {
+          "alpha": 0.5,
+          "beta": 0.2,
+          "gamma": 0.3,
+          "low_threshold": 0.3,
+          "medium_threshold": 0.5,
+          "high_threshold": 0.7,
+          "risk_alert_threshold": 0.7,
+          "high_conflict_threshold": 0.7,
+          "high_steering_threshold": 0.25,
+          "risk_increase_threshold": 0.1,
+          "conflict_increase_threshold": 0.1,
+          "steering_persistence_windows": 2,
+          "assessment_medium_threshold": 0.35,
+          "assessment_high_threshold": 0.75
+        },
+        "ablations": {
+          "source_quality": true,
+          "relation_confidence": true,
+          "observed_action_effects": true,
+          "institutional_policy": true,
+          "viewpoint_dynamics": true
+        }
+      },
+      "outcome": {
+        "final_beliefs": {
+          "CTX01": {
+            "CTQ-A001": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A005": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A010": [
+              "accepted",
+              1.0
+            ],
+            "CTQ-A014": [
+              "accepted",
+              0.781
+            ],
+            "CTQ-A022": [
+              "accepted",
+              0.7071
+            ]
+          },
+          "VP01": {
+            "CTQ-A002": [
+              "accepted",
+              0.6353
+            ],
+            "CTQ-A007": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A020": [
+              "undecided",
+              0.5046
+            ],
+            "CTQ-A021": [
+              "undecided",
+              0.4853
+            ],
+            "CTQ-A027": [
+              "undecided",
+              0.5177
+            ]
+          },
+          "VP02": {
+            "CTQ-A003": [
+              "undecided",
+              0.4507
+            ],
+            "CTQ-A006": [
+              "accepted",
+              0.6786
+            ],
+            "CTQ-A008": [
+              "accepted",
+              0.6702
+            ]
+          },
+          "VP03": {
+            "CTQ-A004": [
+              "retracted",
+              0.0137
+            ]
+          },
+          "VP04": {
+            "CTQ-A009": [
+              "retracted",
+              0.142
+            ],
+            "CTQ-A011": [
+              "retracted",
+              0.1783
+            ]
+          },
+          "VP05": {
+            "CTQ-A012": [
+              "rejected",
+              0.3213
+            ],
+            "CTQ-A013": [
+              "accepted",
+              0.7303
+            ]
+          },
+          "VP06": {
+            "CTQ-A015": [
+              "accepted",
+              0.9401
+            ],
+            "CTQ-A016": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A017": [
+              "undecided",
+              0.4982
+            ],
+            "CTQ-A018": [
+              "undecided",
+              0.5775
+            ],
+            "CTQ-A025": [
+              "accepted",
+              1.0
+            ]
+          },
+          "VP07": {
+            "CTQ-A019": [
+              "accepted",
+              0.8417
+            ],
+            "CTQ-A023": [
+              "accepted",
+              0.7293
+            ]
+          },
+          "VP08": {
+            "CTQ-A024": [
+              "undecided",
+              0.4677
+            ],
+            "CTQ-A026": [
+              "undecided",
+              0.4918
+            ]
+          }
+        },
+        "dominant_viewpoint": "VP06",
+        "split_candidates": [],
+        "merge_candidates": [
+          {
+            "agents": [
+              "CTX01",
+              "VP02"
+            ],
+            "score": 0.8193,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R004"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A003",
+              "CTQ-A005",
+              "CTQ-A006",
+              "CTQ-A008",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A022"
+            ],
+            "criteria": {
+              "status_similarity": 0.6667,
+              "confidence_similarity": 0.8103,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "CTX01",
+              "VP06"
+            ],
+            "score": 0.7402,
+            "threshold": 0.68,
+            "cross_support": 4,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R002",
+              "CTQ-R008",
+              "CTQ-R009",
+              "CTQ-R016"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A005",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A022",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9206,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP05"
+            ],
+            "score": 0.8776,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R006"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A012",
+              "CTQ-A013",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.7,
+              "confidence_similarity": 0.9903,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP06"
+            ],
+            "score": 0.8764,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R015",
+              "CTQ-R020"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A025",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.8,
+              "confidence_similarity": 0.8254,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP07"
+            ],
+            "score": 0.7412,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R011",
+              "CTQ-R017"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A019",
+              "CTQ-A023",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9246,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP08"
+            ],
+            "score": 0.7824,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R018",
+              "CTQ-R019"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A024",
+              "CTQ-A025",
+              "CTQ-A026"
+            ],
+            "criteria": {
+              "status_similarity": 0.6,
+              "confidence_similarity": 0.7696,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          }
+        ],
+        "simulation_convergence": false,
+        "convergence_proxy": 0.7116,
+        "event_types": [
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "DOMINANCE_SHIFT",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE"
+        ]
+      }
+    },
+    "semantics_damping_low": {
+      "config": {
+        "v2": {
+          "reasoning": {
+            "canonical_status": {
+              "accepted": 0.68,
+              "undecided": 0.5,
+              "rejected": 0.3
+            },
+            "relation_confidence": {
+              "high": 1.0,
+              "medium": 0.7
+            },
+            "incoming_support": 0.1,
+            "incoming_attack": 0.12,
+            "evidence_quality": 0.1,
+            "source_authority": {
+              "official_document": 1.0,
+              "authority_statement": 0.85,
+              "news": 0.55,
+              "social": 0.35
+            },
+            "verification_quality": {
+              "verified": 1.0,
+              "verified_copy": 0.9,
+              "partially_verified": 0.65,
+              "needs_human_review": 0.4
+            },
+            "historical_penalty": 0.08,
+            "observed_support_action": 0.06,
+            "observed_attack_action": 0.08,
+            "observed_challenge_action": 0.05,
+            "observed_evidence_action": 0.07
+          },
+          "policy": {
+            "action_base": {
+              "PRESENT_ARGUMENT": 0.4,
+              "SUPPORT": 0.62,
+              "ATTACK": 0.72,
+              "CHALLENGE": 0.56,
+              "PROVIDE_EVIDENCE": 0.6,
+              "RETRACT": 0.78,
+              "NO_OP": 0.0
+            },
+            "high_relation_bonus": 0.08,
+            "medium_relation_bonus": 0.04,
+            "new_argument_bonus": 0.05,
+            "evidence_bonus": 0.04,
+            "historical_penalty": 0.08
+          },
+          "max_deliberation_steps": 5,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38,
+          "retract_threshold": 0.22,
+          "reasoning_blend": 0.35,
+          "confidence_change_epsilon": 0.0001,
+          "no_change_patience": 1
+        },
+        "semantics": {
+          "damping": 0.2,
+          "convergence_epsilon": 0.0001,
+          "max_iterations": 40,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38
+        },
+        "semantic_revision_blend": 0.35,
+        "viewpoint_dynamics": {
+          "split_candidate_threshold": 0.45,
+          "merge_candidate_threshold": 0.68,
+          "stabilization_threshold": 0.72,
+          "persistent_steps": 2,
+          "enable_runtime_split_merge": false
+        },
+        "dynamics": {
+          "persistent_conflict_steps": 2,
+          "confidence_gap_threshold": 0.08,
+          "consensus_threshold": 0.72,
+          "fragmentation_threshold": 0.25
+        },
+        "conflict": {
+          "relation_confidence": {
+            "high": 1.0,
+            "medium": 0.7
+          },
+          "authority_weights": {
+            "official_document": 1.0,
+            "authority_statement": 0.85,
+            "news": 0.55,
+            "social": 0.35
+          },
+          "verification_weights": {
+            "verified": 1.0,
+            "verified_copy": 0.9,
+            "partially_verified": 0.65,
+            "needs_human_review": 0.4
+          },
+          "status_validity": {
+            "accepted": 1.0,
+            "undecided": 0.6,
+            "rejected": 0.25
+          },
+          "historical_multiplier": 0.35
+        },
+        "steering": {
+          "linkage_weights": {
+            "direct_relation": 0.45,
+            "reverse_response_relation": 0.2,
+            "interaction_reaches_target_owner": 0.2,
+            "linked_belief_revision": 0.15
+          },
+          "canonical_relation_semantic_floor": 0.85,
+          "semantic_method": "canonical_relation_else_conclusion_token_jaccard",
+          "medium_evidence_threshold": 0.2,
+          "strong_evidence_threshold": 0.75
+        },
+        "risk": {
+          "alpha": 0.5,
+          "beta": 0.2,
+          "gamma": 0.3,
+          "low_threshold": 0.3,
+          "medium_threshold": 0.5,
+          "high_threshold": 0.7,
+          "risk_alert_threshold": 0.7,
+          "high_conflict_threshold": 0.7,
+          "high_steering_threshold": 0.25,
+          "risk_increase_threshold": 0.1,
+          "conflict_increase_threshold": 0.1,
+          "steering_persistence_windows": 2,
+          "assessment_medium_threshold": 0.35,
+          "assessment_high_threshold": 0.75
+        },
+        "ablations": {
+          "source_quality": true,
+          "relation_confidence": true,
+          "observed_action_effects": true,
+          "institutional_policy": true,
+          "viewpoint_dynamics": true
+        }
+      },
+      "outcome": {
+        "final_beliefs": {
+          "CTX01": {
+            "CTQ-A001": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A005": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A010": [
+              "accepted",
+              1.0
+            ],
+            "CTQ-A014": [
+              "accepted",
+              0.7244
+            ],
+            "CTQ-A022": [
+              "accepted",
+              0.7071
+            ]
+          },
+          "VP01": {
+            "CTQ-A002": [
+              "accepted",
+              0.6353
+            ],
+            "CTQ-A007": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A020": [
+              "undecided",
+              0.5046
+            ],
+            "CTQ-A021": [
+              "undecided",
+              0.4853
+            ],
+            "CTQ-A027": [
+              "undecided",
+              0.5177
+            ]
+          },
+          "VP02": {
+            "CTQ-A003": [
+              "undecided",
+              0.4507
+            ],
+            "CTQ-A006": [
+              "accepted",
+              0.6786
+            ],
+            "CTQ-A008": [
+              "accepted",
+              0.6702
+            ]
+          },
+          "VP03": {
+            "CTQ-A004": [
+              "retracted",
+              0.0078
+            ]
+          },
+          "VP04": {
+            "CTQ-A009": [
+              "retracted",
+              0.1361
+            ],
+            "CTQ-A011": [
+              "retracted",
+              0.09
+            ]
+          },
+          "VP05": {
+            "CTQ-A012": [
+              "rejected",
+              0.3294
+            ],
+            "CTQ-A013": [
+              "accepted",
+              0.6831
+            ]
+          },
+          "VP06": {
+            "CTQ-A015": [
+              "accepted",
+              0.8689
+            ],
+            "CTQ-A016": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A017": [
+              "undecided",
+              0.4982
+            ],
+            "CTQ-A018": [
+              "undecided",
+              0.5272
+            ],
+            "CTQ-A025": [
+              "accepted",
+              1.0
+            ]
+          },
+          "VP07": {
+            "CTQ-A019": [
+              "accepted",
+              0.7606
+            ],
+            "CTQ-A023": [
+              "accepted",
+              0.7293
+            ]
+          },
+          "VP08": {
+            "CTQ-A024": [
+              "undecided",
+              0.4352
+            ],
+            "CTQ-A026": [
+              "undecided",
+              0.4918
+            ]
+          }
+        },
+        "dominant_viewpoint": "VP06",
+        "split_candidates": [],
+        "merge_candidates": [
+          {
+            "agents": [
+              "CTX01",
+              "VP02"
+            ],
+            "score": 0.8221,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R004"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A003",
+              "CTQ-A005",
+              "CTQ-A006",
+              "CTQ-A008",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A022"
+            ],
+            "criteria": {
+              "status_similarity": 0.6667,
+              "confidence_similarity": 0.8217,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "CTX01",
+              "VP06"
+            ],
+            "score": 0.7369,
+            "threshold": 0.68,
+            "cross_support": 4,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R002",
+              "CTQ-R008",
+              "CTQ-R009",
+              "CTQ-R016"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A005",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A022",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9076,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP05"
+            ],
+            "score": 0.8727,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R006"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A012",
+              "CTQ-A013",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.7,
+              "confidence_similarity": 0.9707,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP06"
+            ],
+            "score": 0.8824,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R015",
+              "CTQ-R020"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A025",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.8,
+              "confidence_similarity": 0.8497,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP07"
+            ],
+            "score": 0.7452,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R011",
+              "CTQ-R017"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A019",
+              "CTQ-A023",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9409,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP08"
+            ],
+            "score": 0.7844,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R018",
+              "CTQ-R019"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A024",
+              "CTQ-A025",
+              "CTQ-A026"
+            ],
+            "criteria": {
+              "status_similarity": 0.6,
+              "confidence_similarity": 0.7777,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          }
+        ],
+        "simulation_convergence": false,
+        "convergence_proxy": 0.712,
+        "event_types": [
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "DOMINANCE_SHIFT",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE"
+        ]
+      }
+    },
+    "semantics_damping_high": {
+      "config": {
+        "v2": {
+          "reasoning": {
+            "canonical_status": {
+              "accepted": 0.68,
+              "undecided": 0.5,
+              "rejected": 0.3
+            },
+            "relation_confidence": {
+              "high": 1.0,
+              "medium": 0.7
+            },
+            "incoming_support": 0.1,
+            "incoming_attack": 0.12,
+            "evidence_quality": 0.1,
+            "source_authority": {
+              "official_document": 1.0,
+              "authority_statement": 0.85,
+              "news": 0.55,
+              "social": 0.35
+            },
+            "verification_quality": {
+              "verified": 1.0,
+              "verified_copy": 0.9,
+              "partially_verified": 0.65,
+              "needs_human_review": 0.4
+            },
+            "historical_penalty": 0.08,
+            "observed_support_action": 0.06,
+            "observed_attack_action": 0.08,
+            "observed_challenge_action": 0.05,
+            "observed_evidence_action": 0.07
+          },
+          "policy": {
+            "action_base": {
+              "PRESENT_ARGUMENT": 0.4,
+              "SUPPORT": 0.62,
+              "ATTACK": 0.72,
+              "CHALLENGE": 0.56,
+              "PROVIDE_EVIDENCE": 0.6,
+              "RETRACT": 0.78,
+              "NO_OP": 0.0
+            },
+            "high_relation_bonus": 0.08,
+            "medium_relation_bonus": 0.04,
+            "new_argument_bonus": 0.05,
+            "evidence_bonus": 0.04,
+            "historical_penalty": 0.08
+          },
+          "max_deliberation_steps": 5,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38,
+          "retract_threshold": 0.22,
+          "reasoning_blend": 0.35,
+          "confidence_change_epsilon": 0.0001,
+          "no_change_patience": 1
+        },
+        "semantics": {
+          "damping": 0.55,
+          "convergence_epsilon": 0.0001,
+          "max_iterations": 40,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38
+        },
+        "semantic_revision_blend": 0.35,
+        "viewpoint_dynamics": {
+          "split_candidate_threshold": 0.45,
+          "merge_candidate_threshold": 0.68,
+          "stabilization_threshold": 0.72,
+          "persistent_steps": 2,
+          "enable_runtime_split_merge": false
+        },
+        "dynamics": {
+          "persistent_conflict_steps": 2,
+          "confidence_gap_threshold": 0.08,
+          "consensus_threshold": 0.72,
+          "fragmentation_threshold": 0.25
+        },
+        "conflict": {
+          "relation_confidence": {
+            "high": 1.0,
+            "medium": 0.7
+          },
+          "authority_weights": {
+            "official_document": 1.0,
+            "authority_statement": 0.85,
+            "news": 0.55,
+            "social": 0.35
+          },
+          "verification_weights": {
+            "verified": 1.0,
+            "verified_copy": 0.9,
+            "partially_verified": 0.65,
+            "needs_human_review": 0.4
+          },
+          "status_validity": {
+            "accepted": 1.0,
+            "undecided": 0.6,
+            "rejected": 0.25
+          },
+          "historical_multiplier": 0.35
+        },
+        "steering": {
+          "linkage_weights": {
+            "direct_relation": 0.45,
+            "reverse_response_relation": 0.2,
+            "interaction_reaches_target_owner": 0.2,
+            "linked_belief_revision": 0.15
+          },
+          "canonical_relation_semantic_floor": 0.85,
+          "semantic_method": "canonical_relation_else_conclusion_token_jaccard",
+          "medium_evidence_threshold": 0.2,
+          "strong_evidence_threshold": 0.75
+        },
+        "risk": {
+          "alpha": 0.5,
+          "beta": 0.2,
+          "gamma": 0.3,
+          "low_threshold": 0.3,
+          "medium_threshold": 0.5,
+          "high_threshold": 0.7,
+          "risk_alert_threshold": 0.7,
+          "high_conflict_threshold": 0.7,
+          "high_steering_threshold": 0.25,
+          "risk_increase_threshold": 0.1,
+          "conflict_increase_threshold": 0.1,
+          "steering_persistence_windows": 2,
+          "assessment_medium_threshold": 0.35,
+          "assessment_high_threshold": 0.75
+        },
+        "ablations": {
+          "source_quality": true,
+          "relation_confidence": true,
+          "observed_action_effects": true,
+          "institutional_policy": true,
+          "viewpoint_dynamics": true
+        }
+      },
+      "outcome": {
+        "final_beliefs": {
+          "CTX01": {
+            "CTQ-A001": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A005": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A010": [
+              "accepted",
+              1.0
+            ],
+            "CTQ-A014": [
+              "accepted",
+              0.7384
+            ],
+            "CTQ-A022": [
+              "accepted",
+              0.7071
+            ]
+          },
+          "VP01": {
+            "CTQ-A002": [
+              "accepted",
+              0.6353
+            ],
+            "CTQ-A007": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A020": [
+              "undecided",
+              0.5046
+            ],
+            "CTQ-A021": [
+              "undecided",
+              0.4853
+            ],
+            "CTQ-A027": [
+              "undecided",
+              0.5177
+            ]
+          },
+          "VP02": {
+            "CTQ-A003": [
+              "undecided",
+              0.4507
+            ],
+            "CTQ-A006": [
+              "accepted",
+              0.6786
+            ],
+            "CTQ-A008": [
+              "accepted",
+              0.6702
+            ]
+          },
+          "VP03": {
+            "CTQ-A004": [
+              "retracted",
+              0.0215
+            ]
+          },
+          "VP04": {
+            "CTQ-A009": [
+              "retracted",
+              0.149
+            ],
+            "CTQ-A011": [
+              "retracted",
+              0.1234
+            ]
+          },
+          "VP05": {
+            "CTQ-A012": [
+              "rejected",
+              0.3105
+            ],
+            "CTQ-A013": [
+              "accepted",
+              0.7072
+            ]
+          },
+          "VP06": {
+            "CTQ-A015": [
+              "accepted",
+              0.8397
+            ],
+            "CTQ-A016": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A017": [
+              "undecided",
+              0.4982
+            ],
+            "CTQ-A018": [
+              "undecided",
+              0.5588
+            ],
+            "CTQ-A025": [
+              "accepted",
+              1.0
+            ]
+          },
+          "VP07": {
+            "CTQ-A019": [
+              "accepted",
+              0.7801
+            ],
+            "CTQ-A023": [
+              "accepted",
+              0.7293
+            ]
+          },
+          "VP08": {
+            "CTQ-A024": [
+              "undecided",
+              0.4352
+            ],
+            "CTQ-A026": [
+              "undecided",
+              0.4918
+            ]
+          }
+        },
+        "dominant_viewpoint": "VP06",
+        "split_candidates": [],
+        "merge_candidates": [
+          {
+            "agents": [
+              "CTX01",
+              "VP02"
+            ],
+            "score": 0.8214,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R004"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A003",
+              "CTQ-A005",
+              "CTQ-A006",
+              "CTQ-A008",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A022"
+            ],
+            "criteria": {
+              "status_similarity": 0.6667,
+              "confidence_similarity": 0.8189,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "CTX01",
+              "VP06"
+            ],
+            "score": 0.7363,
+            "threshold": 0.68,
+            "cross_support": 4,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R002",
+              "CTQ-R008",
+              "CTQ-R009",
+              "CTQ-R016"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A005",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A022",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9053,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP05"
+            ],
+            "score": 0.8733,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R006"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A012",
+              "CTQ-A013",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.7,
+              "confidence_similarity": 0.9733,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP06"
+            ],
+            "score": 0.8823,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R015",
+              "CTQ-R020"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A025",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.8,
+              "confidence_similarity": 0.8492,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP07"
+            ],
+            "score": 0.7429,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R011",
+              "CTQ-R017"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A019",
+              "CTQ-A023",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9316,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP08"
+            ],
+            "score": 0.7843,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R018",
+              "CTQ-R019"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A024",
+              "CTQ-A025",
+              "CTQ-A026"
+            ],
+            "criteria": {
+              "status_similarity": 0.6,
+              "confidence_similarity": 0.7772,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          }
+        ],
+        "simulation_convergence": false,
+        "convergence_proxy": 0.7131,
+        "event_types": [
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "DOMINANCE_SHIFT",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE"
+        ]
+      }
+    },
+    "strict_thresholds": {
+      "config": {
+        "v2": {
+          "reasoning": {
+            "canonical_status": {
+              "accepted": 0.68,
+              "undecided": 0.5,
+              "rejected": 0.3
+            },
+            "relation_confidence": {
+              "high": 1.0,
+              "medium": 0.7
+            },
+            "incoming_support": 0.1,
+            "incoming_attack": 0.12,
+            "evidence_quality": 0.1,
+            "source_authority": {
+              "official_document": 1.0,
+              "authority_statement": 0.85,
+              "news": 0.55,
+              "social": 0.35
+            },
+            "verification_quality": {
+              "verified": 1.0,
+              "verified_copy": 0.9,
+              "partially_verified": 0.65,
+              "needs_human_review": 0.4
+            },
+            "historical_penalty": 0.08,
+            "observed_support_action": 0.06,
+            "observed_attack_action": 0.08,
+            "observed_challenge_action": 0.05,
+            "observed_evidence_action": 0.07
+          },
+          "policy": {
+            "action_base": {
+              "PRESENT_ARGUMENT": 0.4,
+              "SUPPORT": 0.62,
+              "ATTACK": 0.72,
+              "CHALLENGE": 0.56,
+              "PROVIDE_EVIDENCE": 0.6,
+              "RETRACT": 0.78,
+              "NO_OP": 0.0
+            },
+            "high_relation_bonus": 0.08,
+            "medium_relation_bonus": 0.04,
+            "new_argument_bonus": 0.05,
+            "evidence_bonus": 0.04,
+            "historical_penalty": 0.08
+          },
+          "max_deliberation_steps": 5,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38,
+          "retract_threshold": 0.22,
+          "reasoning_blend": 0.35,
+          "confidence_change_epsilon": 0.0001,
+          "no_change_patience": 1
+        },
+        "semantics": {
+          "damping": 0.35,
+          "convergence_epsilon": 0.0001,
+          "max_iterations": 40,
+          "accepted_threshold": 0.7,
+          "rejected_threshold": 0.3
+        },
+        "semantic_revision_blend": 0.35,
+        "viewpoint_dynamics": {
+          "split_candidate_threshold": 0.45,
+          "merge_candidate_threshold": 0.68,
+          "stabilization_threshold": 0.72,
+          "persistent_steps": 2,
+          "enable_runtime_split_merge": false
+        },
+        "dynamics": {
+          "persistent_conflict_steps": 2,
+          "confidence_gap_threshold": 0.08,
+          "consensus_threshold": 0.72,
+          "fragmentation_threshold": 0.25
+        },
+        "conflict": {
+          "relation_confidence": {
+            "high": 1.0,
+            "medium": 0.7
+          },
+          "authority_weights": {
+            "official_document": 1.0,
+            "authority_statement": 0.85,
+            "news": 0.55,
+            "social": 0.35
+          },
+          "verification_weights": {
+            "verified": 1.0,
+            "verified_copy": 0.9,
+            "partially_verified": 0.65,
+            "needs_human_review": 0.4
+          },
+          "status_validity": {
+            "accepted": 1.0,
+            "undecided": 0.6,
+            "rejected": 0.25
+          },
+          "historical_multiplier": 0.35
+        },
+        "steering": {
+          "linkage_weights": {
+            "direct_relation": 0.45,
+            "reverse_response_relation": 0.2,
+            "interaction_reaches_target_owner": 0.2,
+            "linked_belief_revision": 0.15
+          },
+          "canonical_relation_semantic_floor": 0.85,
+          "semantic_method": "canonical_relation_else_conclusion_token_jaccard",
+          "medium_evidence_threshold": 0.2,
+          "strong_evidence_threshold": 0.75
+        },
+        "risk": {
+          "alpha": 0.5,
+          "beta": 0.2,
+          "gamma": 0.3,
+          "low_threshold": 0.3,
+          "medium_threshold": 0.5,
+          "high_threshold": 0.7,
+          "risk_alert_threshold": 0.7,
+          "high_conflict_threshold": 0.7,
+          "high_steering_threshold": 0.25,
+          "risk_increase_threshold": 0.1,
+          "conflict_increase_threshold": 0.1,
+          "steering_persistence_windows": 2,
+          "assessment_medium_threshold": 0.35,
+          "assessment_high_threshold": 0.75
+        },
+        "ablations": {
+          "source_quality": true,
+          "relation_confidence": true,
+          "observed_action_effects": true,
+          "institutional_policy": true,
+          "viewpoint_dynamics": true
+        }
+      },
+      "outcome": {
+        "final_beliefs": {
+          "CTX01": {
+            "CTQ-A001": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A005": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A010": [
+              "accepted",
+              1.0
+            ],
+            "CTQ-A014": [
+              "accepted",
+              0.7304
+            ],
+            "CTQ-A022": [
+              "accepted",
+              0.7071
+            ]
+          },
+          "VP01": {
+            "CTQ-A002": [
+              "accepted",
+              0.6353
+            ],
+            "CTQ-A007": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A020": [
+              "undecided",
+              0.5046
+            ],
+            "CTQ-A021": [
+              "undecided",
+              0.4853
+            ],
+            "CTQ-A027": [
+              "undecided",
+              0.5177
+            ]
+          },
+          "VP02": {
+            "CTQ-A003": [
+              "undecided",
+              0.4507
+            ],
+            "CTQ-A006": [
+              "accepted",
+              0.6786
+            ],
+            "CTQ-A008": [
+              "accepted",
+              0.6702
+            ]
+          },
+          "VP03": {
+            "CTQ-A004": [
+              "retracted",
+              0.0137
+            ]
+          },
+          "VP04": {
+            "CTQ-A009": [
+              "retracted",
+              0.1417
+            ],
+            "CTQ-A011": [
+              "retracted",
+              0.1043
+            ]
+          },
+          "VP05": {
+            "CTQ-A012": [
+              "rejected",
+              0.3213
+            ],
+            "CTQ-A013": [
+              "accepted",
+              0.6935
+            ]
+          },
+          "VP06": {
+            "CTQ-A015": [
+              "accepted",
+              0.8564
+            ],
+            "CTQ-A016": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A017": [
+              "undecided",
+              0.4982
+            ],
+            "CTQ-A018": [
+              "undecided",
+              0.5408
+            ],
+            "CTQ-A025": [
+              "accepted",
+              1.0
+            ]
+          },
+          "VP07": {
+            "CTQ-A019": [
+              "accepted",
+              0.769
+            ],
+            "CTQ-A023": [
+              "accepted",
+              0.7293
+            ]
+          },
+          "VP08": {
+            "CTQ-A024": [
+              "undecided",
+              0.4352
+            ],
+            "CTQ-A026": [
+              "undecided",
+              0.4918
+            ]
+          }
+        },
+        "dominant_viewpoint": "VP06",
+        "split_candidates": [],
+        "merge_candidates": [
+          {
+            "agents": [
+              "CTX01",
+              "VP02"
+            ],
+            "score": 0.8218,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R004"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A003",
+              "CTQ-A005",
+              "CTQ-A006",
+              "CTQ-A008",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A022"
+            ],
+            "criteria": {
+              "status_similarity": 0.6667,
+              "confidence_similarity": 0.8205,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "CTX01",
+              "VP06"
+            ],
+            "score": 0.7367,
+            "threshold": 0.68,
+            "cross_support": 4,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R002",
+              "CTQ-R008",
+              "CTQ-R009",
+              "CTQ-R016"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A005",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A022",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9067,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP05"
+            ],
+            "score": 0.873,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R006"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A012",
+              "CTQ-A013",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.7,
+              "confidence_similarity": 0.9719,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP06"
+            ],
+            "score": 0.8824,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R015",
+              "CTQ-R020"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A025",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.8,
+              "confidence_similarity": 0.8495,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP07"
+            ],
+            "score": 0.7442,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R011",
+              "CTQ-R017"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A019",
+              "CTQ-A023",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9369,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP08"
+            ],
+            "score": 0.7844,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R018",
+              "CTQ-R019"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A024",
+              "CTQ-A025",
+              "CTQ-A026"
+            ],
+            "criteria": {
+              "status_similarity": 0.6,
+              "confidence_similarity": 0.7775,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          }
+        ],
+        "simulation_convergence": false,
+        "convergence_proxy": 0.7125,
+        "event_types": [
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "DOMINANCE_SHIFT",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE"
+        ]
+      }
+    },
+    "semantic_revision_blend_low": {
+      "config": {
+        "v2": {
+          "reasoning": {
+            "canonical_status": {
+              "accepted": 0.68,
+              "undecided": 0.5,
+              "rejected": 0.3
+            },
+            "relation_confidence": {
+              "high": 1.0,
+              "medium": 0.7
+            },
+            "incoming_support": 0.1,
+            "incoming_attack": 0.12,
+            "evidence_quality": 0.1,
+            "source_authority": {
+              "official_document": 1.0,
+              "authority_statement": 0.85,
+              "news": 0.55,
+              "social": 0.35
+            },
+            "verification_quality": {
+              "verified": 1.0,
+              "verified_copy": 0.9,
+              "partially_verified": 0.65,
+              "needs_human_review": 0.4
+            },
+            "historical_penalty": 0.08,
+            "observed_support_action": 0.06,
+            "observed_attack_action": 0.08,
+            "observed_challenge_action": 0.05,
+            "observed_evidence_action": 0.07
+          },
+          "policy": {
+            "action_base": {
+              "PRESENT_ARGUMENT": 0.4,
+              "SUPPORT": 0.62,
+              "ATTACK": 0.72,
+              "CHALLENGE": 0.56,
+              "PROVIDE_EVIDENCE": 0.6,
+              "RETRACT": 0.78,
+              "NO_OP": 0.0
+            },
+            "high_relation_bonus": 0.08,
+            "medium_relation_bonus": 0.04,
+            "new_argument_bonus": 0.05,
+            "evidence_bonus": 0.04,
+            "historical_penalty": 0.08
+          },
+          "max_deliberation_steps": 5,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38,
+          "retract_threshold": 0.22,
+          "reasoning_blend": 0.35,
+          "confidence_change_epsilon": 0.0001,
+          "no_change_patience": 1
+        },
+        "semantics": {
+          "damping": 0.35,
+          "convergence_epsilon": 0.0001,
+          "max_iterations": 40,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38
+        },
+        "semantic_revision_blend": 0.15,
+        "viewpoint_dynamics": {
+          "split_candidate_threshold": 0.45,
+          "merge_candidate_threshold": 0.68,
+          "stabilization_threshold": 0.72,
+          "persistent_steps": 2,
+          "enable_runtime_split_merge": false
+        },
+        "dynamics": {
+          "persistent_conflict_steps": 2,
+          "confidence_gap_threshold": 0.08,
+          "consensus_threshold": 0.72,
+          "fragmentation_threshold": 0.25
+        },
+        "conflict": {
+          "relation_confidence": {
+            "high": 1.0,
+            "medium": 0.7
+          },
+          "authority_weights": {
+            "official_document": 1.0,
+            "authority_statement": 0.85,
+            "news": 0.55,
+            "social": 0.35
+          },
+          "verification_weights": {
+            "verified": 1.0,
+            "verified_copy": 0.9,
+            "partially_verified": 0.65,
+            "needs_human_review": 0.4
+          },
+          "status_validity": {
+            "accepted": 1.0,
+            "undecided": 0.6,
+            "rejected": 0.25
+          },
+          "historical_multiplier": 0.35
+        },
+        "steering": {
+          "linkage_weights": {
+            "direct_relation": 0.45,
+            "reverse_response_relation": 0.2,
+            "interaction_reaches_target_owner": 0.2,
+            "linked_belief_revision": 0.15
+          },
+          "canonical_relation_semantic_floor": 0.85,
+          "semantic_method": "canonical_relation_else_conclusion_token_jaccard",
+          "medium_evidence_threshold": 0.2,
+          "strong_evidence_threshold": 0.75
+        },
+        "risk": {
+          "alpha": 0.5,
+          "beta": 0.2,
+          "gamma": 0.3,
+          "low_threshold": 0.3,
+          "medium_threshold": 0.5,
+          "high_threshold": 0.7,
+          "risk_alert_threshold": 0.7,
+          "high_conflict_threshold": 0.7,
+          "high_steering_threshold": 0.25,
+          "risk_increase_threshold": 0.1,
+          "conflict_increase_threshold": 0.1,
+          "steering_persistence_windows": 2,
+          "assessment_medium_threshold": 0.35,
+          "assessment_high_threshold": 0.75
+        },
+        "ablations": {
+          "source_quality": true,
+          "relation_confidence": true,
+          "observed_action_effects": true,
+          "institutional_policy": true,
+          "viewpoint_dynamics": true
+        }
+      },
+      "outcome": {
+        "final_beliefs": {
+          "CTX01": {
+            "CTQ-A001": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A005": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A010": [
+              "accepted",
+              1.0
+            ],
+            "CTQ-A014": [
+              "accepted",
+              0.7224
+            ],
+            "CTQ-A022": [
+              "accepted",
+              0.7071
+            ]
+          },
+          "VP01": {
+            "CTQ-A002": [
+              "accepted",
+              0.6353
+            ],
+            "CTQ-A007": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A020": [
+              "undecided",
+              0.5046
+            ],
+            "CTQ-A021": [
+              "undecided",
+              0.4853
+            ],
+            "CTQ-A027": [
+              "undecided",
+              0.5177
+            ]
+          },
+          "VP02": {
+            "CTQ-A003": [
+              "undecided",
+              0.4507
+            ],
+            "CTQ-A006": [
+              "accepted",
+              0.6786
+            ],
+            "CTQ-A008": [
+              "accepted",
+              0.6702
+            ]
+          },
+          "VP03": {
+            "CTQ-A004": [
+              "retracted",
+              0.0059
+            ]
+          },
+          "VP04": {
+            "CTQ-A009": [
+              "retracted",
+              0.1342
+            ],
+            "CTQ-A011": [
+              "retracted",
+              0.0852
+            ]
+          },
+          "VP05": {
+            "CTQ-A012": [
+              "rejected",
+              0.332
+            ],
+            "CTQ-A013": [
+              "accepted",
+              0.6797
+            ]
+          },
+          "VP06": {
+            "CTQ-A015": [
+              "accepted",
+              0.873
+            ],
+            "CTQ-A016": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A017": [
+              "undecided",
+              0.4982
+            ],
+            "CTQ-A018": [
+              "undecided",
+              0.5226
+            ],
+            "CTQ-A025": [
+              "accepted",
+              1.0
+            ]
+          },
+          "VP07": {
+            "CTQ-A019": [
+              "accepted",
+              0.7578
+            ],
+            "CTQ-A023": [
+              "accepted",
+              0.7293
+            ]
+          },
+          "VP08": {
+            "CTQ-A024": [
+              "undecided",
+              0.4352
+            ],
+            "CTQ-A026": [
+              "undecided",
+              0.4918
+            ]
+          }
+        },
+        "dominant_viewpoint": "VP06",
+        "split_candidates": [],
+        "merge_candidates": [
+          {
+            "agents": [
+              "CTX01",
+              "VP02"
+            ],
+            "score": 0.8222,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R004"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A003",
+              "CTQ-A005",
+              "CTQ-A006",
+              "CTQ-A008",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A022"
+            ],
+            "criteria": {
+              "status_similarity": 0.6667,
+              "confidence_similarity": 0.8221,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "CTX01",
+              "VP06"
+            ],
+            "score": 0.737,
+            "threshold": 0.68,
+            "cross_support": 4,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R002",
+              "CTQ-R008",
+              "CTQ-R009",
+              "CTQ-R016"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A005",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A022",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9079,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP05"
+            ],
+            "score": 0.8726,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R006"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A012",
+              "CTQ-A013",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.7,
+              "confidence_similarity": 0.9703,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP06"
+            ],
+            "score": 0.8825,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R015",
+              "CTQ-R020"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A025",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.8,
+              "confidence_similarity": 0.8498,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP07"
+            ],
+            "score": 0.7455,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R011",
+              "CTQ-R017"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A019",
+              "CTQ-A023",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9422,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP08"
+            ],
+            "score": 0.7844,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R018",
+              "CTQ-R019"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A024",
+              "CTQ-A025",
+              "CTQ-A026"
+            ],
+            "criteria": {
+              "status_similarity": 0.6,
+              "confidence_similarity": 0.7778,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          }
+        ],
+        "simulation_convergence": false,
+        "convergence_proxy": 0.7118,
+        "event_types": [
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "DOMINANCE_SHIFT",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE"
+        ]
+      }
+    },
+    "semantic_revision_blend_high": {
+      "config": {
+        "v2": {
+          "reasoning": {
+            "canonical_status": {
+              "accepted": 0.68,
+              "undecided": 0.5,
+              "rejected": 0.3
+            },
+            "relation_confidence": {
+              "high": 1.0,
+              "medium": 0.7
+            },
+            "incoming_support": 0.1,
+            "incoming_attack": 0.12,
+            "evidence_quality": 0.1,
+            "source_authority": {
+              "official_document": 1.0,
+              "authority_statement": 0.85,
+              "news": 0.55,
+              "social": 0.35
+            },
+            "verification_quality": {
+              "verified": 1.0,
+              "verified_copy": 0.9,
+              "partially_verified": 0.65,
+              "needs_human_review": 0.4
+            },
+            "historical_penalty": 0.08,
+            "observed_support_action": 0.06,
+            "observed_attack_action": 0.08,
+            "observed_challenge_action": 0.05,
+            "observed_evidence_action": 0.07
+          },
+          "policy": {
+            "action_base": {
+              "PRESENT_ARGUMENT": 0.4,
+              "SUPPORT": 0.62,
+              "ATTACK": 0.72,
+              "CHALLENGE": 0.56,
+              "PROVIDE_EVIDENCE": 0.6,
+              "RETRACT": 0.78,
+              "NO_OP": 0.0
+            },
+            "high_relation_bonus": 0.08,
+            "medium_relation_bonus": 0.04,
+            "new_argument_bonus": 0.05,
+            "evidence_bonus": 0.04,
+            "historical_penalty": 0.08
+          },
+          "max_deliberation_steps": 5,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38,
+          "retract_threshold": 0.22,
+          "reasoning_blend": 0.35,
+          "confidence_change_epsilon": 0.0001,
+          "no_change_patience": 1
+        },
+        "semantics": {
+          "damping": 0.35,
+          "convergence_epsilon": 0.0001,
+          "max_iterations": 40,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38
+        },
+        "semantic_revision_blend": 0.6,
+        "viewpoint_dynamics": {
+          "split_candidate_threshold": 0.45,
+          "merge_candidate_threshold": 0.68,
+          "stabilization_threshold": 0.72,
+          "persistent_steps": 2,
+          "enable_runtime_split_merge": false
+        },
+        "dynamics": {
+          "persistent_conflict_steps": 2,
+          "confidence_gap_threshold": 0.08,
+          "consensus_threshold": 0.72,
+          "fragmentation_threshold": 0.25
+        },
+        "conflict": {
+          "relation_confidence": {
+            "high": 1.0,
+            "medium": 0.7
+          },
+          "authority_weights": {
+            "official_document": 1.0,
+            "authority_statement": 0.85,
+            "news": 0.55,
+            "social": 0.35
+          },
+          "verification_weights": {
+            "verified": 1.0,
+            "verified_copy": 0.9,
+            "partially_verified": 0.65,
+            "needs_human_review": 0.4
+          },
+          "status_validity": {
+            "accepted": 1.0,
+            "undecided": 0.6,
+            "rejected": 0.25
+          },
+          "historical_multiplier": 0.35
+        },
+        "steering": {
+          "linkage_weights": {
+            "direct_relation": 0.45,
+            "reverse_response_relation": 0.2,
+            "interaction_reaches_target_owner": 0.2,
+            "linked_belief_revision": 0.15
+          },
+          "canonical_relation_semantic_floor": 0.85,
+          "semantic_method": "canonical_relation_else_conclusion_token_jaccard",
+          "medium_evidence_threshold": 0.2,
+          "strong_evidence_threshold": 0.75
+        },
+        "risk": {
+          "alpha": 0.5,
+          "beta": 0.2,
+          "gamma": 0.3,
+          "low_threshold": 0.3,
+          "medium_threshold": 0.5,
+          "high_threshold": 0.7,
+          "risk_alert_threshold": 0.7,
+          "high_conflict_threshold": 0.7,
+          "high_steering_threshold": 0.25,
+          "risk_increase_threshold": 0.1,
+          "conflict_increase_threshold": 0.1,
+          "steering_persistence_windows": 2,
+          "assessment_medium_threshold": 0.35,
+          "assessment_high_threshold": 0.75
+        },
+        "ablations": {
+          "source_quality": true,
+          "relation_confidence": true,
+          "observed_action_effects": true,
+          "institutional_policy": true,
+          "viewpoint_dynamics": true
+        }
+      },
+      "outcome": {
+        "final_beliefs": {
+          "CTX01": {
+            "CTQ-A001": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A005": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A010": [
+              "accepted",
+              1.0
+            ],
+            "CTQ-A014": [
+              "accepted",
+              0.7404
+            ],
+            "CTQ-A022": [
+              "accepted",
+              0.7071
+            ]
+          },
+          "VP01": {
+            "CTQ-A002": [
+              "accepted",
+              0.6353
+            ],
+            "CTQ-A007": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A020": [
+              "undecided",
+              0.5046
+            ],
+            "CTQ-A021": [
+              "undecided",
+              0.4853
+            ],
+            "CTQ-A027": [
+              "undecided",
+              0.5177
+            ]
+          },
+          "VP02": {
+            "CTQ-A003": [
+              "undecided",
+              0.4507
+            ],
+            "CTQ-A006": [
+              "accepted",
+              0.6786
+            ],
+            "CTQ-A008": [
+              "accepted",
+              0.6702
+            ]
+          },
+          "VP03": {
+            "CTQ-A004": [
+              "retracted",
+              0.0234
+            ]
+          },
+          "VP04": {
+            "CTQ-A009": [
+              "retracted",
+              0.1509
+            ],
+            "CTQ-A011": [
+              "retracted",
+              0.1283
+            ]
+          },
+          "VP05": {
+            "CTQ-A012": [
+              "rejected",
+              0.3078
+            ],
+            "CTQ-A013": [
+              "accepted",
+              0.7107
+            ]
+          },
+          "VP06": {
+            "CTQ-A015": [
+              "accepted",
+              0.8358
+            ],
+            "CTQ-A016": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A017": [
+              "undecided",
+              0.4982
+            ],
+            "CTQ-A018": [
+              "undecided",
+              0.5634
+            ],
+            "CTQ-A025": [
+              "accepted",
+              1.0
+            ]
+          },
+          "VP07": {
+            "CTQ-A019": [
+              "accepted",
+              0.7828
+            ],
+            "CTQ-A023": [
+              "accepted",
+              0.7293
+            ]
+          },
+          "VP08": {
+            "CTQ-A024": [
+              "undecided",
+              0.4352
+            ],
+            "CTQ-A026": [
+              "undecided",
+              0.4918
+            ]
+          }
+        },
+        "dominant_viewpoint": "VP06",
+        "split_candidates": [],
+        "merge_candidates": [
+          {
+            "agents": [
+              "CTX01",
+              "VP02"
+            ],
+            "score": 0.8213,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R004"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A003",
+              "CTQ-A005",
+              "CTQ-A006",
+              "CTQ-A008",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A022"
+            ],
+            "criteria": {
+              "status_similarity": 0.6667,
+              "confidence_similarity": 0.8185,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "CTX01",
+              "VP06"
+            ],
+            "score": 0.7363,
+            "threshold": 0.68,
+            "cross_support": 4,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R002",
+              "CTQ-R008",
+              "CTQ-R009",
+              "CTQ-R016"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A005",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A022",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9051,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP05"
+            ],
+            "score": 0.8734,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R006"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A012",
+              "CTQ-A013",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.7,
+              "confidence_similarity": 0.9737,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP06"
+            ],
+            "score": 0.8823,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R015",
+              "CTQ-R020"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A025",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.8,
+              "confidence_similarity": 0.8491,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP07"
+            ],
+            "score": 0.7426,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R011",
+              "CTQ-R017"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A019",
+              "CTQ-A023",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9304,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP08"
+            ],
+            "score": 0.7843,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R018",
+              "CTQ-R019"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A024",
+              "CTQ-A025",
+              "CTQ-A026"
+            ],
+            "criteria": {
+              "status_similarity": 0.6,
+              "confidence_similarity": 0.7771,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          }
+        ],
+        "simulation_convergence": false,
+        "convergence_proxy": 0.7133,
+        "event_types": [
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "DOMINANCE_SHIFT",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE"
+        ]
+      }
+    },
+    "max_steps_3": {
+      "config": {
+        "v2": {
+          "reasoning": {
+            "canonical_status": {
+              "accepted": 0.68,
+              "undecided": 0.5,
+              "rejected": 0.3
+            },
+            "relation_confidence": {
+              "high": 1.0,
+              "medium": 0.7
+            },
+            "incoming_support": 0.1,
+            "incoming_attack": 0.12,
+            "evidence_quality": 0.1,
+            "source_authority": {
+              "official_document": 1.0,
+              "authority_statement": 0.85,
+              "news": 0.55,
+              "social": 0.35
+            },
+            "verification_quality": {
+              "verified": 1.0,
+              "verified_copy": 0.9,
+              "partially_verified": 0.65,
+              "needs_human_review": 0.4
+            },
+            "historical_penalty": 0.08,
+            "observed_support_action": 0.06,
+            "observed_attack_action": 0.08,
+            "observed_challenge_action": 0.05,
+            "observed_evidence_action": 0.07
+          },
+          "policy": {
+            "action_base": {
+              "PRESENT_ARGUMENT": 0.4,
+              "SUPPORT": 0.62,
+              "ATTACK": 0.72,
+              "CHALLENGE": 0.56,
+              "PROVIDE_EVIDENCE": 0.6,
+              "RETRACT": 0.78,
+              "NO_OP": 0.0
+            },
+            "high_relation_bonus": 0.08,
+            "medium_relation_bonus": 0.04,
+            "new_argument_bonus": 0.05,
+            "evidence_bonus": 0.04,
+            "historical_penalty": 0.08
+          },
+          "max_deliberation_steps": 3,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38,
+          "retract_threshold": 0.22,
+          "reasoning_blend": 0.35,
+          "confidence_change_epsilon": 0.0001,
+          "no_change_patience": 1
+        },
+        "semantics": {
+          "damping": 0.35,
+          "convergence_epsilon": 0.0001,
+          "max_iterations": 40,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38
+        },
+        "semantic_revision_blend": 0.35,
+        "viewpoint_dynamics": {
+          "split_candidate_threshold": 0.45,
+          "merge_candidate_threshold": 0.68,
+          "stabilization_threshold": 0.72,
+          "persistent_steps": 2,
+          "enable_runtime_split_merge": false
+        },
+        "dynamics": {
+          "persistent_conflict_steps": 2,
+          "confidence_gap_threshold": 0.08,
+          "consensus_threshold": 0.72,
+          "fragmentation_threshold": 0.25
+        },
+        "conflict": {
+          "relation_confidence": {
+            "high": 1.0,
+            "medium": 0.7
+          },
+          "authority_weights": {
+            "official_document": 1.0,
+            "authority_statement": 0.85,
+            "news": 0.55,
+            "social": 0.35
+          },
+          "verification_weights": {
+            "verified": 1.0,
+            "verified_copy": 0.9,
+            "partially_verified": 0.65,
+            "needs_human_review": 0.4
+          },
+          "status_validity": {
+            "accepted": 1.0,
+            "undecided": 0.6,
+            "rejected": 0.25
+          },
+          "historical_multiplier": 0.35
+        },
+        "steering": {
+          "linkage_weights": {
+            "direct_relation": 0.45,
+            "reverse_response_relation": 0.2,
+            "interaction_reaches_target_owner": 0.2,
+            "linked_belief_revision": 0.15
+          },
+          "canonical_relation_semantic_floor": 0.85,
+          "semantic_method": "canonical_relation_else_conclusion_token_jaccard",
+          "medium_evidence_threshold": 0.2,
+          "strong_evidence_threshold": 0.75
+        },
+        "risk": {
+          "alpha": 0.5,
+          "beta": 0.2,
+          "gamma": 0.3,
+          "low_threshold": 0.3,
+          "medium_threshold": 0.5,
+          "high_threshold": 0.7,
+          "risk_alert_threshold": 0.7,
+          "high_conflict_threshold": 0.7,
+          "high_steering_threshold": 0.25,
+          "risk_increase_threshold": 0.1,
+          "conflict_increase_threshold": 0.1,
+          "steering_persistence_windows": 2,
+          "assessment_medium_threshold": 0.35,
+          "assessment_high_threshold": 0.75
+        },
+        "ablations": {
+          "source_quality": true,
+          "relation_confidence": true,
+          "observed_action_effects": true,
+          "institutional_policy": true,
+          "viewpoint_dynamics": true
+        }
+      },
+      "outcome": {
+        "final_beliefs": {
+          "CTX01": {
+            "CTQ-A001": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A005": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A010": [
+              "accepted",
+              0.9423
+            ],
+            "CTQ-A014": [
+              "accepted",
+              0.7637
+            ],
+            "CTQ-A022": [
+              "accepted",
+              0.7054
+            ]
+          },
+          "VP01": {
+            "CTQ-A002": [
+              "accepted",
+              0.6353
+            ],
+            "CTQ-A007": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A020": [
+              "undecided",
+              0.5046
+            ],
+            "CTQ-A021": [
+              "undecided",
+              0.4862
+            ],
+            "CTQ-A027": [
+              "undecided",
+              0.5145
+            ]
+          },
+          "VP02": {
+            "CTQ-A003": [
+              "undecided",
+              0.4863
+            ],
+            "CTQ-A006": [
+              "accepted",
+              0.6207
+            ],
+            "CTQ-A008": [
+              "undecided",
+              0.5967
+            ]
+          },
+          "VP03": {
+            "CTQ-A004": [
+              "retracted",
+              0.0
+            ]
+          },
+          "VP04": {
+            "CTQ-A009": [
+              "retracted",
+              0.1414
+            ],
+            "CTQ-A011": [
+              "retracted",
+              0.0537
+            ]
+          },
+          "VP05": {
+            "CTQ-A012": [
+              "rejected",
+              0.3291
+            ],
+            "CTQ-A013": [
+              "accepted",
+              0.6792
+            ]
+          },
+          "VP06": {
+            "CTQ-A015": [
+              "accepted",
+              0.6289
+            ],
+            "CTQ-A016": [
+              "undecided",
+              0.5343
+            ],
+            "CTQ-A017": [
+              "undecided",
+              0.4667
+            ],
+            "CTQ-A018": [
+              "undecided",
+              0.55
+            ],
+            "CTQ-A025": [
+              "accepted",
+              0.9749
+            ]
+          },
+          "VP07": {
+            "CTQ-A019": [
+              "accepted",
+              0.7267
+            ],
+            "CTQ-A023": [
+              "accepted",
+              0.7262
+            ]
+          },
+          "VP08": {
+            "CTQ-A024": [
+              "undecided",
+              0.5145
+            ],
+            "CTQ-A026": [
+              "undecided",
+              0.47
+            ]
+          }
+        },
+        "dominant_viewpoint": "VP06",
+        "split_candidates": [],
+        "merge_candidates": [
+          {
+            "agents": [
+              "CTX01",
+              "VP02"
+            ],
+            "score": 0.6818,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R004"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A003",
+              "CTQ-A005",
+              "CTQ-A006",
+              "CTQ-A008",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A022"
+            ],
+            "criteria": {
+              "status_similarity": 0.3333,
+              "confidence_similarity": 0.7937,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "CTX01",
+              "VP06"
+            ],
+            "score": 0.7242,
+            "threshold": 0.68,
+            "cross_support": 4,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R002",
+              "CTQ-R008",
+              "CTQ-R009",
+              "CTQ-R016"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A005",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A022",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.8568,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP05"
+            ],
+            "score": 0.8723,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R006"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A012",
+              "CTQ-A013",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.7,
+              "confidence_similarity": 0.9691,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP06"
+            ],
+            "score": 0.896,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R015",
+              "CTQ-R020"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A025",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.8,
+              "confidence_similarity": 0.9041,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP02",
+              "VP04"
+            ],
+            "score": 0.7491,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R005"
+            ],
+            "argument_ids": [
+              "CTQ-A003",
+              "CTQ-A006",
+              "CTQ-A008",
+              "CTQ-A009",
+              "CTQ-A011"
+            ],
+            "criteria": {
+              "status_similarity": 0.6667,
+              "confidence_similarity": 0.5296,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP07"
+            ],
+            "score": 0.7361,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R011",
+              "CTQ-R017"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A019",
+              "CTQ-A023",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9045,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP08"
+            ],
+            "score": 0.8053,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R018",
+              "CTQ-R019"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A024",
+              "CTQ-A025",
+              "CTQ-A026"
+            ],
+            "criteria": {
+              "status_similarity": 0.6,
+              "confidence_similarity": 0.8613,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          }
+        ],
+        "simulation_convergence": false,
+        "convergence_proxy": 0.5084,
+        "event_types": [
+          "CONVERGENCE_PROXY",
+          "DOMINANCE_SHIFT",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE"
+        ]
+      }
+    }
+  },
+  "ablation": {
+    "without_source_quality": {
+      "config": {
+        "v2": {
+          "reasoning": {
+            "canonical_status": {
+              "accepted": 0.68,
+              "undecided": 0.5,
+              "rejected": 0.3
+            },
+            "relation_confidence": {
+              "high": 1.0,
+              "medium": 0.7
+            },
+            "incoming_support": 0.1,
+            "incoming_attack": 0.12,
+            "evidence_quality": 0.1,
+            "source_authority": {
+              "official_document": 1.0,
+              "authority_statement": 0.85,
+              "news": 0.55,
+              "social": 0.35
+            },
+            "verification_quality": {
+              "verified": 1.0,
+              "verified_copy": 0.9,
+              "partially_verified": 0.65,
+              "needs_human_review": 0.4
+            },
+            "historical_penalty": 0.08,
+            "observed_support_action": 0.06,
+            "observed_attack_action": 0.08,
+            "observed_challenge_action": 0.05,
+            "observed_evidence_action": 0.07
+          },
+          "policy": {
+            "action_base": {
+              "PRESENT_ARGUMENT": 0.4,
+              "SUPPORT": 0.62,
+              "ATTACK": 0.72,
+              "CHALLENGE": 0.56,
+              "PROVIDE_EVIDENCE": 0.6,
+              "RETRACT": 0.78,
+              "NO_OP": 0.0
+            },
+            "high_relation_bonus": 0.08,
+            "medium_relation_bonus": 0.04,
+            "new_argument_bonus": 0.05,
+            "evidence_bonus": 0.04,
+            "historical_penalty": 0.08
+          },
+          "max_deliberation_steps": 5,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38,
+          "retract_threshold": 0.22,
+          "reasoning_blend": 0.35,
+          "confidence_change_epsilon": 0.0001,
+          "no_change_patience": 1
+        },
+        "semantics": {
+          "damping": 0.35,
+          "convergence_epsilon": 0.0001,
+          "max_iterations": 40,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38
+        },
+        "semantic_revision_blend": 0.35,
+        "viewpoint_dynamics": {
+          "split_candidate_threshold": 0.45,
+          "merge_candidate_threshold": 0.68,
+          "stabilization_threshold": 0.72,
+          "persistent_steps": 2,
+          "enable_runtime_split_merge": false
+        },
+        "dynamics": {
+          "persistent_conflict_steps": 2,
+          "confidence_gap_threshold": 0.08,
+          "consensus_threshold": 0.72,
+          "fragmentation_threshold": 0.25
+        },
+        "conflict": {
+          "relation_confidence": {
+            "high": 1.0,
+            "medium": 0.7
+          },
+          "authority_weights": {
+            "official_document": 1.0,
+            "authority_statement": 0.85,
+            "news": 0.55,
+            "social": 0.35
+          },
+          "verification_weights": {
+            "verified": 1.0,
+            "verified_copy": 0.9,
+            "partially_verified": 0.65,
+            "needs_human_review": 0.4
+          },
+          "status_validity": {
+            "accepted": 1.0,
+            "undecided": 0.6,
+            "rejected": 0.25
+          },
+          "historical_multiplier": 0.35
+        },
+        "steering": {
+          "linkage_weights": {
+            "direct_relation": 0.45,
+            "reverse_response_relation": 0.2,
+            "interaction_reaches_target_owner": 0.2,
+            "linked_belief_revision": 0.15
+          },
+          "canonical_relation_semantic_floor": 0.85,
+          "semantic_method": "canonical_relation_else_conclusion_token_jaccard",
+          "medium_evidence_threshold": 0.2,
+          "strong_evidence_threshold": 0.75
+        },
+        "risk": {
+          "alpha": 0.5,
+          "beta": 0.2,
+          "gamma": 0.3,
+          "low_threshold": 0.3,
+          "medium_threshold": 0.5,
+          "high_threshold": 0.7,
+          "risk_alert_threshold": 0.7,
+          "high_conflict_threshold": 0.7,
+          "high_steering_threshold": 0.25,
+          "risk_increase_threshold": 0.1,
+          "conflict_increase_threshold": 0.1,
+          "steering_persistence_windows": 2,
+          "assessment_medium_threshold": 0.35,
+          "assessment_high_threshold": 0.75
+        },
+        "ablations": {
+          "source_quality": false,
+          "relation_confidence": true,
+          "observed_action_effects": true,
+          "institutional_policy": true,
+          "viewpoint_dynamics": true
+        }
+      },
+      "outcome": {
+        "final_beliefs": {
+          "CTX01": {
+            "CTQ-A001": [
+              "accepted",
+              0.68
+            ],
+            "CTQ-A005": [
+              "accepted",
+              0.68
+            ],
+            "CTQ-A010": [
+              "accepted",
+              1.0
+            ],
+            "CTQ-A014": [
+              "accepted",
+              0.7055
+            ],
+            "CTQ-A022": [
+              "accepted",
+              0.68
+            ]
+          },
+          "VP01": {
+            "CTQ-A002": [
+              "undecided",
+              0.6003
+            ],
+            "CTQ-A007": [
+              "undecided",
+              0.5
+            ],
+            "CTQ-A020": [
+              "undecided",
+              0.5
+            ],
+            "CTQ-A021": [
+              "undecided",
+              0.5
+            ],
+            "CTQ-A027": [
+              "undecided",
+              0.5
+            ]
+          },
+          "VP02": {
+            "CTQ-A003": [
+              "undecided",
+              0.4457
+            ],
+            "CTQ-A006": [
+              "accepted",
+              0.6436
+            ],
+            "CTQ-A008": [
+              "accepted",
+              0.6352
+            ]
+          },
+          "VP03": {
+            "CTQ-A004": [
+              "retracted",
+              0.0146
+            ]
+          },
+          "VP04": {
+            "CTQ-A009": [
+              "retracted",
+              0.1107
+            ],
+            "CTQ-A011": [
+              "retracted",
+              0.1008
+            ]
+          },
+          "VP05": {
+            "CTQ-A012": [
+              "rejected",
+              0.319
+            ],
+            "CTQ-A013": [
+              "accepted",
+              0.7045
+            ]
+          },
+          "VP06": {
+            "CTQ-A015": [
+              "accepted",
+              0.8297
+            ],
+            "CTQ-A016": [
+              "undecided",
+              0.5
+            ],
+            "CTQ-A017": [
+              "undecided",
+              0.4633
+            ],
+            "CTQ-A018": [
+              "undecided",
+              0.5298
+            ],
+            "CTQ-A025": [
+              "accepted",
+              1.0
+            ]
+          },
+          "VP07": {
+            "CTQ-A019": [
+              "accepted",
+              0.762
+            ],
+            "CTQ-A023": [
+              "accepted",
+              0.68
+            ]
+          },
+          "VP08": {
+            "CTQ-A024": [
+              "undecided",
+              0.4289
+            ],
+            "CTQ-A026": [
+              "undecided",
+              0.4675
+            ]
+          }
+        },
+        "dominant_viewpoint": "VP06",
+        "split_candidates": [],
+        "merge_candidates": [
+          {
+            "agents": [
+              "CTX01",
+              "VP02"
+            ],
+            "score": 0.8231,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R004"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A003",
+              "CTQ-A005",
+              "CTQ-A006",
+              "CTQ-A008",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A022"
+            ],
+            "criteria": {
+              "status_similarity": 0.6667,
+              "confidence_similarity": 0.8257,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "CTX01",
+              "VP06"
+            ],
+            "score": 0.7389,
+            "threshold": 0.68,
+            "cross_support": 4,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R002",
+              "CTQ-R008",
+              "CTQ-R009",
+              "CTQ-R016"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A005",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A022",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9155,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP05"
+            ],
+            "score": 0.7979,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R006"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A012",
+              "CTQ-A013",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.5,
+              "confidence_similarity": 0.9917,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP06"
+            ],
+            "score": 0.8039,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R015",
+              "CTQ-R020"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A025",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.6,
+              "confidence_similarity": 0.8555,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP07"
+            ],
+            "score": 0.7459,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R011",
+              "CTQ-R017"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A019",
+              "CTQ-A023",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9436,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP08"
+            ],
+            "score": 0.7859,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R018",
+              "CTQ-R019"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A024",
+              "CTQ-A025",
+              "CTQ-A026"
+            ],
+            "criteria": {
+              "status_similarity": 0.6,
+              "confidence_similarity": 0.7836,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          }
+        ],
+        "simulation_convergence": false,
+        "convergence_proxy": 0.7984,
+        "event_types": [
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "DOMINANCE_SHIFT",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE"
+        ]
+      }
+    },
+    "without_relation_confidence": {
+      "config": {
+        "v2": {
+          "reasoning": {
+            "canonical_status": {
+              "accepted": 0.68,
+              "undecided": 0.5,
+              "rejected": 0.3
+            },
+            "relation_confidence": {
+              "high": 1.0,
+              "medium": 0.7
+            },
+            "incoming_support": 0.1,
+            "incoming_attack": 0.12,
+            "evidence_quality": 0.1,
+            "source_authority": {
+              "official_document": 1.0,
+              "authority_statement": 0.85,
+              "news": 0.55,
+              "social": 0.35
+            },
+            "verification_quality": {
+              "verified": 1.0,
+              "verified_copy": 0.9,
+              "partially_verified": 0.65,
+              "needs_human_review": 0.4
+            },
+            "historical_penalty": 0.08,
+            "observed_support_action": 0.06,
+            "observed_attack_action": 0.08,
+            "observed_challenge_action": 0.05,
+            "observed_evidence_action": 0.07
+          },
+          "policy": {
+            "action_base": {
+              "PRESENT_ARGUMENT": 0.4,
+              "SUPPORT": 0.62,
+              "ATTACK": 0.72,
+              "CHALLENGE": 0.56,
+              "PROVIDE_EVIDENCE": 0.6,
+              "RETRACT": 0.78,
+              "NO_OP": 0.0
+            },
+            "high_relation_bonus": 0.08,
+            "medium_relation_bonus": 0.04,
+            "new_argument_bonus": 0.05,
+            "evidence_bonus": 0.04,
+            "historical_penalty": 0.08
+          },
+          "max_deliberation_steps": 5,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38,
+          "retract_threshold": 0.22,
+          "reasoning_blend": 0.35,
+          "confidence_change_epsilon": 0.0001,
+          "no_change_patience": 1
+        },
+        "semantics": {
+          "damping": 0.35,
+          "convergence_epsilon": 0.0001,
+          "max_iterations": 40,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38
+        },
+        "semantic_revision_blend": 0.35,
+        "viewpoint_dynamics": {
+          "split_candidate_threshold": 0.45,
+          "merge_candidate_threshold": 0.68,
+          "stabilization_threshold": 0.72,
+          "persistent_steps": 2,
+          "enable_runtime_split_merge": false
+        },
+        "dynamics": {
+          "persistent_conflict_steps": 2,
+          "confidence_gap_threshold": 0.08,
+          "consensus_threshold": 0.72,
+          "fragmentation_threshold": 0.25
+        },
+        "conflict": {
+          "relation_confidence": {
+            "high": 1.0,
+            "medium": 0.7
+          },
+          "authority_weights": {
+            "official_document": 1.0,
+            "authority_statement": 0.85,
+            "news": 0.55,
+            "social": 0.35
+          },
+          "verification_weights": {
+            "verified": 1.0,
+            "verified_copy": 0.9,
+            "partially_verified": 0.65,
+            "needs_human_review": 0.4
+          },
+          "status_validity": {
+            "accepted": 1.0,
+            "undecided": 0.6,
+            "rejected": 0.25
+          },
+          "historical_multiplier": 0.35
+        },
+        "steering": {
+          "linkage_weights": {
+            "direct_relation": 0.45,
+            "reverse_response_relation": 0.2,
+            "interaction_reaches_target_owner": 0.2,
+            "linked_belief_revision": 0.15
+          },
+          "canonical_relation_semantic_floor": 0.85,
+          "semantic_method": "canonical_relation_else_conclusion_token_jaccard",
+          "medium_evidence_threshold": 0.2,
+          "strong_evidence_threshold": 0.75
+        },
+        "risk": {
+          "alpha": 0.5,
+          "beta": 0.2,
+          "gamma": 0.3,
+          "low_threshold": 0.3,
+          "medium_threshold": 0.5,
+          "high_threshold": 0.7,
+          "risk_alert_threshold": 0.7,
+          "high_conflict_threshold": 0.7,
+          "high_steering_threshold": 0.25,
+          "risk_increase_threshold": 0.1,
+          "conflict_increase_threshold": 0.1,
+          "steering_persistence_windows": 2,
+          "assessment_medium_threshold": 0.35,
+          "assessment_high_threshold": 0.75
+        },
+        "ablations": {
+          "source_quality": true,
+          "relation_confidence": false,
+          "observed_action_effects": true,
+          "institutional_policy": true,
+          "viewpoint_dynamics": true
+        }
+      },
+      "outcome": {
+        "final_beliefs": {
+          "CTX01": {
+            "CTQ-A001": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A005": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A010": [
+              "accepted",
+              1.0
+            ],
+            "CTQ-A014": [
+              "accepted",
+              0.7283
+            ],
+            "CTQ-A022": [
+              "accepted",
+              0.7071
+            ]
+          },
+          "VP01": {
+            "CTQ-A002": [
+              "accepted",
+              0.6353
+            ],
+            "CTQ-A007": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A020": [
+              "undecided",
+              0.5046
+            ],
+            "CTQ-A021": [
+              "undecided",
+              0.4853
+            ],
+            "CTQ-A027": [
+              "undecided",
+              0.5177
+            ]
+          },
+          "VP02": {
+            "CTQ-A003": [
+              "undecided",
+              0.4507
+            ],
+            "CTQ-A006": [
+              "accepted",
+              0.6786
+            ],
+            "CTQ-A008": [
+              "accepted",
+              0.6702
+            ]
+          },
+          "VP03": {
+            "CTQ-A004": [
+              "retracted",
+              0.014
+            ]
+          },
+          "VP04": {
+            "CTQ-A009": [
+              "retracted",
+              0.142
+            ],
+            "CTQ-A011": [
+              "retracted",
+              0.164
+            ]
+          },
+          "VP05": {
+            "CTQ-A012": [
+              "rejected",
+              0.2897
+            ],
+            "CTQ-A013": [
+              "accepted",
+              0.7198
+            ]
+          },
+          "VP06": {
+            "CTQ-A015": [
+              "accepted",
+              0.8734
+            ],
+            "CTQ-A016": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A017": [
+              "undecided",
+              0.4982
+            ],
+            "CTQ-A018": [
+              "undecided",
+              0.567
+            ],
+            "CTQ-A025": [
+              "accepted",
+              1.0
+            ]
+          },
+          "VP07": {
+            "CTQ-A019": [
+              "accepted",
+              0.8209
+            ],
+            "CTQ-A023": [
+              "accepted",
+              0.7293
+            ]
+          },
+          "VP08": {
+            "CTQ-A024": [
+              "undecided",
+              0.4677
+            ],
+            "CTQ-A026": [
+              "undecided",
+              0.4918
+            ]
+          }
+        },
+        "dominant_viewpoint": "VP06",
+        "split_candidates": [],
+        "merge_candidates": [
+          {
+            "agents": [
+              "CTX01",
+              "VP02"
+            ],
+            "score": 0.8219,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R004"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A003",
+              "CTQ-A005",
+              "CTQ-A006",
+              "CTQ-A008",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A022"
+            ],
+            "criteria": {
+              "status_similarity": 0.6667,
+              "confidence_similarity": 0.8209,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "CTX01",
+              "VP06"
+            ],
+            "score": 0.7389,
+            "threshold": 0.68,
+            "cross_support": 4,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R002",
+              "CTQ-R008",
+              "CTQ-R009",
+              "CTQ-R016"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A005",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A022",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9157,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP05"
+            ],
+            "score": 0.8723,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R006"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A012",
+              "CTQ-A013",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.7,
+              "confidence_similarity": 0.9692,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP06"
+            ],
+            "score": 0.8802,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R015",
+              "CTQ-R020"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A025",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.8,
+              "confidence_similarity": 0.8409,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP07"
+            ],
+            "score": 0.7399,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R011",
+              "CTQ-R017"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A019",
+              "CTQ-A023",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9196,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP08"
+            ],
+            "score": 0.7863,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R018",
+              "CTQ-R019"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A024",
+              "CTQ-A025",
+              "CTQ-A026"
+            ],
+            "criteria": {
+              "status_similarity": 0.6,
+              "confidence_similarity": 0.7851,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          }
+        ],
+        "simulation_convergence": false,
+        "convergence_proxy": 0.7126,
+        "event_types": [
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "DOMINANCE_SHIFT",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE"
+        ]
+      }
+    },
+    "without_action_effects": {
+      "config": {
+        "v2": {
+          "reasoning": {
+            "canonical_status": {
+              "accepted": 0.68,
+              "undecided": 0.5,
+              "rejected": 0.3
+            },
+            "relation_confidence": {
+              "high": 1.0,
+              "medium": 0.7
+            },
+            "incoming_support": 0.1,
+            "incoming_attack": 0.12,
+            "evidence_quality": 0.1,
+            "source_authority": {
+              "official_document": 1.0,
+              "authority_statement": 0.85,
+              "news": 0.55,
+              "social": 0.35
+            },
+            "verification_quality": {
+              "verified": 1.0,
+              "verified_copy": 0.9,
+              "partially_verified": 0.65,
+              "needs_human_review": 0.4
+            },
+            "historical_penalty": 0.08,
+            "observed_support_action": 0.06,
+            "observed_attack_action": 0.08,
+            "observed_challenge_action": 0.05,
+            "observed_evidence_action": 0.07
+          },
+          "policy": {
+            "action_base": {
+              "PRESENT_ARGUMENT": 0.4,
+              "SUPPORT": 0.62,
+              "ATTACK": 0.72,
+              "CHALLENGE": 0.56,
+              "PROVIDE_EVIDENCE": 0.6,
+              "RETRACT": 0.78,
+              "NO_OP": 0.0
+            },
+            "high_relation_bonus": 0.08,
+            "medium_relation_bonus": 0.04,
+            "new_argument_bonus": 0.05,
+            "evidence_bonus": 0.04,
+            "historical_penalty": 0.08
+          },
+          "max_deliberation_steps": 5,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38,
+          "retract_threshold": 0.22,
+          "reasoning_blend": 0.35,
+          "confidence_change_epsilon": 0.0001,
+          "no_change_patience": 1
+        },
+        "semantics": {
+          "damping": 0.35,
+          "convergence_epsilon": 0.0001,
+          "max_iterations": 40,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38
+        },
+        "semantic_revision_blend": 0.35,
+        "viewpoint_dynamics": {
+          "split_candidate_threshold": 0.45,
+          "merge_candidate_threshold": 0.68,
+          "stabilization_threshold": 0.72,
+          "persistent_steps": 2,
+          "enable_runtime_split_merge": false
+        },
+        "dynamics": {
+          "persistent_conflict_steps": 2,
+          "confidence_gap_threshold": 0.08,
+          "consensus_threshold": 0.72,
+          "fragmentation_threshold": 0.25
+        },
+        "conflict": {
+          "relation_confidence": {
+            "high": 1.0,
+            "medium": 0.7
+          },
+          "authority_weights": {
+            "official_document": 1.0,
+            "authority_statement": 0.85,
+            "news": 0.55,
+            "social": 0.35
+          },
+          "verification_weights": {
+            "verified": 1.0,
+            "verified_copy": 0.9,
+            "partially_verified": 0.65,
+            "needs_human_review": 0.4
+          },
+          "status_validity": {
+            "accepted": 1.0,
+            "undecided": 0.6,
+            "rejected": 0.25
+          },
+          "historical_multiplier": 0.35
+        },
+        "steering": {
+          "linkage_weights": {
+            "direct_relation": 0.45,
+            "reverse_response_relation": 0.2,
+            "interaction_reaches_target_owner": 0.2,
+            "linked_belief_revision": 0.15
+          },
+          "canonical_relation_semantic_floor": 0.85,
+          "semantic_method": "canonical_relation_else_conclusion_token_jaccard",
+          "medium_evidence_threshold": 0.2,
+          "strong_evidence_threshold": 0.75
+        },
+        "risk": {
+          "alpha": 0.5,
+          "beta": 0.2,
+          "gamma": 0.3,
+          "low_threshold": 0.3,
+          "medium_threshold": 0.5,
+          "high_threshold": 0.7,
+          "risk_alert_threshold": 0.7,
+          "high_conflict_threshold": 0.7,
+          "high_steering_threshold": 0.25,
+          "risk_increase_threshold": 0.1,
+          "conflict_increase_threshold": 0.1,
+          "steering_persistence_windows": 2,
+          "assessment_medium_threshold": 0.35,
+          "assessment_high_threshold": 0.75
+        },
+        "ablations": {
+          "source_quality": true,
+          "relation_confidence": true,
+          "observed_action_effects": false,
+          "institutional_policy": true,
+          "viewpoint_dynamics": true
+        }
+      },
+      "outcome": {
+        "final_beliefs": {
+          "CTX01": {
+            "CTQ-A001": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A005": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A010": [
+              "accepted",
+              0.9143
+            ],
+            "CTQ-A014": [
+              "accepted",
+              0.7584
+            ],
+            "CTQ-A022": [
+              "accepted",
+              0.7071
+            ]
+          },
+          "VP01": {
+            "CTQ-A002": [
+              "accepted",
+              0.6353
+            ],
+            "CTQ-A007": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A020": [
+              "undecided",
+              0.5046
+            ],
+            "CTQ-A021": [
+              "undecided",
+              0.4853
+            ],
+            "CTQ-A027": [
+              "undecided",
+              0.5177
+            ]
+          },
+          "VP02": {
+            "CTQ-A003": [
+              "undecided",
+              0.5046
+            ],
+            "CTQ-A006": [
+              "accepted",
+              0.6941
+            ],
+            "CTQ-A008": [
+              "accepted",
+              0.6941
+            ]
+          },
+          "VP03": {
+            "CTQ-A004": [
+              "retracted",
+              0.0238
+            ]
+          },
+          "VP04": {
+            "CTQ-A009": [
+              "retracted",
+              0.1619
+            ],
+            "CTQ-A011": [
+              "retracted",
+              0.1728
+            ]
+          },
+          "VP05": {
+            "CTQ-A012": [
+              "undecided",
+              0.3983
+            ],
+            "CTQ-A013": [
+              "undecided",
+              0.5807
+            ]
+          },
+          "VP06": {
+            "CTQ-A015": [
+              "accepted",
+              0.8827
+            ],
+            "CTQ-A016": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A017": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A018": [
+              "undecided",
+              0.5408
+            ],
+            "CTQ-A025": [
+              "accepted",
+              0.8536
+            ]
+          },
+          "VP07": {
+            "CTQ-A019": [
+              "accepted",
+              0.6638
+            ],
+            "CTQ-A023": [
+              "accepted",
+              0.7293
+            ]
+          },
+          "VP08": {
+            "CTQ-A024": [
+              "undecided",
+              0.5177
+            ],
+            "CTQ-A026": [
+              "undecided",
+              0.5243
+            ]
+          }
+        },
+        "dominant_viewpoint": "VP06",
+        "split_candidates": [],
+        "merge_candidates": [
+          {
+            "agents": [
+              "CTX01",
+              "VP02"
+            ],
+            "score": 0.8324,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R004"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A003",
+              "CTQ-A005",
+              "CTQ-A006",
+              "CTQ-A008",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A022"
+            ],
+            "criteria": {
+              "status_similarity": 0.6667,
+              "confidence_similarity": 0.8631,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "CTX01",
+              "VP06"
+            ],
+            "score": 0.7354,
+            "threshold": 0.68,
+            "cross_support": 4,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R002",
+              "CTQ-R008",
+              "CTQ-R009",
+              "CTQ-R016"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A005",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A022",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9015,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP05"
+            ],
+            "score": 0.9085,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R006"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A012",
+              "CTQ-A013",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.8,
+              "confidence_similarity": 0.954,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP06"
+            ],
+            "score": 0.8866,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R015",
+              "CTQ-R020"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A025",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.8,
+              "confidence_similarity": 0.8662,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP07"
+            ],
+            "score": 0.7532,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R011",
+              "CTQ-R017"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A019",
+              "CTQ-A023",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9728,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP08"
+            ],
+            "score": 0.8029,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R018",
+              "CTQ-R019"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A024",
+              "CTQ-A025",
+              "CTQ-A026"
+            ],
+            "criteria": {
+              "status_similarity": 0.6,
+              "confidence_similarity": 0.8517,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          }
+        ],
+        "simulation_convergence": false,
+        "convergence_proxy": 0.7271,
+        "event_types": [
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "DOMINANCE_SHIFT",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE"
+        ]
+      }
+    },
+    "without_institutional_policy": {
+      "config": {
+        "v2": {
+          "reasoning": {
+            "canonical_status": {
+              "accepted": 0.68,
+              "undecided": 0.5,
+              "rejected": 0.3
+            },
+            "relation_confidence": {
+              "high": 1.0,
+              "medium": 0.7
+            },
+            "incoming_support": 0.1,
+            "incoming_attack": 0.12,
+            "evidence_quality": 0.1,
+            "source_authority": {
+              "official_document": 1.0,
+              "authority_statement": 0.85,
+              "news": 0.55,
+              "social": 0.35
+            },
+            "verification_quality": {
+              "verified": 1.0,
+              "verified_copy": 0.9,
+              "partially_verified": 0.65,
+              "needs_human_review": 0.4
+            },
+            "historical_penalty": 0.08,
+            "observed_support_action": 0.06,
+            "observed_attack_action": 0.08,
+            "observed_challenge_action": 0.05,
+            "observed_evidence_action": 0.07
+          },
+          "policy": {
+            "action_base": {
+              "PRESENT_ARGUMENT": 0.4,
+              "SUPPORT": 0.62,
+              "ATTACK": 0.72,
+              "CHALLENGE": 0.56,
+              "PROVIDE_EVIDENCE": 0.6,
+              "RETRACT": 0.78,
+              "NO_OP": 0.0
+            },
+            "high_relation_bonus": 0.08,
+            "medium_relation_bonus": 0.04,
+            "new_argument_bonus": 0.05,
+            "evidence_bonus": 0.04,
+            "historical_penalty": 0.08
+          },
+          "max_deliberation_steps": 5,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38,
+          "retract_threshold": 0.22,
+          "reasoning_blend": 0.35,
+          "confidence_change_epsilon": 0.0001,
+          "no_change_patience": 1
+        },
+        "semantics": {
+          "damping": 0.35,
+          "convergence_epsilon": 0.0001,
+          "max_iterations": 40,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38
+        },
+        "semantic_revision_blend": 0.35,
+        "viewpoint_dynamics": {
+          "split_candidate_threshold": 0.45,
+          "merge_candidate_threshold": 0.68,
+          "stabilization_threshold": 0.72,
+          "persistent_steps": 2,
+          "enable_runtime_split_merge": false
+        },
+        "dynamics": {
+          "persistent_conflict_steps": 2,
+          "confidence_gap_threshold": 0.08,
+          "consensus_threshold": 0.72,
+          "fragmentation_threshold": 0.25
+        },
+        "conflict": {
+          "relation_confidence": {
+            "high": 1.0,
+            "medium": 0.7
+          },
+          "authority_weights": {
+            "official_document": 1.0,
+            "authority_statement": 0.85,
+            "news": 0.55,
+            "social": 0.35
+          },
+          "verification_weights": {
+            "verified": 1.0,
+            "verified_copy": 0.9,
+            "partially_verified": 0.65,
+            "needs_human_review": 0.4
+          },
+          "status_validity": {
+            "accepted": 1.0,
+            "undecided": 0.6,
+            "rejected": 0.25
+          },
+          "historical_multiplier": 0.35
+        },
+        "steering": {
+          "linkage_weights": {
+            "direct_relation": 0.45,
+            "reverse_response_relation": 0.2,
+            "interaction_reaches_target_owner": 0.2,
+            "linked_belief_revision": 0.15
+          },
+          "canonical_relation_semantic_floor": 0.85,
+          "semantic_method": "canonical_relation_else_conclusion_token_jaccard",
+          "medium_evidence_threshold": 0.2,
+          "strong_evidence_threshold": 0.75
+        },
+        "risk": {
+          "alpha": 0.5,
+          "beta": 0.2,
+          "gamma": 0.3,
+          "low_threshold": 0.3,
+          "medium_threshold": 0.5,
+          "high_threshold": 0.7,
+          "risk_alert_threshold": 0.7,
+          "high_conflict_threshold": 0.7,
+          "high_steering_threshold": 0.25,
+          "risk_increase_threshold": 0.1,
+          "conflict_increase_threshold": 0.1,
+          "steering_persistence_windows": 2,
+          "assessment_medium_threshold": 0.35,
+          "assessment_high_threshold": 0.75
+        },
+        "ablations": {
+          "source_quality": true,
+          "relation_confidence": true,
+          "observed_action_effects": true,
+          "institutional_policy": false,
+          "viewpoint_dynamics": true
+        }
+      },
+      "outcome": {
+        "final_beliefs": {
+          "CTX01": {
+            "CTQ-A001": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A005": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A010": [
+              "accepted",
+              1.0
+            ],
+            "CTQ-A014": [
+              "accepted",
+              0.7066
+            ],
+            "CTQ-A022": [
+              "accepted",
+              0.7071
+            ]
+          },
+          "VP01": {
+            "CTQ-A002": [
+              "accepted",
+              0.6353
+            ],
+            "CTQ-A007": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A020": [
+              "undecided",
+              0.5046
+            ],
+            "CTQ-A021": [
+              "undecided",
+              0.4853
+            ],
+            "CTQ-A027": [
+              "undecided",
+              0.5177
+            ]
+          },
+          "VP02": {
+            "CTQ-A003": [
+              "undecided",
+              0.4507
+            ],
+            "CTQ-A006": [
+              "accepted",
+              0.6786
+            ],
+            "CTQ-A008": [
+              "accepted",
+              0.6702
+            ]
+          },
+          "VP03": {
+            "CTQ-A004": [
+              "retracted",
+              0.0137
+            ]
+          },
+          "VP04": {
+            "CTQ-A009": [
+              "retracted",
+              0.1417
+            ],
+            "CTQ-A011": [
+              "retracted",
+              0.082
+            ]
+          },
+          "VP05": {
+            "CTQ-A012": [
+              "rejected",
+              0.3213
+            ],
+            "CTQ-A013": [
+              "accepted",
+              0.6935
+            ]
+          },
+          "VP06": {
+            "CTQ-A015": [
+              "accepted",
+              1.0
+            ],
+            "CTQ-A016": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A017": [
+              "undecided",
+              0.4982
+            ],
+            "CTQ-A018": [
+              "undecided",
+              0.5408
+            ],
+            "CTQ-A025": [
+              "accepted",
+              1.0
+            ]
+          },
+          "VP07": {
+            "CTQ-A019": [
+              "accepted",
+              0.769
+            ],
+            "CTQ-A023": [
+              "accepted",
+              0.7293
+            ]
+          },
+          "VP08": {
+            "CTQ-A024": [
+              "undecided",
+              0.4352
+            ],
+            "CTQ-A026": [
+              "undecided",
+              0.4918
+            ]
+          }
+        },
+        "dominant_viewpoint": "VP06",
+        "split_candidates": [],
+        "merge_candidates": [
+          {
+            "agents": [
+              "CTX01",
+              "VP02"
+            ],
+            "score": 0.823,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R004"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A003",
+              "CTQ-A005",
+              "CTQ-A006",
+              "CTQ-A008",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A022"
+            ],
+            "criteria": {
+              "status_similarity": 0.6667,
+              "confidence_similarity": 0.8252,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "CTX01",
+              "VP06"
+            ],
+            "score": 0.745,
+            "threshold": 0.68,
+            "cross_support": 4,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R002",
+              "CTQ-R008",
+              "CTQ-R009",
+              "CTQ-R016"
+            ],
+            "argument_ids": [
+              "CTQ-A001",
+              "CTQ-A005",
+              "CTQ-A010",
+              "CTQ-A014",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A022",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9401,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP05"
+            ],
+            "score": 0.873,
+            "threshold": 0.68,
+            "cross_support": 1,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R006"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A012",
+              "CTQ-A013",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.7,
+              "confidence_similarity": 0.9719,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP01",
+              "VP06"
+            ],
+            "score": 0.8752,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R015",
+              "CTQ-R020"
+            ],
+            "argument_ids": [
+              "CTQ-A002",
+              "CTQ-A007",
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A020",
+              "CTQ-A021",
+              "CTQ-A025",
+              "CTQ-A027"
+            ],
+            "criteria": {
+              "status_similarity": 0.8,
+              "confidence_similarity": 0.8208,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP07"
+            ],
+            "score": 0.7514,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R011",
+              "CTQ-R017"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A019",
+              "CTQ-A023",
+              "CTQ-A025"
+            ],
+            "criteria": {
+              "status_similarity": 0.4,
+              "confidence_similarity": 0.9656,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          },
+          {
+            "agents": [
+              "VP06",
+              "VP08"
+            ],
+            "score": 0.7772,
+            "threshold": 0.68,
+            "cross_support": 2,
+            "cross_attack": 0,
+            "relation_ids": [
+              "CTQ-R018",
+              "CTQ-R019"
+            ],
+            "argument_ids": [
+              "CTQ-A015",
+              "CTQ-A016",
+              "CTQ-A017",
+              "CTQ-A018",
+              "CTQ-A024",
+              "CTQ-A025",
+              "CTQ-A026"
+            ],
+            "criteria": {
+              "status_similarity": 0.6,
+              "confidence_similarity": 0.7487,
+              "cross_support_ratio": 1.0,
+              "low_conflict": 1.0
+            }
+          }
+        ],
+        "simulation_convergence": false,
+        "convergence_proxy": 0.7246,
+        "event_types": [
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "DOMINANCE_SHIFT",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE",
+          "VIEWPOINT_MERGE_CANDIDATE"
+        ]
+      }
+    },
+    "without_viewpoint_dynamics": {
+      "config": {
+        "v2": {
+          "reasoning": {
+            "canonical_status": {
+              "accepted": 0.68,
+              "undecided": 0.5,
+              "rejected": 0.3
+            },
+            "relation_confidence": {
+              "high": 1.0,
+              "medium": 0.7
+            },
+            "incoming_support": 0.1,
+            "incoming_attack": 0.12,
+            "evidence_quality": 0.1,
+            "source_authority": {
+              "official_document": 1.0,
+              "authority_statement": 0.85,
+              "news": 0.55,
+              "social": 0.35
+            },
+            "verification_quality": {
+              "verified": 1.0,
+              "verified_copy": 0.9,
+              "partially_verified": 0.65,
+              "needs_human_review": 0.4
+            },
+            "historical_penalty": 0.08,
+            "observed_support_action": 0.06,
+            "observed_attack_action": 0.08,
+            "observed_challenge_action": 0.05,
+            "observed_evidence_action": 0.07
+          },
+          "policy": {
+            "action_base": {
+              "PRESENT_ARGUMENT": 0.4,
+              "SUPPORT": 0.62,
+              "ATTACK": 0.72,
+              "CHALLENGE": 0.56,
+              "PROVIDE_EVIDENCE": 0.6,
+              "RETRACT": 0.78,
+              "NO_OP": 0.0
+            },
+            "high_relation_bonus": 0.08,
+            "medium_relation_bonus": 0.04,
+            "new_argument_bonus": 0.05,
+            "evidence_bonus": 0.04,
+            "historical_penalty": 0.08
+          },
+          "max_deliberation_steps": 5,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38,
+          "retract_threshold": 0.22,
+          "reasoning_blend": 0.35,
+          "confidence_change_epsilon": 0.0001,
+          "no_change_patience": 1
+        },
+        "semantics": {
+          "damping": 0.35,
+          "convergence_epsilon": 0.0001,
+          "max_iterations": 40,
+          "accepted_threshold": 0.62,
+          "rejected_threshold": 0.38
+        },
+        "semantic_revision_blend": 0.35,
+        "viewpoint_dynamics": {
+          "split_candidate_threshold": 0.45,
+          "merge_candidate_threshold": 0.68,
+          "stabilization_threshold": 0.72,
+          "persistent_steps": 2,
+          "enable_runtime_split_merge": false
+        },
+        "dynamics": {
+          "persistent_conflict_steps": 2,
+          "confidence_gap_threshold": 0.08,
+          "consensus_threshold": 0.72,
+          "fragmentation_threshold": 0.25
+        },
+        "conflict": {
+          "relation_confidence": {
+            "high": 1.0,
+            "medium": 0.7
+          },
+          "authority_weights": {
+            "official_document": 1.0,
+            "authority_statement": 0.85,
+            "news": 0.55,
+            "social": 0.35
+          },
+          "verification_weights": {
+            "verified": 1.0,
+            "verified_copy": 0.9,
+            "partially_verified": 0.65,
+            "needs_human_review": 0.4
+          },
+          "status_validity": {
+            "accepted": 1.0,
+            "undecided": 0.6,
+            "rejected": 0.25
+          },
+          "historical_multiplier": 0.35
+        },
+        "steering": {
+          "linkage_weights": {
+            "direct_relation": 0.45,
+            "reverse_response_relation": 0.2,
+            "interaction_reaches_target_owner": 0.2,
+            "linked_belief_revision": 0.15
+          },
+          "canonical_relation_semantic_floor": 0.85,
+          "semantic_method": "canonical_relation_else_conclusion_token_jaccard",
+          "medium_evidence_threshold": 0.2,
+          "strong_evidence_threshold": 0.75
+        },
+        "risk": {
+          "alpha": 0.5,
+          "beta": 0.2,
+          "gamma": 0.3,
+          "low_threshold": 0.3,
+          "medium_threshold": 0.5,
+          "high_threshold": 0.7,
+          "risk_alert_threshold": 0.7,
+          "high_conflict_threshold": 0.7,
+          "high_steering_threshold": 0.25,
+          "risk_increase_threshold": 0.1,
+          "conflict_increase_threshold": 0.1,
+          "steering_persistence_windows": 2,
+          "assessment_medium_threshold": 0.35,
+          "assessment_high_threshold": 0.75
+        },
+        "ablations": {
+          "source_quality": true,
+          "relation_confidence": true,
+          "observed_action_effects": true,
+          "institutional_policy": true,
+          "viewpoint_dynamics": false
+        }
+      },
+      "outcome": {
+        "final_beliefs": {
+          "CTX01": {
+            "CTQ-A001": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A005": [
+              "accepted",
+              0.7297
+            ],
+            "CTQ-A010": [
+              "accepted",
+              1.0
+            ],
+            "CTQ-A014": [
+              "accepted",
+              0.7304
+            ],
+            "CTQ-A022": [
+              "accepted",
+              0.7071
+            ]
+          },
+          "VP01": {
+            "CTQ-A002": [
+              "accepted",
+              0.6353
+            ],
+            "CTQ-A007": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A020": [
+              "undecided",
+              0.5046
+            ],
+            "CTQ-A021": [
+              "undecided",
+              0.4853
+            ],
+            "CTQ-A027": [
+              "undecided",
+              0.5177
+            ]
+          },
+          "VP02": {
+            "CTQ-A003": [
+              "undecided",
+              0.4507
+            ],
+            "CTQ-A006": [
+              "accepted",
+              0.6786
+            ],
+            "CTQ-A008": [
+              "accepted",
+              0.6702
+            ]
+          },
+          "VP03": {
+            "CTQ-A004": [
+              "retracted",
+              0.0137
+            ]
+          },
+          "VP04": {
+            "CTQ-A009": [
+              "retracted",
+              0.1417
+            ],
+            "CTQ-A011": [
+              "retracted",
+              0.1043
+            ]
+          },
+          "VP05": {
+            "CTQ-A012": [
+              "rejected",
+              0.3213
+            ],
+            "CTQ-A013": [
+              "accepted",
+              0.6935
+            ]
+          },
+          "VP06": {
+            "CTQ-A015": [
+              "accepted",
+              0.8564
+            ],
+            "CTQ-A016": [
+              "undecided",
+              0.5348
+            ],
+            "CTQ-A017": [
+              "undecided",
+              0.4982
+            ],
+            "CTQ-A018": [
+              "undecided",
+              0.5408
+            ],
+            "CTQ-A025": [
+              "accepted",
+              1.0
+            ]
+          },
+          "VP07": {
+            "CTQ-A019": [
+              "accepted",
+              0.769
+            ],
+            "CTQ-A023": [
+              "accepted",
+              0.7293
+            ]
+          },
+          "VP08": {
+            "CTQ-A024": [
+              "undecided",
+              0.4352
+            ],
+            "CTQ-A026": [
+              "undecided",
+              0.4918
+            ]
+          }
+        },
+        "dominant_viewpoint": "VP06",
+        "split_candidates": [],
+        "merge_candidates": [],
+        "simulation_convergence": false,
+        "convergence_proxy": 0.7125,
+        "event_types": [
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "CONVERGENCE_PROXY",
+          "DOMINANCE_SHIFT",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "FRAGMENTATION_PROXY",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "PERSISTENT_CONFLICT",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION",
+          "STABILIZATION"
+        ]
+      }
+    }
+  },
+  "interpretation": "Differences are simulation sensitivity/ablation results, not empirical causal effects."
+}

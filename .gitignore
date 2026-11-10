@@ -1,0 +1,26 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python artifacts (reserved for future components)
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Local environment and secret files
+.env
+.env.*
+!.env.example
+
+# Generated temporary files
+*.tmp
+*.log
