@@ -2,7 +2,7 @@
 
 ## Research objective
 
-AGORA studies how argument structures change as public claims, case-specific evidence, and authoritative information become available over time.
+VIP Girls studies how argument structures change as public claims, case-specific evidence, and authoritative information become available over time.
 
 The current formulation is:
 
@@ -30,4 +30,4 @@ Where:
 
 ## Current boundary
 
-The current stage covers data preparation and temporal representation only. It does not include solver implementation, ASP encoding, or a multi-agent system.
+The current system includes data preparation, temporal representation and a deterministic hierarchical multi-agent simulation. It does not include ASP encoding or an empirically calibrated causal model.

@@ -21,7 +21,7 @@
 ## D-004: Private GitHub baseline
 
 - Status: approved
-- Decision: Initialize Git with `main` as the default branch and publish the setup baseline to the private `dlxik/AGORA` GitHub repository.
+- Decision: Initialize Git with `main` as the default branch and publish the setup baseline to the former private repository.
 - Rationale: Establish version control while keeping unpublished research preparation non-public by default.
 
 ## D-005: CTQ source identifier assignment
@@ -129,5 +129,23 @@
 ## D-022: Shared repository migration
 
 - Status: active
-- Decision: Use `https://github.com/dlxik/vip-girls.git` as the shared collaboration repository from 2026-11-10. Import the latest V4 state from `dlxik/AGORA` commit `2e1dce0cfe7fb7113c8c720e568f1983efb44a45`, preserve the existing architecture HTML, and organize documentation under `docs/architecture`, `docs/research`, and `docs/project`.
+- Decision: Use `https://github.com/dlxik/vip-girls.git` as the shared collaboration repository from 2026-11-10. Import the latest legacy state at commit `2e1dce0cfe7fb7113c8c720e568f1983efb44a45`, preserve the existing architecture HTML, and organize documentation under `docs/architecture`, `docs/research`, and `docs/project`.
 - Rationale: The project now has two active collaborators and needs a single, clearly indexed shared asset base without losing the provenance of the former repository.
+
+## D-023: Source preservation boundary
+
+- Status: approved by implementation request
+- Decision: Commit full source artifacts only when redistribution is clearly permitted. Otherwise retain required metadata and a SHA-256 manifest in the repository while storing any lawful research copy in a private controlled archive. Minimize social-media and personal data and retain only abstracted claims where possible.
+- Rationale: This preserves auditability without treating Git as an unrestricted archive of copyrighted, private, or harmful material.
+
+## D-024: Functional layer names
+
+- Status: approved by implementation request
+- Decision: Use `core`, `society`, and `hierarchy` in public APIs, configuration, trace fields, tests, and UI instead of historical numbered software-version names.
+- Rationale: The names describe responsibility and remain meaningful as the implementation evolves.
+
+## D-025: CTQ scope and runtime viewpoint structure
+
+- Status: approved by implementation request
+- Decision: The current implementation serves CTQ only. An argument may belong to multiple viewpoints. Runtime split/merge retires active overlay viewpoints and creates derived replacements after a candidate persists for the configured number of steps; the canonical base mapping remains immutable for audit.
+- Rationale: Multi-membership better represents overlapping positions, while an immutable base plus mutable runtime overlay preserves provenance. Primary-owner routing remains a documented deterministic implementation constraint.

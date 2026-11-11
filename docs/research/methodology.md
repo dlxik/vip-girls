@@ -26,6 +26,6 @@ Each candidate records `transition_targets` so its role in `t1->t2`, `t2->t3`, `
 - Trace material factual claims and annotations to source identifiers.
 - Review argument annotations in batches of no more than ten new arguments.
 
-## Current exclusions
+## Current implementation boundary
 
-Automated reasoning, ASP encoding, agent implementation, and large-scale evaluation are not part of the current phase.
+The repository now includes deterministic heuristic reasoning, hierarchical argument agents and sensitivity evaluation. ASP encoding, empirical weight calibration, measured real-world exposure and large-scale external validation remain outside the current implementation.

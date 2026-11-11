@@ -131,6 +131,58 @@
       border-radius: 9px;
       box-shadow: 0 2px 4px rgba(15, 23, 42, 0.06);
     }
+    #box-risk-reasoning {
+      box-sizing: border-box;
+      min-height: 252px;
+    }
+    .risk-reasoning-grid {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 12px 32px;
+      align-items: stretch;
+    }
+    .risk-input-panel,
+    .risk-explanation-panel,
+    #box-formula {
+      box-sizing: border-box;
+      min-height: 108px;
+    }
+    .risk-input-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    #box-formula {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-inline: 16px;
+    }
+    .risk-explanation-panel {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      min-height: 0;
+      padding: 10px 4px 0;
+      border-top: 1px solid #cbd5e1;
+      overflow-wrap: anywhere;
+    }
+    .risk-explanation-panel > div {
+      min-width: 0;
+    }
+    #legend-box {
+      z-index: 8;
+    }
+    #legend-box > .blue-box {
+      height: 100%;
+    }
+    .legend-items {
+      height: calc(100% - 34px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
     /* Dynamic SVG Overlay */
     #connections-svg {
       position: absolute;
@@ -437,20 +489,28 @@
                 <div contenteditable="true" class="col-span-8">: temporal argument graph<br/>&nbsp;&nbsp;<span class="math">(A<sub>K</sub>(t) <span class="math-upright">∪</span> A<sub>D</sub>(t), R<sup>+</sup>, R<sup>−</sup>)</span></div>
               </div>
               <div class="grid grid-cols-12 items-baseline">
-                <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">C<span class="math-upright">(</span>x<sub>i</sub>, t<span class="math-upright">)</span></div>
-                <div contenteditable="true" class="col-span-8">: conflict score of <span class="math">x<sub>i</sub></span> at <span class="math">t</span></div>
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">C<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">)</span></div>
+                <div contenteditable="true" class="col-span-8">: incompatibility with temporally valid reference knowledge, considering provenance and applicability</div>
               </div>
               <div class="grid grid-cols-12 items-baseline">
-                <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">S<span class="math-upright">(</span>x<sub>i</sub>, t<span class="math-upright">)</span></div>
-                <div contenteditable="true" class="col-span-8">: steering proxy of <span class="math">x<sub>i</sub></span> at <span class="math">t</span></div>
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">S<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">)</span></div>
+                <div contenteditable="true" class="col-span-8">: observable potential of <span class="math">x<sub>i</sub></span> to direct or catalyze later argumentative interaction</div>
               </div>
               <div class="grid grid-cols-12 items-baseline">
-                <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">R<span class="math-upright">(</span>x<sub>i</sub>, s, t<span class="math-upright">)</span></div>
-                <div contenteditable="true" class="col-span-8">: risk of <span class="math">x<sub>i</sub></span> for stakeholder <span class="math">s</span><br/>&nbsp;&nbsp;at <span class="math">t</span></div>
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;s,&thinsp;t<span class="math-upright">)</span></div>
+                <div contenteditable="true" class="col-span-8">: structured, traceable risk assessment for stakeholder <span class="math">s</span>; not a prediction of actual harm</div>
               </div>
               <div class="grid grid-cols-12 items-baseline">
                 <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">I<sub>s</sub><span class="math-upright">(</span>t<span class="math-upright">)</span></div>
-                <div contenteditable="true" class="col-span-8">: interests and context of a<br/>&nbsp;&nbsp;stakeholder <span class="math">s</span> at <span class="math">t</span></div>
+                <div contenteditable="true" class="col-span-8">: relevant interests and contextual information of stakeholder <span class="math">s</span> at <span class="math">t</span></div>
+              </div>
+              <div class="grid grid-cols-12 items-baseline">
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">Q<sub>t</sub></div>
+                <div contenteditable="true" class="col-span-8">: multi-agent reasoning outcomes: local states, collective interpretations, and unresolved disagreements</div>
+              </div>
+              <div class="grid grid-cols-12 items-baseline">
+                <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">T<sub>t</sub></div>
+                <div contenteditable="true" class="col-span-8">: retained traces explaining how the multi-agent outcomes emerge</div>
               </div>
             </div>
           </div>
@@ -643,9 +703,9 @@
                   </h3>
                 </div>
 
-                <div class="grid grid-cols-12 gap-3 items-center">
+                <div class="risk-reasoning-grid">
                   <!-- Left Two Pill Inputs (Conflict & SteeringProxy) -->
-                  <div class="col-span-4 flex flex-col gap-2.5 pr-2 relative">
+                  <div class="risk-input-panel gap-2.5 pr-1 relative">
                     <!-- Conflict C(x_i, t) -->
                     <div id="pill-conflict" class="blue-gradient-pill rounded-xl px-3 py-1.5 flex items-center justify-between text-[14px]">
                       <div class="flex items-center gap-2">
@@ -655,7 +715,7 @@
                         </svg>
                         <span contenteditable="true" class="font-semibold text-slate-900">Conflict</span>
                       </div>
-                      <span contenteditable="true" class="math font-semibold text-[15px]">C<span class="math-upright">(</span>x<sub>i</sub>, t<span class="math-upright">)</span></span>
+                      <span contenteditable="true" class="math font-semibold text-[15px]">C<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">)</span></span>
                     </div>
 
                     <!-- SteeringProxy S(x_i, t) -->
@@ -670,12 +730,12 @@
                         </svg>
                         <span contenteditable="true" class="font-semibold text-slate-900">SteeringProxy</span>
                       </div>
-                      <span contenteditable="true" class="math font-semibold text-[15px]">S<span class="math-upright">(</span>x<sub>i</sub>, t<span class="math-upright">)</span></span>
+                      <span contenteditable="true" class="math font-semibold text-[15px]">S<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">)</span></span>
                     </div>
                   </div>
 
                   <!-- Center Proposed Reasoning Problem Formula Box -->
-                  <div class="col-span-4">
+                  <div>
                     <div id="box-formula" class="border-[1.6px] border-[#94a3b8] bg-white rounded-xl px-3 py-2.5 text-center shadow-sm">
                       <div class="flex items-center justify-center gap-1.5 mb-1">
                         <!-- Gear Icon -->
@@ -684,17 +744,29 @@
                           <circle cx="12" cy="12" r="3" />
                         </svg>
                         <div contenteditable="true" class="math font-bold text-[14.5px] text-slate-900 whitespace-nowrap">
-                          R<span class="math-upright">(</span>x<sub>i</sub>, s, t<span class="math-upright">) = </span>f<span class="math-upright">(</span>C<span class="math-upright">(</span>x<sub>i</sub>, t<span class="math-upright">), </span>S<span class="math-upright">(</span>x<sub>i</sub>, t<span class="math-upright">), </span>I<sub>s</sub><span class="math-upright">(</span>t<span class="math-upright">))</span>
+                          R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;s,&thinsp;t<span class="math-upright">)&ensp;=&ensp;</span>f&nbsp;<span class="math-upright">(</span>C<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">),&ensp;</span>S<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">),&ensp;</span>I<sub>s</sub><span class="math-upright">(</span>t<span class="math-upright">),&ensp;</span>Q<sub>t</sub><span class="math-upright">).</span>
                         </div>
                       </div>
-                      <div contenteditable="true" class="text-[12.5px] italic text-slate-600">
-                        (a proposed reasoning problem)
+                      <div contenteditable="true" class="text-[11.5px] italic text-slate-600">
+                        <span class="math">f</span> is a reasoning mechanism to be investigated, not a predefined scoring function
                       </div>
                     </div>
                   </div>
 
                   <!-- Right Explanation Bullet Points -->
-                  <div class="col-span-4 border-l-2 border-slate-300 pl-3.5 text-[12.5px] leading-snug space-y-1.5 text-slate-800">
+                  <div class="risk-explanation-panel text-[11.5px] leading-snug text-slate-800">
+                    <div class="flex items-start gap-1.5">
+                      <span class="font-bold">•</span>
+                      <div contenteditable="true">
+                        <span class="math font-bold">C<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">)</span></span>: incompatibility with valid reference knowledge
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <span class="font-bold">•</span>
+                      <div contenteditable="true">
+                        <span class="math font-bold">S<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">)</span></span>: observable potential to direct later interaction
+                      </div>
+                    </div>
                     <div class="flex items-start gap-1.5">
                       <span class="font-bold">•</span>
                       <div contenteditable="true">
@@ -704,13 +776,19 @@
                     <div class="flex items-start gap-1.5">
                       <span class="font-bold">•</span>
                       <div contenteditable="true">
-                        <span class="math font-bold">R<span class="math-upright">(</span>x<sub>i</sub>, s, t<span class="math-upright">)</span></span>: stakeholder-specific risk<br/>(with uncertainty)
+                        <span class="math font-bold">Q<sub>t</sub></span>: local reasoning states, collective interpretations, and unresolved disagreements
                       </div>
                     </div>
                     <div class="flex items-start gap-1.5">
                       <span class="font-bold">•</span>
                       <div contenteditable="true">
-                        <span class="font-bold underline">Explanation</span>: argument chains and evidence in <span class="math font-semibold">G<sub>t</sub></span>
+                        <span class="math font-bold">R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;s,&thinsp;t<span class="math-upright">)</span></span>: traceable assessment, not an actual-harm prediction
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <span class="font-bold">•</span>
+                      <div contenteditable="true">
+                        <span class="math font-bold">T<sub>t</sub></span>: retained traces of arguments, viewpoints, evidence, and remaining disagreement
                       </div>
                     </div>
                   </div>
@@ -722,7 +800,7 @@
             <!-- ========================================================
                  RIGHT COLUMN TOP: Update at t + 1
                  ======================================================== -->
-            <div class="col-span-3 flex flex-col gap-5">
+            <div id="right-architecture-rail" class="col-span-3 flex flex-col gap-5">
               <div id="box-update" class="blue-box p-3.5 bg-gradient-to-b from-[#dbeafe]/70 via-white to-white">
                 <!-- Header -->
                 <div class="flex items-center justify-center gap-2 mb-3">
@@ -795,7 +873,7 @@
                     </svg>
                     <div contenteditable="true" class="text-[13.5px] font-medium text-slate-900 leading-tight text-center flex-1">
                       Re-assess<br/>
-                      <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>, s, t<span class="math-upright">+1)</span></span>
+                      <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;s,&thinsp;t<span class="math-upright">+1)</span></span>
                     </div>
                   </div>
                 </div>
@@ -805,7 +883,7 @@
           </div>
 
           <!-- ==========================================================
-               BOTTOM SUB-GRID: 3 Stakeholder Cards (9 cols) + Legend (3 cols)
+               BOTTOM SUB-GRID: 3 Stakeholder Cards + Legend
                ========================================================== -->
           <div class="grid grid-cols-12 gap-5 items-stretch">
 
@@ -834,7 +912,7 @@
                   <li class="flex items-start gap-1.5">
                     <span class="font-bold">•</span>
                     <div contenteditable="true">
-                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>, S<sub>stu</sub>, t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
+                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;S<sub>stu</sub>,&thinsp;t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
                     </div>
                   </li>
                   <li class="flex items-start gap-1.5">
@@ -867,7 +945,7 @@
                   <li class="flex items-start gap-1.5">
                     <span class="font-bold">•</span>
                     <div contenteditable="true">
-                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>, S<sub>edu</sub>, t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
+                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;S<sub>edu</sub>,&thinsp;t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
                     </div>
                   </li>
                   <li class="flex items-start gap-1.5">
@@ -900,7 +978,7 @@
                   <li class="flex items-start gap-1.5">
                     <span class="font-bold">•</span>
                     <div contenteditable="true">
-                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>, S<sub>com</sub>, t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
+                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;S<sub>com</sub>,&thinsp;t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
                     </div>
                   </li>
                   <li class="flex items-start gap-1.5">
@@ -915,14 +993,14 @@
             </div>
 
             <!-- ========================================================
-                 RIGHT COLUMN BOTTOM: Legend
+                 Legend aligned with the stakeholder outputs
                  ======================================================== -->
-            <div class="col-span-3">
+            <div id="legend-box" class="col-span-3">
               <div class="blue-box p-3.5 h-full bg-gradient-to-b from-[#e8f0fe] via-white to-white">
                 <h3 contenteditable="true" class="font-bold text-[18px] text-slate-900 text-center mb-2.5">
                   Legend
                 </h3>
-                <div class="space-y-2 text-[13px] text-slate-800">
+                <div class="legend-items text-[13px] text-slate-800">
                   
                   <!-- Support (R+) -->
                   <div class="flex items-center gap-2.5">
@@ -1034,6 +1112,20 @@
       if (markerEnd) p.setAttribute('marker-end', `url(#${markerEnd})`);
       if (markerStart) p.setAttribute('marker-start', `url(#${markerStart})`);
       return p;
+    }
+
+    function positionLegend() {
+      const legend = document.getElementById('legend-box');
+      const update = getRelRect('box-update');
+      if (!legend || !update) return;
+      legend.style.position = 'absolute';
+      const riskReasoning = getRelRect('box-risk-reasoning');
+      if (!riskReasoning) return;
+      const top = update.bottom + 48;
+      legend.style.left = `${update.left}px`;
+      legend.style.top = `${top}px`;
+      legend.style.width = `${update.width}px`;
+      legend.style.height = `${riskReasoning.bottom - top}px`;
     }
 
     // Render all dynamic arrows accurately between elements
@@ -1237,16 +1329,19 @@
       const pSteer = getRelRect('pill-steering');
       const bForm = getRelRect('box-formula');
       if (pConf && pSteer && bForm) {
-        const midX = (pConf.right + bForm.left) / 2;
+        const bracketX = pConf.right + 10;
+        const centerY = (pConf.cy + pSteer.cy) / 2;
         const dBracket = `
           M ${pConf.right + 2} ${pConf.cy}
-          L ${midX} ${pConf.cy}
-          L ${midX} ${pSteer.cy}
+          L ${bracketX} ${pConf.cy}
+          L ${bracketX} ${pSteer.cy}
           L ${pSteer.right + 2} ${pSteer.cy}
-          M ${midX} ${(pConf.cy + pSteer.cy) / 2}
-          L ${bForm.left - 5} ${bForm.cy}
         `;
-        g.appendChild(createPath(dBracket, '#1e293b', 2, 'arrow-black'));
+        g.appendChild(createPath(dBracket, '#1e293b', 2, ''));
+        g.appendChild(createPath(
+          `M ${bracketX} ${centerY} L ${bForm.left - 7} ${centerY}`,
+          '#1e293b', 2, 'arrow-black'
+        ));
       }
 
       // 7. Stakeholder-Aware Risk Reasoning -> 3 Bottom Stakeholder Cards
@@ -1284,7 +1379,7 @@
         const startY = bUpdate.bottom + 24;
         const midX = bUpdate.cx;
         g.appendChild(createPath(
-          `M ${startX} ${startY} L ${midX - 10} ${startY} Q ${midX} ${startY} ${midX} ${startY - 10} L ${midX} ${bUpdate.bottom + 5}`,
+          `M ${startX} ${startY} L ${midX - 10} ${startY} Q ${midX} ${startY} ${midX} ${startY - 10} L ${midX} ${bUpdate.bottom - 7}`,
           '#6d28d9', 2.8, 'arrow-purple'
         ));
 
@@ -1429,12 +1524,19 @@
 
     // Re-draw arrows whenever text is edited or window resizes
     window.addEventListener('load', () => {
+      positionLegend();
       initDraggableNodes();
       renderAllConnections();
       // Observe DOM mutations / text edits inside the canvas to keep arrows aligned
       const canvas = document.getElementById('diagram-canvas');
-      canvas.addEventListener('input', renderAllConnections);
-      window.addEventListener('resize', renderAllConnections);
+      canvas.addEventListener('input', () => {
+        positionLegend();
+        renderAllConnections();
+      });
+      window.addEventListener('resize', () => {
+        positionLegend();
+        renderAllConnections();
+      });
     });
   </script>
 </body>

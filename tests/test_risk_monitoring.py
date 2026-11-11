@@ -3,16 +3,16 @@ from __future__ import annotations
 import unittest
 from dataclasses import replace
 
-from agora.pipeline.loader import load_ctq_data
-from agora.pipeline.temporal_graph import build_temporal_snapshots
-from agora.pipeline.viewpoint import add_viewpoint_layers
-from agora.society.config import DEFAULT_V3_CONFIG
-from agora.society.conflict import ConflictEvaluator
-from agora.society.prioritization import RiskMonitoringEngine
-from agora.society.risk import RiskEvaluator
-from agora.society.simulation import DynamicSocietySimulation
-from agora.society.steering import SteeringEvaluator
-from agora.society.visualizer import HTML
+from pipeline.loader import load_ctq_data
+from pipeline.temporal_graph import build_temporal_snapshots
+from pipeline.viewpoint import add_viewpoint_layers
+from society.config import DEFAULT_SOCIETY_CONFIG
+from society.conflict import ConflictEvaluator
+from society.prioritization import RiskMonitoringEngine
+from society.risk import RiskEvaluator
+from society.simulation import DynamicSocietySimulation
+from society.steering import SteeringEvaluator
+from society.visualizer import HTML
 
 
 class ManagerRiskMonitoringTests(unittest.TestCase):
@@ -22,12 +22,12 @@ class ManagerRiskMonitoringTests(unittest.TestCase):
         cls.snapshots = build_temporal_snapshots(cls.data)
         add_viewpoint_layers(cls.snapshots, cls.data["viewpoint_mapping"])
         cls.trace = DynamicSocietySimulation(cls.data, cls.snapshots).run()
-        cls.conflict = ConflictEvaluator(cls.data, cls.snapshots, DEFAULT_V3_CONFIG.conflict)
+        cls.conflict = ConflictEvaluator(cls.data, cls.snapshots, DEFAULT_SOCIETY_CONFIG.conflict)
         cls.steering = SteeringEvaluator(
-            cls.data, cls.snapshots, cls.trace, DEFAULT_V3_CONFIG.steering
+            cls.data, cls.snapshots, cls.trace, DEFAULT_SOCIETY_CONFIG.steering
         )
         cls.engine = RiskMonitoringEngine(
-            cls.data, cls.snapshots, cls.trace, DEFAULT_V3_CONFIG
+            cls.data, cls.snapshots, cls.trace, DEFAULT_SOCIETY_CONFIG
         )
 
     def test_conflict_uses_max_pair_and_preserves_provenance(self) -> None:
@@ -97,13 +97,13 @@ class ManagerRiskMonitoringTests(unittest.TestCase):
         self.assertIn("revision_ids", result)
 
     def test_risk_formula_config_and_bands(self) -> None:
-        evaluator = RiskEvaluator(DEFAULT_V3_CONFIG.risk)
+        evaluator = RiskEvaluator(DEFAULT_SOCIETY_CONFIG.risk)
         conflict = {"conflict_score": 0.8, "maximizing_pair": {"relation_ids": ["R"]}}
         steering = {"steering_score": 0.4, "pairwise_influence": [{"evidence_level": "MEDIUM"}]}
         result = evaluator.evaluate("X", conflict, steering)
         expected = round(0.5 * 0.8 + 0.2 * 0.4 + 0.3 * 0.8 * 0.4, 4)
         self.assertEqual(expected, result["risk_score"])
-        changed = RiskEvaluator(replace(DEFAULT_V3_CONFIG.risk, alpha=0.2)).evaluate("X", conflict, steering)
+        changed = RiskEvaluator(replace(DEFAULT_SOCIETY_CONFIG.risk, alpha=0.2)).evaluate("X", conflict, steering)
         self.assertNotEqual(result["risk_score"], changed["risk_score"])
         self.assertEqual("LOW", evaluator.band(0.29))
         self.assertEqual("MEDIUM", evaluator.band(0.30))
@@ -168,7 +168,7 @@ class ManagerRiskMonitoringTests(unittest.TestCase):
         )
 
     def test_summary_and_argument_flags_use_configured_thresholds(self) -> None:
-        config = DEFAULT_V3_CONFIG.risk
+        config = DEFAULT_SOCIETY_CONFIG.risk
         for window in self.trace["risk_monitoring"]["by_window"].values():
             rows = window["ranked_arguments"]
             self.assertEqual(
@@ -197,7 +197,7 @@ class ManagerRiskMonitoringTests(unittest.TestCase):
                     row["above_risk_threshold"],
                 )
 
-    def test_trace_and_ui_expose_manager_view_without_removing_v3(self) -> None:
+    def test_trace_and_ui_expose_manager_view_without_removing_society_view(self) -> None:
         self.assertIn("risk_monitoring", self.trace)
         self.assertIn("Xã hội tác tử", HTML)
         self.assertIn("Giám sát rủi ro", HTML)
@@ -219,9 +219,9 @@ class ManagerRiskMonitoringTests(unittest.TestCase):
     def test_displayed_formula_uses_serialized_config(self) -> None:
         methodology = self.trace["risk_monitoring"]["methodology"]
         risk_config = methodology["config"]["risk"]
-        self.assertEqual(DEFAULT_V3_CONFIG.risk.alpha, risk_config["alpha"])
-        self.assertEqual(DEFAULT_V3_CONFIG.risk.beta, risk_config["beta"])
-        self.assertEqual(DEFAULT_V3_CONFIG.risk.gamma, risk_config["gamma"])
+        self.assertEqual(DEFAULT_SOCIETY_CONFIG.risk.alpha, risk_config["alpha"])
+        self.assertEqual(DEFAULT_SOCIETY_CONFIG.risk.beta, risk_config["beta"])
+        self.assertEqual(DEFAULT_SOCIETY_CONFIG.risk.gamma, risk_config["gamma"])
         self.assertIn("coeff.alpha", HTML)
         self.assertIn("coeff.beta", HTML)
         self.assertIn("coeff.gamma", HTML)

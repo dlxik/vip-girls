@@ -1,5 +1,5 @@
 {
-  "model": "V4 propagation sensitivity; not empirical delay estimation",
+  "model": "Propagation sensitivity; not empirical delay estimation",
   "scenario_zero_delay": {
     "propagation": {
       "mode": "zero_delay",
@@ -9,15 +9,15 @@
         "deliver eligible messages",
         "argument agents observe delivered inbox",
         "argument agents reason deterministically",
-        "grounded V3 actions create messages",
+        "grounded society actions create messages",
         "zero-delay messages may deliver in the same k",
         "argument-agent beliefs revise",
         "viewpoint macro state aggregates",
-        "society metrics/events remain V3 baseline"
+        "society metrics/events remain society baseline"
       ],
-      "cross_snapshot_rule": "Nếu available k vượt số bước của t, chuyển deterministic sang (t_next,k0); Steering dùng cùng quy tắc carry này.",
+      "cross_snapshot_rule": "Delay được trừ tuần tự theo số bước thực của từng snapshot; message có thể đi qua nhiều snapshot và giữ phần delay dư.",
       "real_world_exposure": "unknown",
-      "limitation": "Độ trễ là giả định sensitivity, không phải số đo ngoài đời thực; V4 nới giả định thông tin đồng bộ chứ không tuyên bố mô phỏng thực tế."
+      "limitation": "Độ trễ là giả định sensitivity, không phải số đo ngoài đời thực; Hierarchy layer nới giả định thông tin đồng bộ chứ không tuyên bố mô phỏng thực tế."
     },
     "interactions": 120,
     "viewpoint_belief_revisions": 401,
@@ -95,8 +95,8 @@
     },
     "dominant_viewpoint": "VP06",
     "society_events": 38,
-    "split_candidates": 0,
-    "merge_candidates": 60
+    "split_candidates": 2,
+    "merge_candidates": 14
   },
   "scenario_fixed_delay_1k": {
     "propagation": {
@@ -107,15 +107,15 @@
         "deliver eligible messages",
         "argument agents observe delivered inbox",
         "argument agents reason deterministically",
-        "grounded V3 actions create messages",
+        "grounded society actions create messages",
         "zero-delay messages may deliver in the same k",
         "argument-agent beliefs revise",
         "viewpoint macro state aggregates",
-        "society metrics/events remain V3 baseline"
+        "society metrics/events remain society baseline"
       ],
-      "cross_snapshot_rule": "Nếu available k vượt số bước của t, chuyển deterministic sang (t_next,k0); Steering dùng cùng quy tắc carry này.",
+      "cross_snapshot_rule": "Delay được trừ tuần tự theo số bước thực của từng snapshot; message có thể đi qua nhiều snapshot và giữ phần delay dư.",
       "real_world_exposure": "unknown",
-      "limitation": "Độ trễ là giả định sensitivity, không phải số đo ngoài đời thực; V4 nới giả định thông tin đồng bộ chứ không tuyên bố mô phỏng thực tế."
+      "limitation": "Độ trễ là giả định sensitivity, không phải số đo ngoài đời thực; Hierarchy layer nới giả định thông tin đồng bộ chứ không tuyên bố mô phỏng thực tế."
     },
     "interactions": 120,
     "viewpoint_belief_revisions": 401,
@@ -193,13 +193,13 @@
     },
     "dominant_viewpoint": "VP06",
     "society_events": 38,
-    "split_candidates": 0,
-    "merge_candidates": 60
+    "split_candidates": 2,
+    "merge_candidates": 14
   },
   "comparison": {
     "steering_changed_arguments": [],
     "risk_ranking_changed": false,
     "dominant_viewpoint_changed": false,
-    "interpretation": "V4 nới giả định thông tin đồng bộ và cho phép phân tích độ nhạy dưới độ trễ; không chứng minh độ trễ thực địa."
+    "interpretation": "Hierarchy layer nới giả định thông tin đồng bộ và cho phép phân tích độ nhạy dưới độ trễ; không chứng minh độ trễ thực địa."
   }
 }

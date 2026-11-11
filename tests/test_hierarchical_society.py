@@ -3,21 +3,21 @@ from __future__ import annotations
 import hashlib
 import unittest
 
-from agora.pipeline.loader import load_ctq_data, repository_root
-from agora.pipeline.temporal_graph import build_temporal_snapshots
-from agora.pipeline.viewpoint import add_viewpoint_layers
-from agora.society.config import DEFAULT_V3_CONFIG
-from agora.hierarchy.config import PropagationConfig
-from agora.hierarchy.hierarchy import AgentHierarchy
-from agora.hierarchy.models import ArgumentSubAgent
-from agora.hierarchy.propagation import DeterministicMessageQueue
-from agora.hierarchy.simulation import HierarchicalArgumentSocietySimulation
-from agora.hierarchy.steering import ArrivalAwareSteeringEvaluator
-from agora.hierarchy.validation import validate_v4_trace
-from agora.hierarchy.visualizer import HTML
+from hierarchy.config import PropagationConfig
+from hierarchy.hierarchy import AgentHierarchy
+from hierarchy.models import ArgumentSubAgent
+from hierarchy.propagation import DeterministicMessageQueue
+from hierarchy.simulation import HierarchicalArgumentSocietySimulation
+from hierarchy.steering import ArrivalAwareSteeringEvaluator
+from hierarchy.validation import validate_hierarchy_trace
+from hierarchy.visualizer import HTML
+from pipeline.loader import load_ctq_data, repository_root
+from pipeline.temporal_graph import build_temporal_snapshots
+from pipeline.viewpoint import add_viewpoint_layers
+from society.config import DEFAULT_SOCIETY_CONFIG
 
 
-class HierarchicalArgumentSocietyV4Tests(unittest.TestCase):
+class HierarchicalArgumentSocietyTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.data = load_ctq_data()
@@ -30,7 +30,7 @@ class HierarchicalArgumentSocietyV4Tests(unittest.TestCase):
             root / "data/annotations/ctq_argument_status.csv",
             root / "data/annotations/ctq_relations.csv",
             root / "data/sources/ctq_sources.csv",
-            root / "agora/resources/viewpoint_mapping.json",
+            root / "src/resources/viewpoint_mapping.json",
         ]
         cls.hashes_before = {
             str(path): hashlib.sha256(path.read_bytes()).hexdigest()
@@ -61,7 +61,7 @@ class HierarchicalArgumentSocietyV4Tests(unittest.TestCase):
             for argument_id in row["argument_ids"]
         }
         for row in self.trace["argument_subagents"].values():
-            self.assertEqual(owner[row["argument_id"]], row["parent_viewpoint_id"])
+            self.assertEqual([owner[row["argument_id"]]], row["parent_viewpoint_ids"])
         hierarchy_a = AgentHierarchy(self.data, self.trace["argument_catalog"])
         hierarchy_b = AgentHierarchy(self.data, self.trace["argument_catalog"])
         self.assertEqual(hierarchy_a.trace_mapping(), hierarchy_b.trace_mapping())
@@ -82,7 +82,7 @@ class HierarchicalArgumentSocietyV4Tests(unittest.TestCase):
     def _agent(argument_id: str, parent: str) -> ArgumentSubAgent:
         return ArgumentSubAgent(
             agent_id=f"ARG-{argument_id}", argument_id=argument_id,
-            parent_viewpoint_id=parent, argument_type="A_D",
+            parent_viewpoint_ids=[parent], argument_type="A_D",
             belief_status="undecided", confidence=0.5, active=True,
             introduced_at="t1", source_ids=["S"],
         )
@@ -121,6 +121,31 @@ class HierarchicalArgumentSocietyV4Tests(unittest.TestCase):
         self.assertEqual([message], queue.deliver("t2", 0, {"A": source, "B": target}))
         self.assertNotIn("date", message.to_dict())
 
+    def test_delay_preserves_remainder_across_multiple_snapshots(self) -> None:
+        config = PropagationConfig(mode="fixed_delay", default_delay_steps=7)
+        queue = DeterministicMessageQueue(
+            ["t1", "t2", "t3", "t4"],
+            config,
+            {"t1": 2, "t2": 3, "t3": 2, "t4": 4},
+        )
+        source, target = self._agent("A", "VP1"), self._agent("B", "VP2")
+        message = queue.send_from_interaction(self._interaction(), source, target, 2)
+        self.assertEqual(("t4", 0), (message.available_at_t, message.available_at_k))
+        self.assertTrue(message.crossed_snapshot_boundary)
+        self.assertEqual([], queue.deliver("t3", 1, {"A": source, "B": target}))
+        self.assertEqual([message], queue.deliver("t4", 0, {"A": source, "B": target}))
+
+    def test_delay_beyond_final_snapshot_remains_pending(self) -> None:
+        config = PropagationConfig(mode="fixed_delay", default_delay_steps=9)
+        queue = DeterministicMessageQueue(
+            ["t1", "t2"], config, {"t1": 2, "t2": 3}
+        )
+        source, target = self._agent("A", "VP1"), self._agent("B", "VP2")
+        message = queue.send_from_interaction(self._interaction(), source, target, 2)
+        self.assertEqual(("t2", 7), (message.available_at_t, message.available_at_k))
+        self.assertEqual([], queue.deliver("t2", 2, {"A": source, "B": target}))
+        self.assertEqual("queued", message.delivery_status)
+
     def test_negative_delay_is_rejected(self) -> None:
         with self.assertRaises(ValueError):
             PropagationConfig(mode="fixed_delay", default_delay_steps=-1)
@@ -133,10 +158,10 @@ class HierarchicalArgumentSocietyV4Tests(unittest.TestCase):
             self.assertIn(row["delivery_status"], {"queued", "delivered", "consumed"})
             self.assertEqual("unknown", row["provenance"]["real_world_exposure"])
 
-    def test_arrival_steering_zero_delay_reproduces_v3_t(self) -> None:
+    def test_arrival_steering_zero_delay_reproduces_society_t(self) -> None:
         evaluator = ArrivalAwareSteeringEvaluator(
             self.data, self.snapshots, self.trace,
-            DEFAULT_V3_CONFIG.steering,
+            DEFAULT_SOCIETY_CONFIG.steering,
             PropagationConfig(),
         )
         pair = evaluator.pairwise("CTQ-A004", "CTQ-A006", 0, 5)
@@ -146,7 +171,7 @@ class HierarchicalArgumentSocietyV4Tests(unittest.TestCase):
 
     def test_positive_delay_can_remove_temporal_precedence(self) -> None:
         evaluator = ArrivalAwareSteeringEvaluator(
-            self.data, self.snapshots, self.trace, DEFAULT_V3_CONFIG.steering,
+            self.data, self.snapshots, self.trace, DEFAULT_SOCIETY_CONFIG.steering,
             PropagationConfig(mode="fixed_delay", default_delay_steps=2),
         )
         pair = evaluator.pairwise("CTQ-A004", "CTQ-A006", 0, 5)
@@ -156,7 +181,7 @@ class HierarchicalArgumentSocietyV4Tests(unittest.TestCase):
         self.assertEqual("unknown", pair["real_world_exposure"])
 
     def test_conflict_risk_and_snapshot_windows_are_preserved(self) -> None:
-        comparison = self.trace["v3_zero_delay_comparison"]
+        comparison = self.trace["zero_delay_baseline_comparison"]
         self.assertTrue(comparison["conflict_unchanged"])
         self.assertFalse(comparison["steering_changed"])
         self.assertFalse(comparison["risk_changed"])
@@ -169,11 +194,11 @@ class HierarchicalArgumentSocietyV4Tests(unittest.TestCase):
         )
 
     def test_trace_validation(self) -> None:
-        result = validate_v4_trace(self.trace, self.data, self.snapshots)
+        result = validate_hierarchy_trace(self.trace, self.data, self.snapshots)
         self.assertEqual(27, result["argument_subagents"])
-        self.assertEqual(21, result["v4_risk_windows"])
+        self.assertEqual(21, result["hierarchy_risk_windows"])
 
-    def test_ui_keeps_v3_risk_and_adds_collapsed_hierarchy(self) -> None:
+    def test_ui_keeps_baseline_risk_and_adds_collapsed_hierarchy(self) -> None:
         self.assertIn("const expandedViewpoints=new Set(", HTML)
         self.assertIn("argument-subagent", HTML)
         self.assertIn("INSPECTOR TRUYỀN TIN", HTML)

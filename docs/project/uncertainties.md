@@ -14,14 +14,14 @@
 
 ## U-003: Source preservation policy
 
-- Status: open
-- Question: Which source types should be archived locally, and what metadata such as access time or checksum is required?
+- Status: resolved
+- Resolution: D-023 and `docs/research/source-preservation-policy.md` require provenance metadata for every source and SHA-256 for any retained artifact. Full content is committed only when redistribution is permitted; otherwise the research copy stays in a controlled private archive.
 - Impact: Affects reproducibility, copyright handling, privacy, and resilience to link disappearance.
 
 ## U-004: Git baseline workflow
 
 - Status: resolved
-- Resolution: The project was initially hosted at `https://github.com/dlxik/AGORA.git`. On 2026-11-10, the latest V4 state was migrated into the shared repository `https://github.com/dlxik/vip-girls.git`; the former repository remains the historical source.
+- Resolution: The project was initially hosted in a former private repository. On 2026-11-10, the latest legacy state was migrated into the shared repository `https://github.com/dlxik/vip-girls.git`; Git history preserves the migration record.
 - Impact: Component branches can now be created from the reviewed setup baseline.
 
 ## U-005: Original Ministry cancellation decision
@@ -39,8 +39,8 @@
 
 ## U-007: Public-forum provenance and persistence
 
-- Status: open
-- Question: Should public forum posts be archived with post-level URLs, timestamps, and snapshots, subject to privacy and copyright constraints?
+- Status: resolved as policy; source recovery remains case-specific
+- Resolution: Preserve post-level URL and timestamps when platform terms permit, minimize personal data, and commit abstracted claims rather than full snapshots by default. Record edits/deletion as source status changes.
 - Impact: Thread pagination and edits may weaken future reproducibility.
 - Batch 2 note: CTQ-S028 contains abusive language and unsupported allegations. Only abstracted claims are retained; a future preservation policy must address ethical quotation, deletion, and post-level timestamps.
 
