@@ -1,0 +1,338 @@
+{
+  "n_items": 24,
+  "n_threads": 24,
+  "n_ordered": 16,
+  "gold_label_counts": {
+    "A1>A2": 8,
+    "insufficient": 4,
+    "A1<A2": 8,
+    "tie": 4
+  },
+  "tie_or_insufficient_rate": 0.3333333333333333,
+  "reference": "cosine",
+  "boot": 500,
+  "results": [
+    {
+      "method": "random",
+      "acc": 0.4375,
+      "acc_ci": [
+        0.18451704545454548,
+        0.6666666666666666
+      ],
+      "acc_strict": 0.4375,
+      "coverage": 1.0,
+      "delta_vs_ref": -0.5625,
+      "delta_ci": [
+        -0.8154829545454545,
+        -0.33333333333333337
+      ]
+    },
+    {
+      "method": "cosine",
+      "acc": 1.0,
+      "acc_ci": [
+        1.0,
+        1.0
+      ],
+      "acc_strict": 1.0,
+      "coverage": 1.0
+    },
+    {
+      "method": "reply_quote",
+      "acc": 0.9375,
+      "acc_ci": [
+        0.8,
+        1.0
+      ],
+      "acc_strict": 0.9375,
+      "coverage": 1.0,
+      "delta_vs_ref": -0.0625,
+      "delta_ci": [
+        -0.19999999999999996,
+        0.0
+      ]
+    },
+    {
+      "method": "llm",
+      "acc": 0.875,
+      "acc_ci": [
+        0.6875,
+        1.0
+      ],
+      "acc_strict": 0.875,
+      "coverage": 1.0,
+      "delta_vs_ref": -0.125,
+      "delta_ci": [
+        -0.3125,
+        0.0
+      ]
+    },
+    {
+      "method": "proposed",
+      "acc": 1.0,
+      "acc_ci": [
+        1.0,
+        1.0
+      ],
+      "acc_strict": 1.0,
+      "coverage": 1.0,
+      "delta_vs_ref": 0.0,
+      "delta_ci": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "method": "proposed_u_only",
+      "acc": 1.0,
+      "acc_ci": [
+        1.0,
+        1.0
+      ],
+      "acc_strict": 1.0,
+      "coverage": 1.0,
+      "delta_vs_ref": 0.0,
+      "delta_ci": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "method": "proposed_d_only",
+      "acc": 1.0,
+      "acc_ci": [
+        1.0,
+        1.0
+      ],
+      "acc_strict": 1.0,
+      "coverage": 1.0,
+      "delta_vs_ref": 0.0,
+      "delta_ci": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "method": "proposed_ungated",
+      "acc": 1.0,
+      "acc_ci": [
+        1.0,
+        1.0
+      ],
+      "acc_strict": 1.0,
+      "coverage": 1.0,
+      "delta_vs_ref": 0.0,
+      "delta_ci": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "method": "proposed_dmean",
+      "acc": 1.0,
+      "acc_ci": [
+        1.0,
+        1.0
+      ],
+      "acc_strict": 1.0,
+      "coverage": 1.0,
+      "delta_vs_ref": 0.0,
+      "delta_ci": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "slices": {
+    "high_sim_other_branch": {
+      "random": {
+        "acc": 0.25,
+        "n": 4
+      },
+      "cosine": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "reply_quote": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "llm": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_u_only": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_d_only": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_ungated": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_dmean": {
+        "acc": 1.0,
+        "n": 4
+      }
+    },
+    "ancestor_2_hops": {
+      "random": {
+        "acc": 0.5,
+        "n": 4
+      },
+      "cosine": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "reply_quote": {
+        "acc": 0.75,
+        "n": 4
+      },
+      "llm": {
+        "acc": 0.5,
+        "n": 4
+      },
+      "proposed": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_u_only": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_d_only": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_ungated": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_dmean": {
+        "acc": 1.0,
+        "n": 4
+      }
+    },
+    "reply_diff_lens": {
+      "random": {
+        "acc": 0.5,
+        "n": 4
+      },
+      "cosine": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "reply_quote": {
+        "acc": 0.75,
+        "n": 4
+      },
+      "llm": {
+        "acc": 0.5,
+        "n": 4
+      },
+      "proposed": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_u_only": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_d_only": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_ungated": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_dmean": {
+        "acc": 1.0,
+        "n": 4
+      }
+    },
+    "opposite_stance": {
+      "random": {
+        "acc": 0.75,
+        "n": 4
+      },
+      "cosine": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "reply_quote": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "llm": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_u_only": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_d_only": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_ungated": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_dmean": {
+        "acc": 1.0,
+        "n": 4
+      }
+    },
+    "partial_frame": {
+      "random": {
+        "acc": 0.25,
+        "n": 4
+      },
+      "cosine": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "reply_quote": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "llm": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_u_only": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_d_only": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_ungated": {
+        "acc": 1.0,
+        "n": 4
+      },
+      "proposed_dmean": {
+        "acc": 1.0,
+        "n": 4
+      }
+    }
+  }
+}
