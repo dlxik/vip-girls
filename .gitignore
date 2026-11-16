@@ -21,6 +21,12 @@ dist/
 .venv/
 venv/
 
+# Local WSDM experiment outputs, model caches, and canonical corpus artifacts
+/wsdm/results/
+/dataset/
+*.parquet
+llm_cache.jsonl
+
 # Local environment and secret files
 .env
 .env.*

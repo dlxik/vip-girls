@@ -11,7 +11,8 @@ from pathlib import Path
 
 from steering import load_items
 
-OUT = Path("toy")
+HERE = Path(__file__).resolve().parent
+OUT = HERE / "toy"
 TOPICS = ["thi lại", "đồng phục", "bài tập về nhà", "học thêm"]
 
 
@@ -90,7 +91,11 @@ def build():
 
 def run(*args):
     print("$", " ".join(args))
-    r = subprocess.run([sys.executable, *args], capture_output=True, text=True)
+    command = list(args)
+    script = Path(command[0])
+    if not script.is_absolute():
+        command[0] = str(HERE / script)
+    r = subprocess.run([sys.executable, *command], capture_output=True, text=True)
     print(r.stdout)
     if r.returncode:
         print(r.stderr)
