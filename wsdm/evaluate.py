@@ -21,9 +21,17 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 import numpy as np
-
-from steering import (CosineScorer, Item, ORDERED, ProposedScorer, RandomScorer,
-                      ReplyQuoteScorer, Scorer, load_extractions, load_items)
+from steering import (
+    ORDERED,
+    CosineScorer,
+    Item,
+    ProposedScorer,
+    RandomScorer,
+    ReplyQuoteScorer,
+    Scorer,
+    load_extractions,
+    load_items,
+)
 
 EPS = 1e-9
 
