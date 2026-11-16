@@ -1,4 +1,7 @@
-Dưới đây là nội dung hoàn chỉnh cho file README.md của project, được soạn thảo theo đúng cấu trúc yêu cầu, giữ nguyên các thuật ngữ chuyên ngành tiếng Anh và tuân thủ nguyên tắc khách quan, khoa học.Markdown# WSDM Research Track Project: Evidence Scoring & Frame Uptake Pipeline
+# WSDM Research Track Project: Evidence Scoring & Frame Uptake Pipeline
+
+For the verified Windows real-data workflow, canonical Parquet adapter, one-command
+runner, edge-pilot boundary, and local viewer, see [LOCAL_PIPELINE.md](LOCAL_PIPELINE.md).
 
 Repository này chứa mã nguồn và dữ liệu thực nghiệm cho pipeline đánh giá bằng chứng (evidence scoring) và sự kế thừa khung tranh biện (frame uptake) trên dữ liệu ChangeMyView (CMV) qua các phương pháp trích xuất sử dụng Large Language Models (LLM) và các baseline truyền thống.
 

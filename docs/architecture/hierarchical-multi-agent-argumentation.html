@@ -486,7 +486,7 @@
               </div>
               <div class="grid grid-cols-12 items-baseline">
                 <div contenteditable="true" class="col-span-4 font-semibold math text-[15px]">G<sub>t</sub></div>
-                <div contenteditable="true" class="col-span-8">: temporal argument graph<br/>&nbsp;&nbsp;<span class="math">(A<sub>K</sub>(t) <span class="math-upright">∪</span> A<sub>D</sub>(t), R<sup>+</sup>, R<sup>−</sup>)</span></div>
+                <div contenteditable="true" class="col-span-8">: temporal argument graph<br/>&nbsp;&nbsp;<span class="math">(A<sub>K</sub>(t) <span class="math-upright">∪</span> A<sub>D</sub>(t), R<sup>+</sup><sub>t</sub>, R<sup>−</sup><sub>t</sub>)</span></div>
               </div>
               <div class="grid grid-cols-12 items-baseline">
                 <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">C<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">)</span></div>
@@ -510,7 +510,7 @@
               </div>
               <div class="grid grid-cols-12 items-baseline">
                 <div contenteditable="true" class="col-span-4 font-semibold math text-[14.5px]">T<sub>t</sub></div>
-                <div contenteditable="true" class="col-span-8">: retained traces explaining how the multi-agent outcomes emerge</div>
+                <div contenteditable="true" class="col-span-8">: associated reasoning traces: state transitions, exchanges, and viewpoint adjustments</div>
               </div>
             </div>
           </div>
@@ -743,8 +743,8 @@
                           <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                           <circle cx="12" cy="12" r="3" />
                         </svg>
-                        <div contenteditable="true" class="math font-bold text-[14.5px] text-slate-900 whitespace-nowrap">
-                          R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;s,&thinsp;t<span class="math-upright">)&ensp;=&ensp;</span>f&nbsp;<span class="math-upright">(</span>C<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">),&ensp;</span>S<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">),&ensp;</span>I<sub>s</sub><span class="math-upright">(</span>t<span class="math-upright">),&ensp;</span>Q<sub>t</sub><span class="math-upright">).</span>
+                        <div contenteditable="true" class="math font-bold text-[13.5px] text-slate-900 whitespace-nowrap">
+                          R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;s,&thinsp;t<span class="math-upright">)&ensp;=&ensp;</span>f&nbsp;<span class="math-upright">(</span>C<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">),&ensp;</span>S<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;t<span class="math-upright">),&ensp;</span>I<sub>s</sub><span class="math-upright">(</span>t<span class="math-upright">),&ensp;</span>Q<sub>t</sub><span class="math-upright">,&ensp;</span>T<sub>t</sub><span class="math-upright">).</span>
                         </div>
                       </div>
                       <div contenteditable="true" class="text-[11.5px] italic text-slate-600">
@@ -770,7 +770,7 @@
                     <div class="flex items-start gap-1.5">
                       <span class="font-bold">•</span>
                       <div contenteditable="true">
-                        <span class="math font-bold">I<sub>s</sub><span class="math-upright">(</span>t<span class="math-upright">)</span></span>: interests and context of stakeholders <span class="math">s</span>
+                        <span class="math font-bold">I<sub>s</sub><span class="math-upright">(</span>t<span class="math-upright">)</span></span>: interests and context of stakeholder <span class="math">s</span>
                       </div>
                     </div>
                     <div class="flex items-start gap-1.5">
@@ -788,7 +788,7 @@
                     <div class="flex items-start gap-1.5">
                       <span class="font-bold">•</span>
                       <div contenteditable="true">
-                        <span class="math font-bold">T<sub>t</sub></span>: retained traces of arguments, viewpoints, evidence, and remaining disagreement
+                        <span class="math font-bold">T<sub>t</sub></span>: reasoning traces of state transitions, exchanges, and viewpoint adjustments
                       </div>
                     </div>
                   </div>
@@ -890,7 +890,7 @@
             <!-- 3 STAKEHOLDER OUTPUT CARDS -->
             <div class="col-span-9 grid grid-cols-3 gap-3.5 pt-2">
 
-              <!-- Card 1: Students S_stu -->
+              <!-- Card 1: Students s_stu -->
               <div id="card-stu" class="stakeholder-card p-3.5">
                 <div class="flex items-center justify-center gap-2 pb-2 mb-2 border-b border-amber-300/80">
                   <!-- Graduation Cap Icon -->
@@ -899,7 +899,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                   </svg>
                   <h4 contenteditable="true" class="font-bold text-[16.5px] text-slate-900">
-                    Students <span class="math font-bold ml-1">S<sub>stu</sub></span>
+                    Students <span class="math font-bold ml-1">s<sub>stu</sub></span>
                   </h4>
                 </div>
                 <ul class="space-y-1.5 text-[13px] leading-snug text-slate-800">
@@ -912,7 +912,7 @@
                   <li class="flex items-start gap-1.5">
                     <span class="font-bold">•</span>
                     <div contenteditable="true">
-                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;S<sub>stu</sub>,&thinsp;t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
+                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;s<sub>stu</sub>,&thinsp;t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
                     </div>
                   </li>
                   <li class="flex items-start gap-1.5">
@@ -924,7 +924,7 @@
                 </ul>
               </div>
 
-              <!-- Card 2: Education Authority S_edu -->
+              <!-- Card 2: Education Authority s_edu -->
               <div id="card-edu" class="stakeholder-card p-3.5">
                 <div class="flex items-center justify-center gap-2 pb-2 mb-2 border-b border-amber-300/80">
                   <!-- Building Icon -->
@@ -932,7 +932,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                   </svg>
                   <h4 contenteditable="true" class="font-bold text-[16.5px] text-slate-900">
-                    Education Authority <span class="math font-bold ml-1">S<sub>edu</sub></span>
+                    Education Authority <span class="math font-bold ml-1">s<sub>edu</sub></span>
                   </h4>
                 </div>
                 <ul class="space-y-1.5 text-[13px] leading-snug text-slate-800">
@@ -945,7 +945,7 @@
                   <li class="flex items-start gap-1.5">
                     <span class="font-bold">•</span>
                     <div contenteditable="true">
-                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;S<sub>edu</sub>,&thinsp;t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
+                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;s<sub>edu</sub>,&thinsp;t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
                     </div>
                   </li>
                   <li class="flex items-start gap-1.5">
@@ -957,7 +957,7 @@
                 </ul>
               </div>
 
-              <!-- Card 3: Local Community S_com -->
+              <!-- Card 3: Local Community s_com -->
               <div id="card-com" class="stakeholder-card p-3.5">
                 <div class="flex items-center justify-center gap-2 pb-2 mb-2 border-b border-amber-300/80">
                   <!-- Community / People Icon -->
@@ -965,7 +965,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <h4 contenteditable="true" class="font-bold text-[16.5px] text-slate-900">
-                    Local Community <span class="math font-bold ml-1">S<sub>com</sub></span>
+                    Local Community <span class="math font-bold ml-1">s<sub>com</sub></span>
                   </h4>
                 </div>
                 <ul class="space-y-1.5 text-[13px] leading-snug text-slate-800">
@@ -978,7 +978,7 @@
                   <li class="flex items-start gap-1.5">
                     <span class="font-bold">•</span>
                     <div contenteditable="true">
-                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;S<sub>com</sub>,&thinsp;t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
+                      <span class="font-bold underline">Risk</span>: <span class="math font-semibold">R<span class="math-upright">(</span>x<sub>i</sub>,&thinsp;s<sub>com</sub>,&thinsp;t<span class="math-upright">)</span></span> <span class="text-[12px] text-slate-700">(with uncertainty)</span>
                     </div>
                   </li>
                   <li class="flex items-start gap-1.5">

@@ -62,7 +62,8 @@ def clean(raw: Optional[str]):
 
 
 # --------------------------------------------------------------------- core logic
-def prep_thread(utts: List[dict], min_words: int, min_words_b: int, max_words: int):
+def prep_thread(utts: List[dict], min_words: int, min_words_b: int, max_words: int,
+                impute_root_timestamps: bool = True):
     """Returns (parent map over ALL utterances, valid comments, all usable comments, speakers).
     valid = usable AND within the word limits (candidates / B); all = usable only (used for context).
     Filtered comments still count as reply steps. CMV's OP has no timestamp: it is given a time
@@ -76,7 +77,7 @@ def prep_thread(utts: List[dict], min_words: int, min_words_b: int, max_words: i
     for u in utts:
         t = u.get("timestamp")
         if t is None:
-            if u.get("reply_to") is not None:
+            if u.get("reply_to") is not None or not impute_root_timestamps:
                 continue
             t = floor
         spk = str(u.get("speaker") or "").lower()
@@ -105,12 +106,19 @@ def _dot(a: dict, b: dict) -> float:
 def build_items_from_threads(threads: Dict[str, List[dict]], n: int, seed: int = 13,
                              max_per_thread: int = 2, min_words: int = 12, min_words_b: int = 8,
                              max_words: int = 350, sample_threads: int = 400,
-                             exclude_threads=frozenset()) -> List[dict]:
+                             exclude_threads=frozenset(),
+                             impute_root_timestamps: bool = True) -> List[dict]:
     rng = random.Random(seed)
     tids = sorted(t for t in threads if t not in exclude_threads)
     rng.shuffle(tids)
     tids = tids[:sample_threads]
-    prepped = {t: prep_thread(threads[t], min_words, min_words_b, max_words) for t in tids}
+    prepped = {
+        t: prep_thread(
+            threads[t], min_words, min_words_b, max_words,
+            impute_root_timestamps=impute_root_timestamps,
+        )
+        for t in tids
+    }
 
     emb = TfidfEmbedder().fit(c.text for _, valid, _, _ in prepped.values() for c in valid.values())
     vec_cache: Dict[str, dict] = {}
@@ -244,7 +252,7 @@ def cmd_build(args) -> None:
     exclude = set()
     for p in args.exclude or []:
         with open(p, encoding="utf-8") as f:
-            exclude |= {json.loads(l)["thread_id"] for l in f if l.strip()}
+            exclude |= {json.loads(line)["thread_id"] for line in f if line.strip()}
     items = build_items_from_threads(load_cmv(args.corpus), args.n, args.seed,
                                      max_per_thread=args.max_per_thread, exclude_threads=exclude)
     out = Path(args.out)

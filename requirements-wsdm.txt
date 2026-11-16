@@ -1,0 +1,7 @@
+# Minimal reproducible environment for canonical Parquet, edge diagnostics, and viewer.
+numpy>=2.0,<3
+pandas>=2.2,<4
+pyarrow>=16,<27
+scikit-learn>=1.5,<2
+streamlit>=1.40,<2
+

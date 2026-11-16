@@ -54,6 +54,59 @@ Return JSON with exactly these keys:
  "d_aspect": 0 | 0.5 | 1, "d_lens": 0 | 0.5 | 1,
  "development": "new_reason" | "consequence" | "proposal" | "none"}"""
 
+EXTRACTION_KEYS = {
+    "frame_A", "frame_B", "span_A", "span_B", "span_pair_ok", "specific_reference",
+    "uptake_level", "uptake_type", "d_aspect", "d_lens", "development",
+}
+EXTRACTION_ENUMS = {
+    "uptake_level": {"named_premise", "direct_reply_premise", "indirect_specific", "none"},
+    "uptake_type": {"quote", "direct_reply", "indirect", "none"},
+    "development": {"new_reason", "consequence", "proposal", "none"},
+}
+
+
+def validate_extraction(d: dict, item: Item, key: str) -> list[str]:
+    """Validate schema and require claimed evidence spans to be verbatim source text."""
+    errors = []
+    missing = sorted(EXTRACTION_KEYS - set(d))
+    extra = sorted(set(d) - EXTRACTION_KEYS)
+    if missing:
+        errors.append(f"missing keys: {missing}")
+    if extra:
+        errors.append(f"unexpected keys: {extra}")
+    for frame_key in ("frame_A", "frame_B"):
+        frame = d.get(frame_key)
+        if not isinstance(frame, dict) or set(frame) != {"aspect", "lens"}:
+            errors.append(f"{frame_key} must contain exactly aspect and lens")
+        elif not all(isinstance(frame.get(name), str) for name in ("aspect", "lens")):
+            errors.append(f"{frame_key} values must be strings")
+    for name in ("span_A", "span_B"):
+        if not isinstance(d.get(name), str):
+            errors.append(f"{name} must be a string")
+    for name in ("span_pair_ok", "specific_reference"):
+        if type(d.get(name)) is not bool:
+            errors.append(f"{name} must be boolean")
+    for name, allowed in EXTRACTION_ENUMS.items():
+        if d.get(name) not in allowed:
+            errors.append(f"{name} must be one of {sorted(allowed)}")
+    for name in ("d_aspect", "d_lens"):
+        try:
+            value = float(d.get(name))
+        except (TypeError, ValueError):
+            errors.append(f"{name} must be numeric")
+        else:
+            if value not in {0.0, 0.5, 1.0}:
+                errors.append(f"{name} must be 0, 0.5, or 1")
+    a_text, b_text = item.candidates[key].text, item.B.text
+    span_a, span_b = d.get("span_A"), d.get("span_B")
+    if isinstance(span_a, str) and span_a and span_a not in a_text:
+        errors.append("span_A is not a verbatim substring of A")
+    if isinstance(span_b, str) and span_b and span_b not in b_text:
+        errors.append("span_B is not a verbatim substring of B")
+    if d.get("span_pair_ok") and (not span_a or not span_b):
+        errors.append("span_pair_ok=true requires non-empty span_A and span_B")
+    return errors
+
 
 def render_pair(item: Item, key: str, max_chars: int = 3000, ctx_n: int = 3) -> str:
     a, b = item.candidates[key], item.B
@@ -119,7 +172,25 @@ class OllamaClient(LLMClient):
     def __init__(self, model: str, num_ctx: int = 8192, timeout: int = 600):
         self.model, self.num_ctx, self.timeout = model, num_ctx, timeout
         host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
-        self.url = (host if host.startswith("http") else f"http://{host}").rstrip("/") + "/api/chat"
+        self.host = (host if host.startswith("http") else f"http://{host}").rstrip("/")
+        self.url = self.host + "/api/chat"
+
+    def check_available(self) -> None:
+        import urllib.request
+        try:
+            with urllib.request.urlopen(self.host + "/api/tags", timeout=10) as response:
+                payload = json.loads(response.read())
+        except (OSError, ValueError) as exc:
+            raise SystemExit(
+                f"Cannot reach Ollama at {self.host} ({exc}). Start it with `ollama serve`."
+            ) from exc
+        names = {entry.get("name") for entry in payload.get("models", [])}
+        if self.model not in names and f"{self.model}:latest" not in names:
+            available = ", ".join(sorted(name for name in names if name)) or "none"
+            raise SystemExit(
+                f"Ollama model {self.model!r} is not installed. Available: {available}. "
+                f"Run `ollama pull {self.model}` first."
+            )
 
     def complete(self, prompt: str, system: str = SYSTEM) -> str:
         import urllib.request
@@ -191,6 +262,7 @@ def make_client(model: str, cache: Optional[str]) -> LLMClient:
         inner: LLMClient = MockClient()
     elif model.startswith("ollama:"):
         inner = OllamaClient(model[len("ollama:"):])
+        inner.check_available()
     else:
         inner = AnthropicClient(model)
     return CachedClient(inner, cache)
@@ -228,14 +300,18 @@ def extract_pair(client: LLMClient, item: Item, key: str) -> Optional[dict]:
     d = parse_json(client.complete(prompt))
     if d is None:
         return None
+    validation_errors = validate_extraction(d, item, key)
     a = item.candidates[key]
     d["A_id"], d["B_id"] = a.id, item.B.id
+    d["validation"] = {"valid": not validation_errors, "errors": validation_errors,
+                       "verbatim_spans_checked": True}
     return d
 
 
-def run_extraction(items, client: LLMClient, out_path: str) -> int:
+def run_extraction(items, client: LLMClient, out_path: str, errors_path: Optional[str] = None) -> int:
     seen, n, failed = set(), 0, 0
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    error_records = []
     with open(out_path, "w", encoding="utf-8") as f:
         for it in items:
             for key in ("A1", "A2"):
@@ -246,9 +322,22 @@ def run_extraction(items, client: LLMClient, out_path: str) -> int:
                 d = extract_pair(client, it, key)
                 if d is None:
                     failed += 1
+                    error_records.append({"A_id": it.candidates[key].id, "B_id": it.B.id,
+                                          "errors": ["unparseable JSON"]})
+                    continue
+                if not d["validation"]["valid"]:
+                    failed += 1
+                    error_records.append({"A_id": d["A_id"], "B_id": d["B_id"],
+                                          "errors": d["validation"]["errors"]})
                     continue
                 f.write(json.dumps(d, ensure_ascii=False) + "\n")
                 n += 1
+    if errors_path:
+        error_file = Path(errors_path)
+        error_file.parent.mkdir(parents=True, exist_ok=True)
+        with error_file.open("w", encoding="utf-8") as handle:
+            for record in error_records:
+                handle.write(json.dumps(record, ensure_ascii=False) + "\n")
     print(f"extracted {n} pairs, {failed} unparseable -> {out_path}")
     return n
 
@@ -261,5 +350,10 @@ if __name__ == "__main__":
     e.add_argument("--out", required=True)
     e.add_argument("--model", required=True, help="Anthropic model id, or 'mock' for offline dry run")
     e.add_argument("--cache", default=None)
+    e.add_argument("--limit", type=int, default=None, help="maximum number of ranking items")
+    e.add_argument("--errors", default=None, help="JSONL validation/parse error log")
     args = ap.parse_args()
-    run_extraction(load_items(args.items, allow_unlabeled=True), make_client(args.model, args.cache), args.out)
+    items = load_items(args.items, allow_unlabeled=True)
+    if args.limit is not None:
+        items = items[:args.limit]
+    run_extraction(items, make_client(args.model, args.cache), args.out, args.errors)
