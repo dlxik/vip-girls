@@ -392,7 +392,7 @@ def _edge_item(row):
 
 def extract_proposed(args: argparse.Namespace) -> None:
     """Run real extraction.  This command deliberately has no --gold argument."""
-    from llm import extract_pair, make_client
+    from llm import extract_pair_with_retry, make_client
     from steering import ProposedScorer, pair_key
 
     inputs = _read_csv(args.inputs)
@@ -404,17 +404,25 @@ def extract_proposed(args: argparse.Namespace) -> None:
     client = make_client(args.model, str(out / "llm_cache.jsonl"))
     valid_extractions = []
     errors = []
+    attempt_logs = []
     predictions = []
+    max_retries = int(args.max_extraction_retries)
     for row in inputs.itertuples(index=False):
         item = _edge_item(row)
-        extraction = extract_pair(client, item, "A1")
+        extraction, attempts = extract_pair_with_retry(
+            client, item, "A1", max_retries=max_retries,
+        )
+        for attempt in attempts:
+            attempt_logs.append({"argument_pair_id": item.item_id, **attempt})
         if extraction is None:
             errors.append({"argument_pair_id": item.item_id,
-                           "errors": ["unparseable JSON"]})
+                           "errors": attempts[-1]["errors"],
+                           "attempt_count": len(attempts)})
             continue
         if not extraction["validation"]["valid"]:
             errors.append({"argument_pair_id": item.item_id,
-                           "errors": extraction["validation"]["errors"]})
+                           "errors": extraction["validation"]["errors"],
+                           "attempt_count": len(attempts)})
             continue
         extraction["argument_pair_id"] = item.item_id
         extraction["source_A_id"] = str(row.A_id)
@@ -443,6 +451,9 @@ def extract_proposed(args: argparse.Namespace) -> None:
     with (out / "extraction_errors.jsonl").open("w", encoding="utf-8") as handle:
         for record in errors:
             handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+    with (out / "extraction_attempts.jsonl").open("w", encoding="utf-8") as handle:
+        for record in attempt_logs:
+            handle.write(json.dumps(record, ensure_ascii=False) + "\n")
     _write_csv(pd.DataFrame(predictions), out / "proposed_predictions.csv")
     run_manifest = {
         "created_at": datetime.now().astimezone().isoformat(),
@@ -451,6 +462,9 @@ def extract_proposed(args: argparse.Namespace) -> None:
         "input_file": str(Path(args.inputs).resolve()),
         "n_inputs": int(len(inputs)), "n_valid_extractions": len(valid_extractions),
         "n_invalid_extractions": len(errors),
+        "max_extraction_retries": max_retries,
+        "n_extraction_attempts": len(attempt_logs),
+        "n_items_retried": sum(1 for record in attempt_logs if record["attempt"] == 2),
         "labels_used_as_features": False,
         "gold_argument_spans_used": bool(inputs.human_segmentation_used.astype(str).str.upper().eq("TRUE").all()),
         "gold_evidence_spans_used": False,
@@ -505,6 +519,8 @@ def build_parser() -> argparse.ArgumentParser:
     e.add_argument("--inputs", required=True)
     e.add_argument("--model", required=True)
     e.add_argument("--out", required=True)
+    e.add_argument("--max-extraction-retries", type=int, default=1, choices=(0, 1, 2),
+                   help="bounded correction retries after JSON/schema/span validation failure")
     e.set_defaults(func=extract_proposed)
     v = sub.add_parser("evaluate-proposed")
     v.add_argument("--predictions", required=True)

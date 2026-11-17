@@ -52,7 +52,30 @@ Return JSON with exactly these keys:
  "uptake_level": "named_premise" | "direct_reply_premise" | "indirect_specific" | "none",
  "uptake_type": "quote" | "direct_reply" | "indirect" | "none",
  "d_aspect": 0 | 0.5 | 1, "d_lens": 0 | 0.5 | 1,
- "development": "new_reason" | "consequence" | "proposal" | "none"}"""
+ "development": "new_reason" | "consequence" | "proposal" | "none"}
+
+EVIDENCE RULES:
+- span_A and span_B must be exact, case-sensitive, contiguous substrings copied from A and B. Preserve every character,
+  including Markdown punctuation. Never paraphrase, repair, or normalize a span.
+- Select the shortest clause or sentence that is sufficient to demonstrate the A-B link. Do not copy a whole argument
+  when a shorter exact span works. Each span must be at most 320 characters.
+- span_pair_ok=true only when both non-empty spans form an observable pair: span_B actually uses, challenges, applies,
+  or develops the content in span_A. Topic overlap or reply structure alone is not enough.
+- If span_pair_ok=false, set uptake_level="none" and uptake_type="none". If uptake_level="none", set
+  span_pair_ok=false. Do not claim uptake while rejecting its evidence pair.
+- indirect_specific means there is no direct-reply/quote trace but B makes a content-specific reference to A; therefore
+  it requires span_pair_ok=true, specific_reference=true, and uptake_type="indirect".
+- direct_reply_premise requires span_pair_ok=true and uptake_type="direct_reply". A direct reply alone is insufficient.
+- named_premise requires span_pair_ok=true and uptake_type other than "none"; use uptake_type="quote" for a quotation.
+
+FRAME RULES:
+- A frame is (aspect, lens). The lens is the actual criterion used to evaluate the aspect, not merely the broad topic.
+- d_lens=1 only for clearly the same evaluative criterion; 0.5 only when that same criterion is compatibly narrowed,
+  widened, or qualified; 0 when B switches criteria (for example, individual rights to aggregate welfare), even when
+  B discusses the same aspect or quotes A. Apply the analogous rule to d_aspect.
+- Disagreement does not itself imply a frame shift, and quotation does not itself imply frame retention."""
+
+MAX_EVIDENCE_SPAN_CHARS = 320
 
 EXTRACTION_KEYS = {
     "frame_A", "frame_B", "span_A", "span_B", "span_pair_ok", "specific_reference",
@@ -83,6 +106,8 @@ def validate_extraction(d: dict, item: Item, key: str) -> list[str]:
     for name in ("span_A", "span_B"):
         if not isinstance(d.get(name), str):
             errors.append(f"{name} must be a string")
+        elif len(d[name]) > MAX_EVIDENCE_SPAN_CHARS:
+            errors.append(f"{name} exceeds {MAX_EVIDENCE_SPAN_CHARS} characters; select a concise verbatim span")
     for name in ("span_pair_ok", "specific_reference"):
         if type(d.get(name)) is not bool:
             errors.append(f"{name} must be boolean")
@@ -105,6 +130,36 @@ def validate_extraction(d: dict, item: Item, key: str) -> list[str]:
         errors.append("span_B is not a verbatim substring of B")
     if d.get("span_pair_ok") and (not span_a or not span_b):
         errors.append("span_pair_ok=true requires non-empty span_A and span_B")
+    span_pair_ok = d.get("span_pair_ok")
+    specific_reference = d.get("specific_reference")
+    uptake_level = d.get("uptake_level")
+    uptake_type = d.get("uptake_type")
+    if span_pair_ok is False and uptake_level not in {None, "none"}:
+        errors.append("span_pair_ok=false requires uptake_level='none'")
+    if uptake_level == "none" and span_pair_ok is not False:
+        errors.append("uptake_level='none' requires span_pair_ok=false")
+    if uptake_level == "none" and uptake_type not in {None, "none"}:
+        errors.append("uptake_level='none' requires uptake_type='none'")
+    if uptake_type == "none" and uptake_level not in {None, "none"}:
+        errors.append("uptake_type='none' requires uptake_level='none'")
+    if uptake_level == "indirect_specific":
+        if span_pair_ok is not True:
+            errors.append("uptake_level='indirect_specific' requires span_pair_ok=true")
+        if specific_reference is not True:
+            errors.append("uptake_level='indirect_specific' requires specific_reference=true")
+        if uptake_type != "indirect":
+            errors.append("uptake_level='indirect_specific' requires uptake_type='indirect'")
+    if uptake_type == "indirect" and specific_reference is not True:
+        errors.append("uptake_type='indirect' requires specific_reference=true")
+    if uptake_level == "direct_reply_premise":
+        if span_pair_ok is not True:
+            errors.append("uptake_level='direct_reply_premise' requires span_pair_ok=true")
+        if uptake_type != "direct_reply":
+            errors.append("uptake_level='direct_reply_premise' requires uptake_type='direct_reply'")
+    if uptake_type == "direct_reply" and item.candidates[key].hops != 1:
+        errors.append("uptake_type='direct_reply' requires a direct-reply structural relation")
+    if uptake_level == "named_premise" and (span_pair_ok is not True or uptake_type == "none"):
+        errors.append("uptake_level='named_premise' requires span_pair_ok=true and a non-none uptake_type")
     return errors
 
 
@@ -225,11 +280,13 @@ class MockClient(LLMClient):
             return json.dumps({"score": round(min(1.0, 2 * jac) * (1.0 if direct else 0.3), 2),
                                "rationale": "mock"})
         ok = jac > 0.15
+        indirect_specific = ok and not direct
         return json.dumps({
             "frame_A": {"aspect": "mock", "lens": "mock"}, "frame_B": {"aspect": "mock", "lens": "mock"},
-            "span_A": a[:40], "span_B": b[:40], "span_pair_ok": ok, "specific_reference": False,
+            "span_A": a[:40], "span_B": b[:40], "span_pair_ok": ok,
+            "specific_reference": indirect_specific,
             "uptake_level": ("direct_reply_premise" if direct else "indirect_specific") if ok else "none",
-            "uptake_type": "direct_reply" if direct else "indirect",
+            "uptake_type": ("direct_reply" if direct else "indirect") if ok else "none",
             "d_aspect": 1 if ok else 0, "d_lens": 0.5 if ok else 0, "development": "none"})
 
 
@@ -295,17 +352,67 @@ class LLMDirectScorer(Scorer):
         return self._notes.get(f"{item.item_id}|{key}", {})
 
 
-def extract_pair(client: LLMClient, item: Item, key: str) -> Optional[dict]:
-    prompt = "\n\n".join([DEFINITION, EXTRACT_TASK, render_pair(item, key)])
-    d = parse_json(client.complete(prompt))
-    if d is None:
-        return None
+def _extract_response(client: LLMClient, item: Item, key: str, correction: Optional[list[str]] = None):
+    task = EXTRACT_TASK
+    if correction:
+        task += ("\n\nCORRECTION RETRY. The previous response was rejected for these exact reasons:\n- "
+                 + "\n- ".join(correction)
+                 + "\nRe-extract from the original A and B. Return a new complete JSON object. "
+                   "Do not repair spans by fuzzy matching or normalization.")
+    prompt = "\n\n".join([DEFINITION, task, render_pair(item, key)])
+    raw = client.complete(prompt)
+    return raw, parse_json(raw)
+
+
+def _finalize_extraction(d: dict, item: Item, key: str) -> dict:
     validation_errors = validate_extraction(d, item, key)
     a = item.candidates[key]
     d["A_id"], d["B_id"] = a.id, item.B.id
     d["validation"] = {"valid": not validation_errors, "errors": validation_errors,
-                       "verbatim_spans_checked": True}
+                       "verbatim_spans_checked": True,
+                       "cross_field_consistency_checked": True}
     return d
+
+
+def extract_pair(client: LLMClient, item: Item, key: str) -> Optional[dict]:
+    """Single extraction attempt retained for callers that explicitly do not want retry."""
+    _, d = _extract_response(client, item, key)
+    if d is None:
+        return None
+    return _finalize_extraction(d, item, key)
+
+
+def extract_pair_with_retry(client: LLMClient, item: Item, key: str, max_retries: int = 1):
+    """Extract with bounded correction retries and return (extraction, auditable attempts).
+
+    No invalid output is normalized or converted to a score. Each raw response and its
+    parse/validation failure is retained for the caller to persist.
+    """
+    if max_retries < 0:
+        raise ValueError("max_retries must be non-negative")
+    attempts = []
+    correction = None
+    final = None
+    for attempt_index in range(max_retries + 1):
+        raw, parsed = _extract_response(client, item, key, correction)
+        if parsed is None:
+            errors = ["unparseable JSON"]
+            final = None
+        else:
+            final = _finalize_extraction(parsed, item, key)
+            errors = list(final["validation"]["errors"])
+        attempts.append({
+            "attempt": attempt_index + 1,
+            "kind": "initial" if attempt_index == 0 else "correction_retry",
+            "raw_response": raw,
+            "parsed_json": parsed is not None,
+            "valid": parsed is not None and not errors,
+            "errors": errors,
+        })
+        if parsed is not None and not errors:
+            return final, attempts
+        correction = errors
+    return final, attempts
 
 
 def run_extraction(items, client: LLMClient, out_path: str, errors_path: Optional[str] = None) -> int:

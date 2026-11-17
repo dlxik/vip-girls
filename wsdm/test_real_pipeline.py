@@ -10,9 +10,20 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from llm import MockClient, render_pair, run_extraction, validate_extraction  # noqa: E402
+from llm import (  # noqa: E402
+    EXTRACT_TASK,
+    MAX_EVIDENCE_SPAN_CHARS,
+    LLMClient,
+    MockClient,
+    extract_pair_with_retry,
+    render_pair,
+    run_extraction,
+    validate_extraction,
+)
 from steering import (  # noqa: E402
+    Comment,
     CosineScorer,
+    Item,
     ProposedScorer,
     ReplyQuoteScorer,
     load_extractions,
@@ -20,6 +31,16 @@ from steering import (  # noqa: E402
 )
 
 PILOT = HERE / "pilot" / "items_unlabeled.jsonl"
+
+
+class SequenceClient(LLMClient):
+    model = "sequence-test"
+
+    def __init__(self, responses):
+        self.responses = iter(responses)
+
+    def complete(self, prompt: str, system: str = "") -> str:
+        return next(self.responses)
 
 
 class RealPilotTests(unittest.TestCase):
@@ -61,6 +82,71 @@ class RealPilotTests(unittest.TestCase):
         extraction["span_A"] = "not a verbatim source span"
         errors = validate_extraction(extraction, item, "A1")
         self.assertIn("span_A is not a verbatim substring of A", errors)
+
+    def test_validation_rejects_contradictory_uptake_fields(self):
+        item = Item(
+            item_id="x", thread_id="t",
+            B=Comment(id="b", text="B challenges the premise.", timestamp=2, parent_id="a"),
+            candidates={
+                "A1": Comment(id="a", text="The premise is costly.", timestamp=1, hops=1),
+                "A2": Comment(id="unused", text="", timestamp=1),
+            },
+            label="unlabeled",
+        )
+        extraction = {
+            "frame_A": {"aspect": "premise", "lens": "cost"},
+            "frame_B": {"aspect": "premise", "lens": "cost"},
+            "span_A": "The premise is costly.", "span_B": "B challenges the premise.",
+            "span_pair_ok": False, "specific_reference": False,
+            "uptake_level": "indirect_specific", "uptake_type": "indirect",
+            "d_aspect": 1, "d_lens": 1, "development": "new_reason",
+        }
+        errors = validate_extraction(extraction, item, "A1")
+        self.assertIn("span_pair_ok=false requires uptake_level='none'", errors)
+        self.assertIn("uptake_level='indirect_specific' requires span_pair_ok=true", errors)
+        self.assertIn("uptake_level='indirect_specific' requires specific_reference=true", errors)
+
+    def test_validation_rejects_overlong_evidence_without_normalizing_it(self):
+        item = self.items[0]
+        extraction = json.loads(MockClient().complete(
+            "TASK: EXTRACT\n\n" + render_pair(item, "A1")
+        ))
+        extraction["span_A"] = item.candidates["A1"].text[:MAX_EVIDENCE_SPAN_CHARS + 1]
+        errors = validate_extraction(extraction, item, "A1")
+        self.assertTrue(any("select a concise verbatim span" in error for error in errors))
+        self.assertEqual(item.candidates["A1"].text[:MAX_EVIDENCE_SPAN_CHARS + 1], extraction["span_A"])
+
+    def test_retry_preserves_initial_failure_and_accepts_valid_correction(self):
+        item = Item(
+            item_id="x", thread_id="t",
+            B=Comment(id="b", text="Path denial is a good point.", timestamp=2, parent_id="a"),
+            candidates={
+                "A1": Comment(id="a", text="He denies paths.", timestamp=1, hops=1),
+                "A2": Comment(id="unused", text="", timestamp=1),
+            },
+            label="unlabeled",
+        )
+        invalid = {
+            "frame_A": {"aspect": "paths", "lens": "denial"},
+            "frame_B": {"aspect": "paths", "lens": "denial"},
+            "span_A": "He denies paths.", "span_B": "Path denial is a good point.",
+            "span_pair_ok": True, "specific_reference": True,
+            "uptake_level": "named_premise", "uptake_type": "indirect_reply",
+            "d_aspect": 1, "d_lens": 1, "development": "none",
+        }
+        valid = {**invalid, "uptake_type": "direct_reply"}
+        client = SequenceClient([json.dumps(invalid), json.dumps(valid)])
+        extraction, attempts = extract_pair_with_retry(client, item, "A1", max_retries=1)
+        self.assertTrue(extraction["validation"]["valid"])
+        self.assertEqual(2, len(attempts))
+        self.assertFalse(attempts[0]["valid"])
+        self.assertIn("uptake_type must be one of", attempts[0]["errors"][0])
+        self.assertEqual(json.dumps(invalid), attempts[0]["raw_response"])
+        self.assertTrue(attempts[1]["valid"])
+
+    def test_prompt_defines_lens_shift_as_zero(self):
+        self.assertIn("switches criteria", EXTRACT_TASK)
+        self.assertIn("d_lens=1 only", EXTRACT_TASK)
 
     def test_mock_extraction_and_all_ablations(self):
         with tempfile.TemporaryDirectory() as directory:
