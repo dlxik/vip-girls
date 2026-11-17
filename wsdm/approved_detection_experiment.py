@@ -871,6 +871,10 @@ def evaluate_proposed(args: argparse.Namespace) -> None:
         "- Baselines in the comparison table are recomputed on exactly the same post-retry valid item IDs.",
         "- Missing-score sensitivity rows impute 0 or 1 only as labeled stress tests; they are not observed results.",
         "- Error-analysis FP/FN uses the semantic diagnostic rule S>0, never a gold-tuned threshold.",
+        "- `proposed_d_only` is gated retention (`Temporal * G * D`), not an ungated D-only score.",
+        "- `proposed_ungated` removes the explicit G multiplier, but U_raw still comes from the same "
+        "validated extraction; under direct-reply inputs and consistency constraints it can be degenerate "
+        "with the full score. Treat it as descriptive unless it changes item-level scores.",
         "- `proposed_dmean` is a retention-aggregation sensitivity variant, not an independent component removal.",
         "- The five diagnostic development items are included in the 41 units.",
         "- Human argument segmentation is supplied as model input; this is not raw-comment performance.",
@@ -898,7 +902,7 @@ def build_parser() -> argparse.ArgumentParser:
     e.add_argument("--inputs", required=True)
     e.add_argument("--model", required=True)
     e.add_argument("--out", required=True)
-    e.add_argument("--max-extraction-retries", type=int, default=1, choices=(0, 1, 2),
+    e.add_argument("--max-extraction-retries", type=int, default=1, choices=(0, 1),
                    help="bounded correction retries after JSON/schema/span validation failure")
     e.add_argument("--expected-items", type=int, default=None,
                    help="fail before inference unless the model input has exactly this many rows")

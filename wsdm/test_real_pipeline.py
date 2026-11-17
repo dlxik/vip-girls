@@ -11,6 +11,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 from llm import (  # noqa: E402
+    DEFINITION,
     EXTRACT_TASK,
     MAX_EVIDENCE_SPAN_CHARS,
     LLMClient,
@@ -38,8 +39,10 @@ class SequenceClient(LLMClient):
 
     def __init__(self, responses):
         self.responses = iter(responses)
+        self.prompts = []
 
     def complete(self, prompt: str, system: str = "") -> str:
+        self.prompts.append(prompt)
         return next(self.responses)
 
 
@@ -143,6 +146,65 @@ class RealPilotTests(unittest.TestCase):
         self.assertIn("uptake_type must be one of", attempts[0]["errors"][0])
         self.assertEqual(json.dumps(invalid), attempts[0]["raw_response"])
         self.assertTrue(attempts[1]["valid"])
+        self.assertEqual(json.dumps(valid), attempts[1]["raw_response"])
+        self.assertEqual(
+            "\n\n".join([DEFINITION, EXTRACT_TASK, render_pair(item, "A1")]),
+            client.prompts[0],
+        )
+        retry_prompt = client.prompts[1]
+        self.assertIn(json.dumps(invalid), retry_prompt)
+        self.assertIn("STRUCTURED VALIDATION ERRORS", retry_prompt)
+        self.assertIn('"uptake_type"', retry_prompt)
+        self.assertIn("DEPENDENT FIELDS TO RECHECK", retry_prompt)
+        self.assertIn("VALID UPTAKE COMBINATIONS", retry_prompt)
+        self.assertIn("SOURCE A (authoritative JSON string)", retry_prompt)
+        self.assertIn("SOURCE B (authoritative JSON string)", retry_prompt)
+        self.assertIn("␠", retry_prompt)
+        self.assertIn("Never copy a span from the other source", retry_prompt)
+        self.assertIn("at most 320 characters", retry_prompt)
+        self.assertEqual(
+            {
+                "invalid_fields": ["uptake_type"],
+                "dependent_fields_to_recheck": [
+                    "span_pair_ok", "specific_reference", "uptake_level",
+                ],
+            },
+            attempts[1]["repair_context"],
+        )
+
+    def test_retry_audit_keeps_both_invalid_raw_responses_and_errors(self):
+        item = Item(
+            item_id="x", thread_id="t",
+            B=Comment(id="b", text="B exact.", timestamp=2, parent_id="a"),
+            candidates={
+                "A1": Comment(id="a", text="A exact.", timestamp=1, hops=1),
+                "A2": Comment(id="unused", text="", timestamp=1),
+            }, label="unlabeled",
+        )
+        invalid = {
+            "frame_A": {"aspect": "x", "lens": "x"},
+            "frame_B": {"aspect": "x", "lens": "x"},
+            "span_A": "wrong A", "span_B": "wrong B",
+            "span_pair_ok": False, "specific_reference": True,
+            "uptake_level": "indirect_specific", "uptake_type": "indirect",
+            "d_aspect": 1, "d_lens": 1, "development": "none",
+        }
+        raw_initial = json.dumps(invalid)
+        raw_retry = json.dumps({**invalid, "span_A": "still wrong A"})
+        extraction, attempts = extract_pair_with_retry(
+            SequenceClient([raw_initial, raw_retry]), item, "A1", max_retries=1,
+        )
+        self.assertFalse(extraction["validation"]["valid"])
+        self.assertEqual([raw_initial, raw_retry], [a["raw_response"] for a in attempts])
+        self.assertTrue(attempts[0]["errors"])
+        self.assertTrue(attempts[1]["errors"])
+        self.assertNotIn("repair_context", attempts[0])
+        self.assertIn("span_A", attempts[1]["repair_context"]["invalid_fields"])
+        self.assertIn("uptake_level", attempts[1]["repair_context"]["invalid_fields"])
+
+    def test_retry_count_cannot_exceed_one(self):
+        with self.assertRaisesRegex(ValueError, "max_retries must be 0 or 1"):
+            extract_pair_with_retry(MockClient(), self.items[0], "A1", max_retries=2)
 
     def test_prompt_defines_lens_shift_as_zero(self):
         self.assertIn("switches criteria", EXTRACT_TASK)

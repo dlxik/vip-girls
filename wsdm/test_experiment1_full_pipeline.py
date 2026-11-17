@@ -38,6 +38,20 @@ def _model_inputs(n: int) -> pd.DataFrame:
 
 
 class FullExperimentPipelineTests(unittest.TestCase):
+    def test_model_input_rejects_gold_columns_before_inference(self):
+        inputs = _model_inputs(1)
+        inputs["label_binary"] = [1]
+        with self.assertRaisesRegex(ValueError, "Gold/prediction fields are forbidden"):
+            experiment._assert_model_input(inputs)
+
+    def test_cli_allows_at_most_one_correction_retry(self):
+        action = next(
+            action for action in experiment.build_parser()._subparsers._group_actions[0]
+            .choices["extract-proposed"]._actions
+            if action.dest == "max_extraction_retries"
+        )
+        self.assertEqual((0, 1), action.choices)
+
     def test_atomic_checkpoints_resume_without_duplicate_attempts(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -125,6 +139,9 @@ class FullExperimentPipelineTests(unittest.TestCase):
             self.assertEqual("failed", failed.extraction_status)
             self.assertEqual("", failed.score)
             self.assertTrue((output / "experiment1_full_report.md").exists())
+            report = (output / "experiment1_full_report.md").read_text(encoding="utf-8")
+            self.assertIn("gated retention", report)
+            self.assertIn("can be degenerate", report)
             comparison = experiment._read_csv(output / "baseline_proposed_comparison.csv")
             self.assertTrue((comparison.n.astype(int) == 40).all())
             self.assertTrue((output / "missing_score_sensitivity.csv").exists())

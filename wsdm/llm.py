@@ -352,13 +352,105 @@ class LLMDirectScorer(Scorer):
         return self._notes.get(f"{item.item_id}|{key}", {})
 
 
-def _extract_response(client: LLMClient, item: Item, key: str, correction: Optional[list[str]] = None):
+_RETRY_DEPENDENCIES = {
+    "span_A": {"span_pair_ok", "uptake_level", "uptake_type"},
+    "span_B": {"span_pair_ok", "uptake_level", "uptake_type"},
+    "span_pair_ok": {"span_A", "span_B", "uptake_level", "uptake_type"},
+    "specific_reference": {"uptake_level", "uptake_type"},
+    "uptake_level": {"span_pair_ok", "specific_reference", "uptake_type"},
+    "uptake_type": {"span_pair_ok", "specific_reference", "uptake_level"},
+}
+
+
+def _retry_field_context(errors: list[str]) -> dict:
+    """Identify rejected fields and fields that must be rechecked with them."""
+    invalid = {
+        name for name in EXTRACTION_KEYS
+        if any(name in error for error in errors)
+    }
+    if any(error == "unparseable JSON" for error in errors):
+        invalid.add("entire_json")
+    if any(error.startswith(("missing keys:", "unexpected keys:")) for error in errors):
+        invalid.add("schema")
+    dependencies = set()
+    for name in invalid:
+        dependencies.update(_RETRY_DEPENDENCIES.get(name, set()))
+    dependencies.difference_update(invalid)
+    return {
+        "invalid_fields": sorted(invalid),
+        "dependent_fields_to_recheck": sorted(dependencies),
+    }
+
+
+def _visible_whitespace(text: str) -> str:
+    """Diagnostic rendering only; these visible markers must never become evidence."""
+    return text.replace(" ", "␠").replace("\t", "⇥").replace("\n", "⏎\n")
+
+
+def _correction_task(item: Item, key: str, previous_raw: str, errors: list[str]) -> str:
+    """Build a retry-only repair request without changing the initial extraction task."""
+    context = _retry_field_context(errors)
+    a_text = item.candidates[key].text[:3000]
+    b_text = item.B.text[:3000]
+    return "\n".join([
+        EXTRACT_TASK,
+        "",
+        "CORRECTION RETRY (one retry maximum). Repair the previous JSON; do not redo the task from scratch.",
+        "Preserve fields that were valid. Repair the invalid fields and any dependent fields listed below, then",
+        "revalidate the entire complete JSON object before returning it. Return JSON only.",
+        "",
+        "PREVIOUS INVALID RESPONSE (preserved verbatim):",
+        "<PREVIOUS_INVALID_RESPONSE>",
+        previous_raw,
+        "</PREVIOUS_INVALID_RESPONSE>",
+        "",
+        "STRUCTURED VALIDATION ERRORS:",
+        json.dumps(errors, ensure_ascii=False, indent=2),
+        "INVALID FIELDS:",
+        json.dumps(context["invalid_fields"], ensure_ascii=False),
+        "DEPENDENT FIELDS TO RECHECK:",
+        json.dumps(context["dependent_fields_to_recheck"], ensure_ascii=False),
+        "Preserve fields not listed above. Repair only invalid fields and dependencies needed for consistency,",
+        "then revalidate every field and return one complete JSON object with exactly the required keys.",
+        "",
+        "VALID UPTAKE COMBINATIONS:",
+        "| uptake_level | span_pair_ok | specific_reference | uptake_type |",
+        "| none | false | true or false | none |",
+        "| indirect_specific | true | true | indirect |",
+        "| direct_reply_premise | true | true or false | direct_reply |",
+        "| named_premise | true | true or false | quote or direct_reply |",
+        "| named_premise | true | true | indirect |",
+        "A non-none uptake level is never valid with span_pair_ok=false.",
+        "uptake_type=direct_reply additionally requires that B structurally replies directly to A.",
+        "",
+        "SOURCE BOUNDARIES AND EXACT-SPAN RULES:",
+        "- span_A may be copied only from SOURCE A. span_B may be copied only from SOURCE B.",
+        "- Never copy a span from the other source.",
+        "- Spans remain exact, case-sensitive, contiguous, at most 320 characters, with Markdown and whitespace preserved.",
+        "- Do not fuzzy-match, paraphrase, normalize, repair punctuation, or silently alter whitespace.",
+        "- The JSON-string renderings below are authoritative for copying. The visible renderings are diagnostic only:",
+        "  ␠ marks a space, ⇥ marks a tab, and ⏎ marks a newline. Do not copy those marker characters.",
+        "",
+        "SOURCE A (authoritative JSON string):",
+        json.dumps(a_text, ensure_ascii=False),
+        "SOURCE A (whitespace-visible diagnostic):",
+        _visible_whitespace(a_text),
+        "",
+        "SOURCE B (authoritative JSON string):",
+        json.dumps(b_text, ensure_ascii=False),
+        "SOURCE B (whitespace-visible diagnostic):",
+        _visible_whitespace(b_text),
+    ])
+
+
+def _extract_response(client: LLMClient, item: Item, key: str,
+                      correction: Optional[list[str]] = None,
+                      previous_raw: Optional[str] = None):
     task = EXTRACT_TASK
     if correction:
-        task += ("\n\nCORRECTION RETRY. The previous response was rejected for these exact reasons:\n- "
-                 + "\n- ".join(correction)
-                 + "\nRe-extract from the original A and B. Return a new complete JSON object. "
-                   "Do not repair spans by fuzzy matching or normalization.")
+        if previous_raw is None:
+            raise ValueError("correction retry requires the previous raw response")
+        task = _correction_task(item, key, previous_raw, correction)
     prompt = "\n\n".join([DEFINITION, task, render_pair(item, key)])
     raw = client.complete(prompt)
     return raw, parse_json(raw)
@@ -388,30 +480,38 @@ def extract_pair_with_retry(client: LLMClient, item: Item, key: str, max_retries
     No invalid output is normalized or converted to a score. Each raw response and its
     parse/validation failure is retained for the caller to persist.
     """
-    if max_retries < 0:
-        raise ValueError("max_retries must be non-negative")
+    if max_retries not in {0, 1}:
+        raise ValueError("max_retries must be 0 or 1")
     attempts = []
     correction = None
+    previous_raw = None
     final = None
     for attempt_index in range(max_retries + 1):
-        raw, parsed = _extract_response(client, item, key, correction)
+        repair_context = _retry_field_context(correction) if correction else None
+        raw, parsed = _extract_response(
+            client, item, key, correction=correction, previous_raw=previous_raw,
+        )
         if parsed is None:
             errors = ["unparseable JSON"]
             final = None
         else:
             final = _finalize_extraction(parsed, item, key)
             errors = list(final["validation"]["errors"])
-        attempts.append({
+        attempt_record = {
             "attempt": attempt_index + 1,
             "kind": "initial" if attempt_index == 0 else "correction_retry",
             "raw_response": raw,
             "parsed_json": parsed is not None,
             "valid": parsed is not None and not errors,
             "errors": errors,
-        })
+        }
+        if repair_context is not None:
+            attempt_record["repair_context"] = repair_context
+        attempts.append(attempt_record)
         if parsed is not None and not errors:
             return final, attempts
         correction = errors
+        previous_raw = raw
     return final, attempts
 
 
