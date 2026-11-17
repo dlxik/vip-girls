@@ -64,7 +64,7 @@ approved reliability-patch commit rather than the branch tip:
 git clone --branch data/cmv-edge-review-20261116 --single-branch \
   https://github.com/dieulinhvuhoang/vip-girls.git /kaggle/working/vip-girls
 cd /kaggle/working/vip-girls
-git checkout --detach <APPROVED_RELIABILITY_PATCH_COMMIT>
+git checkout --detach 20c3b40213e096c80875a73e52fe749e81e42e3b
 git rev-parse HEAD
 ```
 
