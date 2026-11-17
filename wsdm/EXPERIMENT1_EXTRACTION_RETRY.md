@@ -62,9 +62,9 @@ and the existing score variants. Tests are offline and do not call an LLM.
 quantization, context length, temperature, seed, and CUDA device. It uses `--max-extraction-retries 1`, writes to a new
 `experiment1_diagnostic5_qwen2_5_7b_retry1` directory, prints every attempt, and exports the attempt log.
 
-The notebook checks out `origin/data/cmv-edge-review-20261116` and refuses to run unless that branch contains
-`extract_pair_with_retry`. Because this review intentionally does not commit or push, the notebook becomes remotely
-executable only after the researcher approves a commit containing these changes.
+The notebook verifies that reviewed implementation commit `02f97218e5726588bc4c29fbdb61f49bbed28127` is an
+ancestor of `origin/data/cmv-edge-review-20261116`, checks out that exact commit, and refuses to run unless it contains
+`extract_pair_with_retry`. This prevents a later branch update from silently changing the rerun implementation.
 
 ## Remaining risks
 
